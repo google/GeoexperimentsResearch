@@ -28,19 +28,21 @@ FormatText <- function(x, ..., quote="'") {
   # Notes:
   #   The function replaces the following special character patterns:
   #   \itemize{
-  #     \item{\code{\{a|b}\}}: 'a' if sum(x) == 1 and 'b' otherwise.
-  #     \item{\code{\{z|a|b\}}}: 'z' if sum(x) == 0, otherwise works like {a|b}.
-  #     \item{\code{$N}}: sum(x).
-  #     \item{\code{$P}}: sprintf("%.1f", 100 * mean(x)).
-  #     \item{\code{$L}}: length(x).
+  #     \item{\code{\{a|b}\}}: 'a' if \code{sum(x) == 1} and 'b' otherwise.
+  #     \item{\code{\{z|a|b\}}}: 'z' if \code{sum(x) == 0}, otherwise works
+  #        like \code{{a|b}}.
+  #     \item{\code{$N}}: \code{sum(x)}.
+  #     \item{\code{$P}}: \code{sprintf("\%.1f", 100 * mean(x))}.
+  #     \item{\code{$L}}: \code{length(x)}.
   #   }
   #   The following patterns are replaced with comma-separated lists of:
   #   \itemize{
-  #     \item{\code{$w}}: which(x).
-  #     \item{\code{$W}}: which(x), each item quoted.
-  #     \item{\code{$x}}: names(x)[which(x)].
-  #     \item{\code{$X}}: names(x)[which(x)], each item quoted.
+  #     \item{\code{$w}}: \code{which(x)}.
+  #     \item{\code{$W}}: \code{which(x)}, each item quoted.
+  #     \item{\code{$x}}: \code{names(x)[which(x)]}.
+  #     \item{\code{$X}}: \code{names(x)[which(x)]}, each item quoted.
   #   }
+  #
   #   Exception: These four patterns output only up to the Kth item, where
   #   K = getOption('FormatTextMaxOutput', default=7L).
   #
