@@ -1,0 +1,22 @@
+Package: GeoexperimentsResearch
+Title: Geo Experiments
+Author: Google Inc. <geoexperiments-opensource@google.com>
+Maintainer: Google Inc. <geoexperiments-opensource@google.com>
+Description: Functions for manipulating and analyzing geo experiment data.
+Depends:
+    R (>= 3.2.2),
+    stats
+Imports:
+    assertthat (>= 0.1.0.99),
+    ggplot2 (>= 2.0.0),
+    reshape2 (>= 1.2.1),
+    MASS (>= 7.3)
+Suggests:
+    testthat (>= 0.10.0),
+    knitr (>= 1.12.3)
+VignetteBuilder: knitr
+Date: 2017-03-06
+Version: 1.0.0
+License: Apache License 2.0 | file LICENSE
+Copyright: Copyright (C) 2017 Google, Inc.
+RoxygenNote: 5.0.1

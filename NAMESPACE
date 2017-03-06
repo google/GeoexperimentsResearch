@@ -1,0 +1,187 @@
+import(stats, assertthat, ggplot2)
+importFrom(reshape2, dcast)
+importFrom(MASS, mvrnorm)
+
+export(GetModelIds)
+
+export(Subset)
+
+export(GeoTimeseries)
+  S3method(Subset, GeoTimeseries)
+  S3method(aggregate, GeoTimeseries)
+  S3method(merge, GeoTimeseries)
+  S3method(plot, GeoTimeseries)
+
+export(as.GeoTimeseries)
+
+export(GeoExperimentData)
+  S3method(Subset, GeoExperimentData)
+  S3method(merge,  GeoExperimentData)
+
+export(as.GeoExperimentData)
+  S3method(as.GeoExperimentData, GeoTimeseries)
+
+export(ExperimentPeriods)
+export(GeoAssignment)
+
+export(TreatmentAssignment)
+
+export(ExtractGeoAssignment)
+  S3method(ExtractGeoAssignment, GeoTimeseries)
+  S3method(ExtractGeoAssignment, GeoExperimentData)
+
+export(ExtractExperimentPeriods)
+  S3method(ExtractExperimentPeriods, GeoTimeseries)
+
+export(ExtractTreatmentAssignment)
+  S3method(ExtractTreatmentAssignment, GeoTimeseries)
+
+export("SetGeoAssignment<-")
+  S3method("SetGeoAssignment<-", GeoExperimentData)
+
+export("SetExperimentPeriods<-")
+  S3method("SetExperimentPeriods<-", GeoExperimentData)
+
+export("SetSpendChange<-")
+  S3method("SetSpendChange<-", GeoExperimentData)
+
+export("SetIncrementalResponse<-")
+  S3method("SetIncrementalResponse<-", GeoExperimentData)
+
+export("SetTreatmentAssignment<-")
+  S3method("SetTreatmentAssignment<-", GeoExperimentData)
+
+export(GBRROASAnalysisData)
+
+export(as.GBRROASAnalysisData)
+  S3method(as.GBRROASAnalysisData, GeoExperimentData)
+
+export(DoGBRROASAnalysis)
+  S3method(DoGBRROASAnalysis, GBRROASAnalysisData)
+  S3method(DoGBRROASAnalysis, GeoExperimentData)
+
+export(EstimateIncremental)
+  S3method(EstimateIncremental, GBRROASAnalysisData)
+
+  S3method(print, GBRROASAnalysisFitGbr1)
+  S3method(coef, GBRROASAnalysisFitGbr1)
+  S3method(confint, GBRROASAnalysisFitGbr1)
+  S3method(summary, GBRROASAnalysisFitGbr1)
+
+export(ROASAnalysisResults)
+  S3method(round, ROASAnalysisResults)
+  S3method(signif, ROASAnalysisResults)
+
+export(AggregateTimeseries)
+  S3method(AggregateTimeseries, GeoTimeseries)
+
+export(DefaultTreatmentAssignment)
+
+export(RenameColumns)
+
+S3method(as.matrix, GeoTimeseries)
+
+export(TBRAnalysisData)
+
+export(as.TBRAnalysisData)
+  S3method(as.TBRAnalysisData, GeoExperimentData)
+
+export(DoTBRAnalysis)
+  S3method(DoTBRAnalysis, TBRAnalysisData)
+  S3method(DoTBRAnalysis, GeoExperimentData)
+
+export(DoTBRAnalysisTbr1)
+  S3method(DoTBRAnalysisTbr1, TBRAnalysisData)
+
+S3method(summary, TBRAnalysisFitTbr1)
+
+export(GetGeoNames)
+  S3method(GetGeoNames, GeoTimeseries)
+  S3method(GetGeoNames, GeoAssignment)
+  S3method(GetGeoNames, Geos)
+  S3method(GetGeoNames, GeoStrata)
+
+export(GetWeeklyAverages)
+  S3method(GetWeeklyAverages, GeoTimeseries)
+
+export(Geos)
+  S3method(plot, Geos)
+
+export(ExtractGeos)
+  S3method(ExtractGeos, GeoTimeseries)
+
+export(GeoStrata)
+
+export(ExtractGeoStrata)
+  S3method(ExtractGeoStrata, GeoTimeseries)
+  S3method(ExtractGeoStrata, GeoExperimentData)
+
+export(GetGeoGroup)
+  S3method(GetGeoGroup, GeoAssignment)
+  S3method(GetGeoGroup, GeoStrata)
+  S3method(GetGeoGroup, GeoExperimentData)
+
+export("SetGeoGroup<-")
+  S3method("SetGeoGroup<-", GeoStrata)
+  S3method("SetGeoGroup<-", GeoAssignment)
+  S3method("SetGeoGroup<-", GeoExperimentData)
+
+export("MapGeoGroups<-")
+  S3method("MapGeoGroups<-", GeoAssignment)
+  S3method("MapGeoGroups<-", GeoExperimentData)
+
+export(CountRandomizations)
+export(IsFixedRandomization)
+
+export(Randomize)
+  S3method(Randomize, Geos)
+  S3method(Randomize, GeoStrata)
+
+export(GeoExperimentPreanalysisData)
+
+export(SimulateGeoExperimentData)
+  S3method(SimulateGeoExperimentData, GeoExperimentPreanalysisData)
+
+export(SimulatePosterior)
+  S3method(SimulatePosterior, TBRAnalysisFitTbr1)
+
+S3method(quantile, PosteriorSimulations)
+
+export(DoTBRROASAnalysis)
+  S3method(DoTBRROASAnalysis, GeoExperimentData)
+
+S3method(print, TBRROASAnalysisFit)
+S3method(summary, TBRROASAnalysisFit)
+
+S3method(.GetPreanalysisSummary, TBRROASAnalysisFit)
+S3method(.GetPreanalysisSummary, GBRROASAnalysisFitGbr1)
+
+export(DoROASPreanalysis)
+  S3method(DoROASPreanalysis, GeoTimeseries)
+  S3method(DoROASPreanalysis, GeoExperimentPreanalysisData)
+
+S3method(summary, ROASPreanalysisFit)
+S3method(print, ROASPreanalysisFit)
+
+export(as.TBRPlotData)
+  S3method(as.TBRPlotData, TBRAnalysisFitTbr1)
+  S3method(as.TBRPlotData, TBRROASAnalysisFit)
+
+export(GetTBRPlotPanelNames)
+
+S3method(plot, TBRPlotData)
+S3method(plot, TBRAnalysisFitTbr1)
+S3method(plot, TBRROASAnalysisFit)
+
+
+S3method(cumsum, PosteriorSimulations)
+
+S3method(quantile, TBRAnalysisFitTbr1)
+S3method(quantile, TBRROASAnalysisFit)
+
+S3method(as.matrix, TBRQuantiles)
+
+S3method(IsInPeriod, TBRAnalysisData)
+S3method(IsInPeriod, TBRAnalysisFitTbr1)
+S3method(IsInPeriod, TBRROASAnalysisFit)
+S3method(IsInPeriod, TBRQuantiles)
