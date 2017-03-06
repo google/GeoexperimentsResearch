@@ -15,7 +15,7 @@
 context("EstimateIncremental.GBRROASAnalysisData")
 
 iROAS <- 4.0
-ad.spend.diff.daily <- 100
+ad.spend.diff.daily <- 1000
 total.ad.spend.diff <- (n.test.days * ad.spend.diff.daily)
 
 obj.gbr <- .MakeGBRDataObject(dfged3, iroas=iROAS,
@@ -123,8 +123,8 @@ test_that("disallow levels 0 or 1", {
 })
 
 test_that("disallow levels that don't make sense", {
-  expect_error(summary(x, level=-0.1))
-  expect_error(summary(x, level=1.1))
+  expect_error(summary(obj, level=-0.1))
+  expect_error(summary(obj, level=1.1))
 })
 
 context("DoGBRROASAnalysis.GBRROASAnalysisData")
@@ -133,7 +133,7 @@ test_that("Model fit is reasonably close to the truth", {
   expect_is(obj <- DoGBRROASAnalysis(obj.gbr), "GBRROASAnalysisFitGbr1")
   r <- summary(obj)
   expect_equal(round(r$estimate[1], digits=1), iROAS)
-  expect_equal(round(r$precision[1], digits=2), 0.63)
+  expect_equal(round(r$precision[1], digits=2), 0.06)
 })
 
 test_that("Doubling the spend should halve the CI", {

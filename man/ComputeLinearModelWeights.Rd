@@ -7,7 +7,7 @@
 \title{Computes the weights to be used in the weighted linear model used to
 estimate ROAS.}
 \usage{
-ComputeLinearModelWeights(response, epsilon = 0.001)
+ComputeLinearModelWeights(response, epsilon = 0.001, power = 2)
 }
 \arguments{
 \item{response}{a vector of the response in the pre period. Length equal to
@@ -15,6 +15,10 @@ the number of geos. Must be all nonnegative.}
 
 \item{epsilon}{(number) a small positive increment to add to 'response' to
 avoid 1 / 0.}
+
+\item{power}{default power to which 'response' is raised to. Can be
+overridden by setting the global option
+'geoexperiments.gbr1.weight.power'.}
 }
 \value{
 A vector of weights of the same length as 'response'.

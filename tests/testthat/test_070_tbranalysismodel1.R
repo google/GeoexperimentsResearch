@@ -227,7 +227,6 @@ test_that("Pr(effect > lower bound of one-sided x% CI) = x.", {
   x <- DoTBRAnalysisTbr1(obj.tbr)
   # Pr(beta2 > lower bound of one-sided x% CI) = x.
   # Pr(beta2 > upper bound of one-sided x% CI) = 1 - x.
-  browser()
   for (one.sided.level in c(0.975, 0.95, 0.9, 0.8)) {
     two.sided.level <- (1 - 2 * (1 - one.sided.level))
     summ <- summary(x, level=two.sided.level, interval.type="two-sided")
