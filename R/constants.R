@@ -51,7 +51,11 @@ kStratum <- "stratum"
 kSpendChange <- ".spend"
 # SetIncrementalResponse<-
 kResponse <- ".response"
-
+# DoGBRROASAnalysis, EstimateIncremental.
+kGbr1MinObs <- 4L
+kIncrCost <- "incr.cost"
+kWeight <- "weight"
+# Group ID indicating a geo to be omitted.
 kExcludeGeoGroup <- 0L
 
 # IDs for various models.

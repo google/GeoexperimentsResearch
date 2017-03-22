@@ -1,3 +1,0 @@
-There are two modes of operation: either do a randomized geo assignment at each
-iteration, or use a fixed geo assignment.  In practice, we need
-

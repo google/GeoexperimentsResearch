@@ -29,4 +29,4 @@ in the source package).
     [Measuring Ad Effectiveness Using Geo Experiments](http://static.googleusercontent.com/media/research.google.com/en//pubs/archive/38355.pdf) 2011.
 
 [2] Kerman, J., Wang, P. and Vaver, J.
-    Measuring Ad Effectiveness Using Geo Experiments in a Time-Based Regression Framework. 2017.
+    Estimating Ad Effectiveness Using Geo Experiments in a Time-Based Regression Framework. 2017.

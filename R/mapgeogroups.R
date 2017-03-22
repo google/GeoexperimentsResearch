@@ -85,8 +85,12 @@
 
   geo.group.column <- obj[[kGeoGroup]]
   all.old.group.ids <- sort(na.omit(unique(geo.group.column)))
-  n.old.groups <- max(all.old.group.ids)
-  if (length(all.old.group.ids) == 0 || n.old.groups == 0) {
+  if (length(all.old.group.ids) == 0) {
+    n.old.groups <- 0L
+  } else {
+    n.old.groups <- max(all.old.group.ids)
+  }
+  if (n.old.groups == 0) {
     assert_that(length(group.map) == 0,
                 msg=Message("Nothing to map: no geo group numbers in the data"))
     return(obj)

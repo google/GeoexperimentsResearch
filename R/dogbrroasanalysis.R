@@ -50,12 +50,36 @@ DoGBRROASAnalysis.GBRROASAnalysisData <- function(obj, ...) {
 
   # Find ad spend differential for each geo.
   incremental.cost <- EstimateIncremental(obj, variable="cost")
-  # Augment the original object with these two columns.
-  obj[["incr.cost"]] <- incremental.cost
-  obj[["lmweights"]] <- ComputeLinearModelWeights(obj[["resp.pre"]])
+  # Augment the original object with columns kIncrCost & kWeight.
+  obj[[kIncrCost]] <- incremental.cost
+  #
+  lmweights <- ComputeLinearModelWeights(obj[[kRespPre]])
+  power <- attr(lmweights, "power")
+  missing.weights <- structure(is.na(lmweights), names=obj[[kGeo]])
+  if (any(missing.weights)) {
+    warning(FormatText(missing.weights,
+                       "$N geo{|s} ($x) ha{s|ve} zero pretest response"))
+  }
+  obj[[kWeight]] <- lmweights
+  data <- obj[!missing.weights, , drop=FALSE]
+  n.data.points <- nrow(data)
+  # Cannot fit if there are fewer than kGbr1MinObs geos available with weights.
+  assert_that(n.data.points >= kGbr1MinObs,
+              msg=Message(FormatText(n.data.points,
+                  "Cannot fit GBR model:",
+                  " {no|only one|only $N} data point{|s} available")))
+  # Cannot fit if there are no test or control geos available.
+  assert_that(sum(data[["control"]]) > 0,
+              msg=Message(FormatText(n.data.points,
+                  "Cannot fit GBR model: no control geos to fit")))
+  assert_that(sum(!data[["control"]]) > 0,
+              msg=Message(FormatText(n.data.points,
+                  "Cannot fit GBR model: no treatment geos to fit")))
   # Fit the iROAS model.
-  lmfit <- lm(resp.test ~ resp.pre + incr.cost, data=obj,
-              weights=obj[["lmweights"]])
+  model <- as.formula(sprintf("%s ~ %s + %s", kRespTest, kRespPre, kIncrCost))
+  lmfit <- lm(model, data=data, weights=data[[kWeight]])
+  assert_that(!anyNA(coef(lmfit)),
+              msg=Message("GBR model fit failed: NA in coefficient"))
 
   .PosteriorBeta2Tail <- function(x) {
     # Calculates the posterior of Pr(beta2 > x | data) with the uniform prior
@@ -88,8 +112,9 @@ DoGBRROASAnalysis.GBRROASAnalysisData <- function(obj, ...) {
     return(prob)
   }
   obj.result <- list(lmfit=lmfit,
-                     data=obj,
+                     data=data,
                      iroas.post=.PosteriorBeta2Tail,
+                     power=power,
                      model=kGBRModel1)
   class(obj.result) <- c(kClassName, class(obj.result))
   return(obj.result)

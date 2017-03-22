@@ -15,7 +15,7 @@ Suggests:
     testthat (>= 0.10.0),
     knitr (>= 1.12.3)
 VignetteBuilder: knitr
-Date: 2017-03-06
+Date: 2017-03-22
 Version: 1.0.0
 License: Apache License 2.0 | file LICENSE
 Copyright: Copyright (C) 2017 Google, Inc.

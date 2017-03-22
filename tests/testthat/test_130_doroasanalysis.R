@@ -15,7 +15,7 @@
 context("DoROASAnalysis")
 
 first.date <- as.Date("2016-09-26")
-geo.names <- c("01", "02", "03", "04")
+geo.names <- c("01", "02", "03", "04", "05")
 df.gts <- expand.grid(date=first.date + seq(from=0, to=7 * 7 - 1),
                       geo=geo.names)
 df.gts[["sales"]] <- runif(nrow(df.gts), min=0,
@@ -23,7 +23,7 @@ df.gts[["sales"]] <- runif(nrow(df.gts), min=0,
 obj.gts <- GeoTimeseries(df.gts, metrics="sales")
 obj.per <- ExperimentPeriods(first.date + c(0L, 3 * 7, 5 * 7, 6 * 7 - 1),
                              period.names=c("Pretest", "Test", "Cooldown"))
-obj.ga <- GeoAssignment(data.frame(geo=geo.names, geo.group=c(1, 2, 1, 2)))
+obj.ga <- GeoAssignment(data.frame(geo=geo.names, geo.group=c(1, 2, 1, 2, 1)))
 obj.ged <- GeoExperimentData(obj.gts, period=obj.per, geo.assignment=obj.ga,
                              treat.assignment=DefaultTreatmentAssignment())
 SetSpendChange(obj.ged, prop.to="sales") <- 1
