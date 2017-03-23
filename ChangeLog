@@ -1,2 +1,6 @@
-2017-04-01: geoexperiments-opensource@google.com
+2017-03-22: Google <geoexperiments-opensource@google.com>
+	* Version 1.0.1
+	* Update GBR weighting scheme.
+2017-03-06: Google <geoexperiments-opensource@google.com>
 	* Version 1.0.0
+	* Initial commit.

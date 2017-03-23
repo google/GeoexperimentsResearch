@@ -1,5 +1,5 @@
 ---
-title: "Geo Experiments Research"
+title: "GeoexperimentsResearch version 1.0"
 date: "`r Sys.Date()`"
 author: "Google, Inc."
 output:
