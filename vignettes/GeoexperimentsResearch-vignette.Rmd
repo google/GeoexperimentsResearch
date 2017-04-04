@@ -116,8 +116,9 @@ By convention, we number the periods as 0 (Pretest), 1 (Intervention), 2
 (Cooldown), but other numbering is allowed provided that the order of the
 periods is unchanged.
 
-This information is represented by the *ExperimentPeriods* object class.
-
+This information is represented by the *ExperimentPeriods* object class.  The
+start dates of each period must be specified, and finally end date of the
+experiment.  This example has only a pretest period and one intervention period:
 ```{r message=TRUE, echo=FALSE}
   print(ExperimentPeriods(c("2015-01-05", "2015-02-16", "2015-03-15")))
 ```
@@ -225,8 +226,9 @@ To plot the time series, use the plot method:
  plot(obj.gts)
 ```
 
-For more information of the method, type `?plot.GeoTimeseries`
-at the R prompt.
+To hide the legend, add `legend=FALSE`. To plot the time series on log scale,
+add `log.scale=TRUE`.  For more information of the method, type
+`?plot.GeoTimeseries` at the R prompt.
 
 ## Experiment Periods
 
@@ -239,6 +241,10 @@ total).
 obj.per <- ExperimentPeriods(c("2015-01-05", "2015-02-16", "2015-03-15"))
 obj.per
 ```
+To introduce a cooldown period, we would specify one more date.
+
+To learn more about the function, type `?ExperimentPeriods` at the R prompt.
+
 
 ## Geo Assignment
 
@@ -306,6 +312,10 @@ represents the cost, along with the experiment periods and group numbers.
                               treatment.group=2)
   result
 ```
+
+Note that in this particular case, there is no `cooldown.period`, hence it is
+set to `NULL`.  If there was one, we would specify the period number (for
+example, `cooldown.period=2`).
 
 The resulting object (a *GBRROASAnalysisFit* object) contains the model fit:
 when printed, it shows its summary, which defaults to 90 percent credible
@@ -413,15 +423,24 @@ bound and the point estimate). We refer to this confidence interval half-width
 by _precision_ (which gets better as the confidence interval gets shorter).
 
 The function *DoROASPreanalysis* predicts the precision of the iROAS estimate
-based on historical data provided. It simulates experiments with given period
-lengths and records the precision from each simulated experiment. We can then
-use the *summary* method to compute the precision given an ad spend change, or
-find the ad spend change associated with a given precision.
+based on historical data provided. It simulates experiments (by resampling) with
+given period lengths and records the precision from each simulated
+experiment. We can then use the *summary* method to compute the precision given
+an ad spend change, or find the ad spend change associated with a given
+precision.
+
+For each simulated geo experiment data set, ROAS and its precision is estimated.
+The process yields a distribution of the these estimates of precision.  The
+summary method takes the empirical median as the point estimate.  If the data
+set does not have strong seasonalities, the variation of this estimate should be
+fairly small.
 
 The process runs as follows:
 
 1. Assign geos to treatment groups.
 1. Run preanalysis to predict the precision.
+
+ 
 
 ## A randomized geo assignment
 
@@ -501,8 +520,7 @@ assignment, the results are likely to be different.
     [Measuring Ad Effectiveness Using Geo Experiments](http://static.googleusercontent.com/media/research.google.com/en//pubs/archive/38355.pdf)
 
 [3] Kerman, J. and Wang, P., and Vaver, J. (2017)
-    Estimating Ad Effectiveness using Geo Experiments in a
-    Time-Based Regression Framework.
+    [Estimating Ad Effectiveness using Geo Experiments in a Time-Based Regression Framework](https://research.google.com/pubs/pub45950.html)
 
 # Disclaimer
 This software is not an official Google product. For research purposes only. Copyright 2017 Google, Inc.

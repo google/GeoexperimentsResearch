@@ -15,8 +15,8 @@ Suggests:
     testthat (>= 0.10.0),
     knitr (>= 1.12.3)
 VignetteBuilder: knitr
-Date: 2017-03-23
-Version: 1.0.1
+Date: 2017-04-04
+Version: 1.0.2
 License: Apache License 2.0 | file LICENSE
 Copyright: Copyright (C) 2017 Google, Inc.
 RoxygenNote: 5.0.1

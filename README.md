@@ -1,4 +1,4 @@
-# R package GeoexperimentsResearch version 1.0.1
+# R package GeoexperimentsResearch version 1.0.2
 
 Copyright (C) 2017 Google, Inc.
 License: Apache 2.0
@@ -25,8 +25,9 @@ in the source package).
 
 ## References
 
-[1] Vaver, J. and Koehler, J.
-    [Measuring Ad Effectiveness Using Geo Experiments](http://static.googleusercontent.com/media/research.google.com/en//pubs/archive/38355.pdf) 2011.
+[1] Vaver, J. and Koehler, J. (2011)
+    [Measuring Ad Effectiveness Using Geo Experiments](http://static.googleusercontent.com/media/research.google.com/en//pubs/archive/38355.pdf).
 
-[2] Kerman, J., Wang, P. and Vaver, J.
-    Estimating Ad Effectiveness Using Geo Experiments in a Time-Based Regression Framework. 2017.
+[2] Kerman, J., Wang, P. and Vaver, J. (2017)
+    [Estimating Ad Effectiveness Using Geo Experiments in a Time-Based Regression Framework](https://research.google.com/pubs/pub45950.html).
+
