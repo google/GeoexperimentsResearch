@@ -12,58 +12,40 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+#' Associates the object with a \code{GeoAssignment} object.
+#'
+#' @param obj the object to change.
+#' @param ... further arguments passed to methods.
+#' @param value a \code{GeoAssignment} object.
+#'
+#' @return The object (that has been modified in place).
+#'
+#' @rdname SetGeoAssignment
 "SetGeoAssignment<-" <- function(obj, ..., value) {
-  # Associates the object with a GeoAssignment object.
-  #
-  # Args:
-  #   obj: the object to change.
-  #   ...: further arguments passed to methods.
-  #   value: a GeoAssignment object.
-  #
-  # Returns:
-  #   The object (that has been modified in place).
-  #
-  # Documentation:
-  #   seealso: SetGeoAssignment.GeoExperimentData.
-
   UseMethod("SetGeoAssignment<-")
 }
 
+#' Associates the object with a GeoAssignment object, mapping geos into geo
+#' group numbers.
+#'
+#' @param strict (flag) insist that all geos in the data are mapped? Also, warn
+#'   if some geos are not found in the data?
+#'
+#' @details If \code{value} is \code{NULL}, the geo assignment and the treatment
+#' assignment are removed, and their corresponding columns in the data frame
+#' are reset to 'NA'. An error is thrown if any geo in data cannot be mapped to
+#' a group (due to the \code{GeoAssignment} object not having such a mapping).
+#' Setting 'strict' to \code{FALSE} will avert this. An error is thrown if some
+#' of the geos in the mapping were not present in the data. Setting 'strict' to
+#' \code{FALSE} will avert this.
+#'
+#' \code{geo.assignment} slot is assigned with the new value and the columns
+#' \code{geo.group} and \code{assignment} are changed to reflect the new geo
+#' assignment.
+#
+#' @rdname SetGeoAssignment
 "SetGeoAssignment<-.GeoExperimentData" <- function(obj, strict=TRUE, ...,
                                                    value) {
-  # Associates the object with a GeoAssignment object, mapping geos
-  # into geo group numbers.
-  #
-  # Args:
-  #   obj: the GeoExperimentData object to change.
-  #   strict: (flag) insist that all geos in the data are mapped?
-  #     Also, warn if some geos are not found in the data?
-  #   ...: ignored.
-  #   value: a GeoAssignment object to associate with the
-  #     GeoExperimentData object.
-  #
-  # Returns:
-  #   The same object that has been modified in place; the
-  #   'geo.assignment' slot is assigned with the new value and the
-  #   columns 'geo.group' and 'assignment' are changed to reflect the
-  #   new geo assignment.
-  #
-  # Notes:
-  #   If 'value' is 'NULL', the geo assignment and the treatment
-  #   assignment are removed, and their corresponding columns in the
-  #   data frame are reset to 'NA'.
-  #
-  #   An error is thrown if any geo in data cannot be mapped to a
-  #   group (due to the GeoAssignment object not having such a
-  #   mapping). Setting 'strict' to FALSE will avert this.
-  #
-  #   An error is thrown if some of the geos in the mapping were
-  #   not present in the data. Setting 'strict' to FALSE will avert
-  #   this.
-  #
-  # Documentation:
-  #   seealso: SetGeoAssignment<- (generic).
-
   kClassName <- "SetGeoAssignment<-.GeoExperimentData"
   SetMessageContextString(kClassName)
   on.exit(SetMessageContextString())

@@ -12,34 +12,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Functions to perform and summarize TBR ROAS analyses.
-# - DoTBRROASAnalysis (generic method)
-# - DoTBRROASAnalysis.GeoExperimentData
-# - print.TBRROASAnalysisFit
-# - summary.TBRROASAnalysisFit
-
+#' Performs a TBR ROAS Analysis.
+#'
+#' @param obj an object.
+#' @param model (string) id of the TBR to use.
+#' @param response (string) name of the column of the response variable.
+#' @param cost (string) name of the column of the cost variable, or
+#'   alternatively a real number specifying the exact incremental cost
+#'   (spend change).
+#' @param n.sims (integer) number of simulations to draw.
+#' @param ... arguments passed to function 'DoTBRAnalysis'.
+#' @return A TBRROASAnalysisFit object.
+#'
+#' @seealso DoTBRAnalysis, DoGBRROASAnalysis
+#' @rdname DoTBRROASAnalysis
 DoTBRROASAnalysis <- function(obj, model, response, cost, n.sims=1e5, ...) {
-  # Performs a TBR ROAS Analysis.
-  #
-  # Args:
-  #   obj: an object.
-  #   model: (string) id of the TBR to use.
-  #   response: (string) name of the column of the response variable.
-  #   cost: (string) name of the column of the cost variable, or
-  #     alternatively a real number specifying the exact incremental cost
-  #     (spend change).
-  #   n.sims: (integer) number of simulations to draw.
-  #   ...: arguments passed to function 'DoTBRAnalysis'.
-  #
-  # Returns:
-  #   A TBRROASAnalysisFit object.
-  #
-  # Notes:
-  #   A generic S3 method.
-  #
-  # Documentation:
-  #   seealso: DoTBRROASAnalysis.GeoExperimentData.
-
   assert_that(is.nonempty.string(model))
   assert_that(is.nonempty.string(response))
   assert_that(is.nonempty.string(cost) || is.real.number(cost))
@@ -49,28 +36,9 @@ DoTBRROASAnalysis <- function(obj, model, response, cost, n.sims=1e5, ...) {
   UseMethod("DoTBRROASAnalysis")
 }
 
+#' @rdname DoTBRROASAnalysis
 DoTBRROASAnalysis.GeoExperimentData <- function(obj, model, response, cost,
                                                 n.sims=1e5, ...) {
-  # Performs a TBR ROAS Analysis.
-  #
-  # Args:
-  #   obj: a GeoExperimentData object.
-  #   model: (string) id of the TBR to use.
-  #   response: (string) name of the column of the response variable.
-  #   cost: (string) name of the column of the cost variable, or
-  #     alternatively a real number specifying the exact total incremental cost
-  #     (spend change).
-  #   n.sims: (integer) number of simulations to draw. If cost is constant and
-  #     n.sims == 1, only the point estimates will be calculated. If cost is
-  #     not constant and n.sims == 1, an error is thrown.
-  #   ...: arguments passed to function 'DoTBRAnalysis'.
-  #
-  # Returns:
-  #   A TBRROASAnalysisFit object.
-  #
-  # Documentation:
-  #   seealso: DoTBRROASAnalysis.GeoExperimentData.
-
   SetMessageContextString("DoTBRROASAnalysis")
   on.exit(SetMessageContextString())
 
@@ -126,20 +94,28 @@ DoTBRROASAnalysis.GeoExperimentData <- function(obj, model, response, cost,
   return(obj.result)
 }
 
-print.TBRROASAnalysisFit <- function(x, ...) {
-  # Shows a summary of TBR analysis results.
-  #
-  # Args:
-  #   x: a TBRROASAnalysisFit object.
-  #   ...: ignored.
-  #
-  # Returns:
-  #   The object itself, invisibly. As a side effect, prints the
-  #   default summary of 'x' on the console.
+#' Shows a summary of TBR analysis results.
+#'
+#' @param x a TBRROASAnalysisFit object.
+#' @param ... ignored.
+#' @return The object itself, invisibly. As a side effect, prints the default
+#'   summary of 'x' on the console.
 
+print.TBRROASAnalysisFit <- function(x, ...) {
   print(summary(x, ...))
   return(invisible(x))
 }
+
+#' Returns a concise summary of the incremental response estimate and its
+#' confidence interval for a TBR ROAS analysis.
+#'
+#' @param object a TBRROASAnalysisFit object.
+#' @param level (number between 0 and 1) confidence level.
+#' @param interval.type (string) 'one-sided', 'two-sided' (interval).
+#' @param threshold (numeric vector) threshold(s) for the right-tail posterior
+#'   probabilities of the total cumulative iROAS.
+#' @param ... ignored.
+#' @return A ROASAnalysisResults object.
 
 summary.TBRROASAnalysisFit <- function(object,
                                        level=0.90,
@@ -147,20 +123,6 @@ summary.TBRROASAnalysisFit <- function(object,
                                            "two-sided"),
                                        threshold=0,
                                        ...) {
-  # Returns a concise summary of the incremental response estimate and
-  # its confidence interval for a TBR ROAS analysis.
-  #
-  # Args:
-  #   object: a TBRROASAnalysisFit object.
-  #   level: (number between 0 and 1) confidence level.
-  #   interval.type: (string) 'one-sided', 'two-sided' (interval).
-  #   threshold: (numeric vector) threshold(s) for the right-tail posterior
-  #     probabilities of the total cumulative iROAS.
-  #   ...: ignored.
-  #
-  # Returns:
-  #   A ROASAnalysisResults object.
-
   kClassName <- "TBRAnalysisResults"
   SetMessageContextString("summary.TBRAnalysisFitTbr1")
   on.exit(SetMessageContextString())

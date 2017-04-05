@@ -12,23 +12,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+#' Creates a graph of the TBRPlotData object.
+#'
+#' @param x a TBRPlotData object.
+#' @param y ignored.
+#' @param highlight.weeks (flag), alternate background shading to highlight
+#'   weeks?
+#' @param date.format (string) date format.
+#' @param ... ignored.
+#'
+#' @return A ggplot2 object.
+#'
+#' @method plot TBRPlotData
+
 plot.TBRPlotData <- function(x, y, highlight.weeks=TRUE, date.format="%Y-%m-%d",
                              ...) {
-  # Creates a graph of the TBRPlotData object.
-  #
-  # Args:
-  #   x: a TBRPlotData object.
-  #   y: ignored.
-  #   highlight.weeks: (flag), alternate background shading to highlight weeks?
-  #   date.format: (string) date format.
-  #   ...: ignored.
-  #
-  # Returns:
-  #   A ggplot2 object.
-  #
-  # Documentation:
-  #   method plot TBRPlotData
-
   SetMessageContextString("plot.TBRPlotData")
   on.exit(SetMessageContextString())
 
@@ -128,22 +126,22 @@ plot.TBRPlotData <- function(x, y, highlight.weeks=TRUE, date.format="%Y-%m-%d",
   return(gg)
 }
 
-.GetWeeklyShadedBackgroundDataFrameForGgplot <- function(plot.data) {
-  # [internal] Create a data.frame to plot a weekly shaded background to
-  # highlight weekly patterns.
-  #
-  # Args:
-  #   plot.data: the output of .GetTBRDataFrameForGgplot.
-  #
-  # Returns:
-  #   A data.frame with the columns:
-  #   \itemize{
-  #      \item\code{xmin}.
-  #      \item\code{panel.label}.
-  #      \item\code{ymin}.
-  #      \item\code{ymax}.
-  #      \item\code{xmax}.}
+#' [internal] Create a data.frame to plot a weekly shaded background to
+#' highlight weekly patterns.
+#'
+#' @param plot.data the output of .GetTBRDataFrameForGgplot.
+#' @return A data.frame with the columns:
+#'   \itemize{
+#'     \item\code{xmin}.
+#'     \item\code{panel.label}.
+#'     \item\code{ymin}.
+#'     \item\code{ymax}.
+#'     \item\code{xmax}.
+#' }
+#'
+#' @rdname GetWeeklyShadedBackgroundDataFrameForGgplot
 
+.GetWeeklyShadedBackgroundDataFrameForGgplot <- function(plot.data) {
   first.day <- min(plot.data[[kDate]])
   if (.GetWeekdays(first.day) == 1) {
     first.monday <- first.day - 0.5
@@ -164,33 +162,30 @@ plot.TBRPlotData <- function(x, y, highlight.weeks=TRUE, date.format="%Y-%m-%d",
 }
 
 
+#' Creates a graph of the TBR analysis fit.
+#'
+#' @param x a TBRAnalysisFitTbr1 object.
+#' @param y ignored.
+#' @param quantiles (real vector of length 2) lower and upper quantiles of the
+#'   credible interval to show.
+#' @param panels (vector of strings) names of the panels to be plotted.
+#' @param periods (vector of strings) names of the periods to show.
+#' @param highlight.weeks (flag), alternate background shading to highlight
+#'   weeks?
+#' @param date.format (string) date format.
+#' @param ... further arguments passed to methods 'as.TBRPlotData' and
+#'   'plot.TBRPlotData'.
+#'
+#' @return A ggplot2 object.
+#'
+#' @method plot TBRAnalysisFitTbr1
+
 plot.TBRAnalysisFitTbr1 <- function(x, y,
                                     panels=GetTBRPlotPanelNames(),
                                     periods=c("pretest", "prediction"),
                                     quantiles=c(0.1, 0.9),
                                     highlight.weeks=TRUE,
                                     date.format="%Y-%m-%d", ...) {
-
-  # Creates a graph of the TBR analysis fit.
-  #
-  # Args:
-  #   x: a TBRAnalysisFitTbr1 object.
-  #   y: ignored.
-  #   quantiles: (real vector of length 2) lower and upper quantiles of the
-  #     credible interval to show.
-  #   panels: (vector of strings) names of the panels to be plotted.
-  #   periods: (vector of strings) names of the periods to show.
-  #   highlight.weeks: (flag), alternate background shading to highlight weeks?
-  #   date.format: (string) date format.
-  #   ...: further arguments passed to methods 'as.TBRPlotData' and
-  #     'plot.TBRPlotData'.
-  #
-  # Returns:
-  #   A ggplot2 object.
-  #
-  # Documentation:
-  #   method plot TBRAnalysisFitTbr1
-
   SetMessageContextString("plot.TBRPlotData")
   on.exit(SetMessageContextString())
 
@@ -201,32 +196,30 @@ plot.TBRAnalysisFitTbr1 <- function(x, y,
   return(gg)
 }
 
+#' Creates a graph of the TBR ROAS analysis fit.
+#'
+#' @param x a TBRROASAnalysisFit object.
+#' @param y ignored.
+#' @param panels (vector of strings) names of the panels to be plotted.
+#' @param periods (vector of strings) names of the periods to show.
+#' @param quantiles (real vector of length 2) lower and upper quantiles of the
+#'   credible interval to show.
+#' @param highlight.weeks (flag), alternate background shading to highlight
+#'   weeks?
+#' @param date.format (string) date format.
+#' @param ... further arguments passed to methods \code{\link{as.TBRPlotData}} and
+#'   \code{\link{plot.TBRPlotData}}.
+#'
+#' @return A ggplot2 object.
+#'
+#' @method plot TBRROASAnalysisFit
+
 plot.TBRROASAnalysisFit <- function(x, y,
                                     panels="cumulative",
                                     periods="prediction",
                                     quantiles=c(0.1, 0.9),
                                     highlight.weeks=TRUE,
                                     date.format="%Y-%m-%d", ...) {
-  # Creates a graph of the TBR ROAS analysis fit.
-  #
-  # Args:
-  #   x: a TBRROASAnalysisFit object.
-  #   y: ignored.
-  #   panels: (vector of strings) names of the panels to be plotted.
-  #   periods: (vector of strings) names of the periods to show.
-  #   quantiles: (real vector of length 2) lower and upper quantiles of the
-  #     credible interval to show.
-  #   highlight.weeks: (flag), alternate background shading to highlight weeks?
-  #   date.format: (string) date format.
-  #   ...: further arguments passed to methods 'as.TBRPlotData' and
-  #     'plot.TBRPlotData'.
-  #
-  # Returns:
-  #   A ggplot2 object.
-  #
-  # Documentation:
-  #   method plot TBRROASAnalysisFit
-
   SetMessageContextString("plot.TBRPlotData")
   on.exit(SetMessageContextString())
 

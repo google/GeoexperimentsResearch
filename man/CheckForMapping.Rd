@@ -4,7 +4,7 @@
 % Please edit documentation in R/utils_assert.R
 \name{CheckForMapping}
 \alias{CheckForMapping}
-\title{Tests whether the mapping is consistent within a data frame.}
+\title{Checks whether the mapping is consistent within a data frame.}
 \usage{
 CheckForMapping(x, from, to)
 }
@@ -21,7 +21,7 @@ If all tests pass, returns TRUE invisibly. Otherwise, an
   'assertError' is thrown.
 }
 \description{
-Tests whether the mapping is consistent within a data frame.
+Checks whether the mapping is consistent within a data frame.
 }
 \note{
 Checks that no rows in 'x[from]' map to two different values of

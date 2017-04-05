@@ -12,32 +12,27 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+#' Extract a Geos object from an object.
+#'
+#' @param obj an object.
+#' @param ... other arguments passed to the methods.
+#'
+#' @return A 'Geos' object.
+#'
+#' @rdname ExtractGeos
 ExtractGeos <- function(obj, ...) {
-  # Extract a Geos object from an object.
-  #
-  # Args:
-  #   obj: an object.
-  #   ...: other arguments passed to the methods.
-  #
-  # Returns:
-  #   A 'Geos' object.
-
   UseMethod("ExtractGeos")
 }
 
+#' @param volume (string) name of a metric in the GeoTimeseries over which to
+#'   generate the 'volume' column. If omitted, the first metric is used.
+#'   The volumes have to be non-negative.
+#'
+#' @return A Geos object, with the average weekly volume of all metrics in
+#'   'obj'.
+#'
+#' @rdname ExtractGeos
 ExtractGeos.GeoTimeseries <- function(obj, volume=NULL, ...) {
-  # Extract a Geos object from a GeoTimeseries.
-  #
-  # Args:
-  #   obj: a GeoTimeseries object.
-  #   volume: (string) name of a metric in the GeoTimeseries over which to
-  #     generate the 'volume' column. If omitted, the first metric is used.
-  #     The volumes have to be non-negative.
-  #   ...: ignored.
-  #
-  # Returns:
-  #   A Geos object, with the average weekly volume of all metrics in 'obj'.
-
   SetMessageContextString("ExtractGeos.GeoTimeseries")
   on.exit(SetMessageContextString())
 

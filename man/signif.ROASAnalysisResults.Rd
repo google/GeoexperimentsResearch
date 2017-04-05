@@ -9,12 +9,13 @@
 \method{signif}{ROASAnalysisResults}(x, digits = 1)
 }
 \arguments{
-\item{x}{a ROASAnalysisResults object.}
+\item{x}{a \code{ROASAnalysisResults} object.}
 
 \item{digits}{number of significant digits to round to.}
 }
 \value{
-A ROASAnalysisResults object, with estimates appropriately rounded.
+A \code{ROASAnalysisResults} object, with estimates appropriately
+rounded.
 }
 \description{
 Rounds the estimates to a given number of significant digits.

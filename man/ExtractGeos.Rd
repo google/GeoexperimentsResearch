@@ -4,17 +4,27 @@
 % Please edit documentation in R/extractgeos.R
 \name{ExtractGeos}
 \alias{ExtractGeos}
+\alias{ExtractGeos.GeoTimeseries}
 \title{Extract a Geos object from an object.}
 \usage{
 ExtractGeos(obj, ...)
+
+\method{ExtractGeos}{GeoTimeseries}(obj, volume = NULL, ...)
 }
 \arguments{
 \item{obj}{an object.}
 
 \item{...}{other arguments passed to the methods.}
+
+\item{volume}{(string) name of a metric in the GeoTimeseries over which to
+generate the 'volume' column. If omitted, the first metric is used.
+The volumes have to be non-negative.}
 }
 \value{
 A 'Geos' object.
+
+A Geos object, with the average weekly volume of all metrics in
+  'obj'.
 }
 \description{
 Extract a Geos object from an object.

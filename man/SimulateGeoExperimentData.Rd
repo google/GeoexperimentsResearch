@@ -4,19 +4,33 @@
 % Please edit documentation in R/simulategeoxdataset.R
 \name{SimulateGeoExperimentData}
 \alias{SimulateGeoExperimentData}
+\alias{SimulateGeoExperimentData.GeoExperimentPreanalysisData}
 \title{Returns a geo experiment data set.}
 \usage{
 SimulateGeoExperimentData(obj, ...)
+
+\method{SimulateGeoExperimentData}{GeoExperimentPreanalysisData}(obj,
+  i = NA_integer_, ...)
 }
 \arguments{
-\item{obj}{a GeoExperimentPreanalysisData object.}
+\item{obj}{an object.}
 
-\item{...}{arguments passed on to the methods.}
+\item{...}{further arguments passed to or from other methods.}
+
+\item{i}{(positive integer or NA) number of the pseudo data set; if NA, the
+number will be drawn from a uniform discrete distribution.}
 }
 \value{
-A GeoExperimentData object.
+A GeoExperimentData object with the experiment periods, geo
+assignment, and the treatment assignment set.
 }
 \description{
 Returns a geo experiment data set.
+
+Returns a set number i from the GeoExperimentPreanalysisData object.
+}
+\note{
+If the embedded 'geos' object is GeoStrata, a randomization is done
+and the geo assignment applied.
 }
 

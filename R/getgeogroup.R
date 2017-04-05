@@ -12,39 +12,24 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+#' Returns the geo-to-geo group mapping.
+#'
+#' @param obj an object with the columns 'geo' and 'geo.group'.
+#' @param geo (character vector or NULL) names of geos for which to obtain the
+#'   geo group ids.
+#' @param ... other arguments passed on to the methods.
+#' @return A named integer-valued vector, with the geo names in the names
+#'   attribute, mapping geos to geo group ids.
+#' @rdname getgeogroup
 GetGeoGroup <- function(obj, geo=NULL, ...) {
-  # Returns the geo-to-geo group mapping.
-  #
-  # Args:
-  #   obj: an object with the columns 'geo' and 'geo.group'.
-  #   geo: (character vector or NULL) names of geos for which to obtain the geo
-  #     group ids.
-  #   ...: other arguments passed on to the methods.
-  #
-  # Returns:
-  #   A named integer-valued vector, with the geo names in the names attribute,
-  #   mapping geos to geo group ids.
-
   UseMethod("GetGeoGroup")
 }
 
+#' @note
+#' If a specified 'geo' does not exist in the GeoAssignment object, the
+#' corresponding geo group will be an NA.
+#' @rdname getgeogroup
 GetGeoGroup.GeoAssignment <- function(obj, geo=NULL, ...) {
-  # Returns the geo group of a geo in a GeoStrata object.
-  #
-  # Args:
-  #   obj: a GeoAssignment object.
-  #   geo: (character vector or NULL) names of geos for which to obtain the geo
-  #     group ids.
-  #   ...: ignored.
-  #
-  # Returns:
-  #   A named integer-valued vector, with the geo names in the names attribute,
-  #   mapping geos to geo group ids.
-  #
-  # Notes:
-  #   If a specified 'geo' does not exist in the GeoAssignment object, the
-  #   corresponding geo group will be an NA.
-
   SetMessageContextString("GetGeoGroup.GeoAssignment")
   on.exit(SetMessageContextString())
 
@@ -58,19 +43,8 @@ GetGeoGroup.GeoAssignment <- function(obj, geo=NULL, ...) {
   return(map[geo])
 }
 
+#' @rdname getgeogroup
 GetGeoGroup.GeoExperimentData <- function(obj, geo=NULL, ...) {
-  # Returns the geo group of a geo in a GeoExperimentData object.
-  #
-  # Args:
-  #   obj: a GeoExperiment object.
-  #   geo: (character vector or NULL) names of geos for which to obtain the geo
-  #     group ids.
-  #   ...: ignored.
-  #
-  # Returns:
-  #   A named integer-valued vector, with the geo names in the names attribute,
-  #   mapping geos to geo group ids.
-
   SetMessageContextString("GetGeoGroup.GeoExperimentData")
   on.exit(SetMessageContextString())
 
@@ -81,19 +55,8 @@ GetGeoGroup.GeoExperimentData <- function(obj, geo=NULL, ...) {
   return(map)
 }
 
+#' @rdname getgeogroup
 GetGeoGroup.GeoStrata <- function(obj, geo=NULL, ...) {
-  # Returns the geo group of a geo in a GeoStrata object.
-  #
-  # Args:
-  #   obj: a GeoStrata object.
-  #   geo: (character vector or NULL) names of geos for which to obtain the geo
-  #     group ids.
-  #   ...: ignored.
-  #
-  # Returns:
-  #   A named integer-valued vector, with the geo names in the names attribute,
-  #   mapping geos to geo group ids.
-
   SetMessageContextString("GetGeoGroup.GeoStrata")
   on.exit(SetMessageContextString())
 

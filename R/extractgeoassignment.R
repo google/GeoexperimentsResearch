@@ -12,44 +12,31 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-ExtractGeoAssignment <- function(obj, ...) {
-  # Extracts a GeoAssignment object.
-  #
-  # Args:
-  #   obj: an object.
-  #   ...: further arguments passed on to methods.
-  #
-  # Returns:
-  #   A GeoAssignment object.
-  #
-  # Notes:
-  #   A generic S3 method.
-  #
-  # Documentation:
-  #   seealso: ExtractGeoAssignment.GeoTimeseries.
+#' Extracts a GeoAssignment object.
+#'
+#' @param obj an object.
+#' @param ... further arguments passed on to methods.
+#' @return A GeoAssignment object. Or \code{NULL} if not available.
+#'
+#' @rdname ExtractGeoAssignment
 
+ExtractGeoAssignment <- function(obj, ...) {
   UseMethod("ExtractGeoAssignment")
 }
 
+#' Attempts to extract a GeoAssignment object from a GeoTimeseries.
+#'
+#' @param strict (flag) if FALSE, the function returns NULL if the column
+#'   'geo.group' does not exist. Otherwise, throws an error.
+#'
+#' @return A GeoAssignment object.
+#'
+#' @note
+#' Finds all unique pairs of ('geo', 'geo.group') in the GeoTimeseries.
+#' 'geo.group' can have missing values.
+#'
+#' @rdname ExtractGeoAssignment
 ExtractGeoAssignment.GeoTimeseries <- function(obj, strict=TRUE, ...) {
-  # Attempts to extract a GeoAssignment object from a GeoTimeseries.
-  #
-  # Args:
-  #   obj: a GeoTimeseries object with the column 'geo.group'.
-  #   strict: (flag) if FALSE, the function returns NULL if the column
-  #     'geo.group' does not exist. Otherwise, throws an error.
-  #   ...: ignored.
-  #
-  # Returns:
-  #   A GeoAssignment object.
-  #
-  # Notes:
-  #   Finds all unique pairs of ('geo', 'geo.group') in the GeoTimeseries.
-  #   'geo.group' can have missing values.
-  #
-  # Documentation:
-  #   seealso: ExtractGeoAssignment (generic).
-
   SetMessageContextString("ExtractGeoAssignment.GeoTimeseries")
   on.exit(SetMessageContextString())
 
@@ -69,20 +56,8 @@ ExtractGeoAssignment.GeoTimeseries <- function(obj, strict=TRUE, ...) {
   return(obj.ga)
 }
 
+#' @rdname ExtractGeoAssignment
 ExtractGeoAssignment.GeoExperimentData <- function(obj, ...) {
-  # Extracts the associated GeoAssignment object.
-  #
-  # Args:
-  #   obj: a GeoExperimentData object.
-  #   ...: ignored.
-  #
-  # Returns:
-  #   The GeoAssignment object associated with the GeoExperimentData object, if
-  #   it exists; if it has not been set, returns NULL.
-  #
-  # Documentation:
-  #   seealso: ExtractGeoAssignment.GeoTimeseries.
-
   geo.assignment <- GetInfo(obj, "geo.assignment")
   return(geo.assignment)
 }

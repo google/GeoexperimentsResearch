@@ -19,7 +19,7 @@ vector of ratios of the sizes of each group.}
 }
 \value{
 An integer value that corresponds to the total number of possible
-  randomizations for the stratum represented by geo.group.
+randomizations for the stratum represented by geo.group.
 }
 \description{
 Counts the total numbers of randomization in a single stratum.

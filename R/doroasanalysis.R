@@ -12,22 +12,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+#' Performs a ROAS analysis using the given model.
+#'
+#' @param obj an object.
+#' @param model (string) id of the model to use. Available models are 'gbr1',
+#'   'tbr1'.
+#' @param ... further arguments passed to or from other models.
+#' @return A GBRROASAnalysisFit (for 'gbr1') or a TBRROASAnalysisFit object
+#'   (for 'tbr1').
+#'
+#' @note
+#' Dispatches the right method for the given model type.
+#' @seealso \code{\link{DoGBRROASAnalysis}}, \code{\link{DoTBRROASAnalysis}}.
+#' @rdname doroasanalysis
 DoROASAnalysis <- function(obj, model, ...) {
-  # Performs a ROAS analysis using the given model.
-  #
-  # Args:
-  #   obj: an object.
-  #   model: (string) id of the model to use. Available models are 'gbr1',
-  #     'tbr1'.
-  #   ...: further arguments passed to or from other models.
-  #
-  # Returns:
-  #   A GBRROASAnalysisFit (for 'gbr1') or a TBRROASAnalysisFit object
-  #  (for 'tbr1').
-  #
-  # Notes:
-  #   Dispatches the right model for the given model type.
-
   SetMessageContextString("DoROASAnalysis")
   on.exit(SetMessageContextString())
 

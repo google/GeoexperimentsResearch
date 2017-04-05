@@ -12,49 +12,35 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+#' Returns a subset of the object, ensuring that the resulting object is of
+#' the same class.
+#'
+#' @param obj an object.
+#' @param ... further arguments passed to or from other methods.
+#' @return An object of the same class as '\code{obj}'.
+#'
+#' @rdname Subset
 Subset <- function(obj, ...) {
-  # Returns a subset of the object, ensuring that the resulting object
-  # is of the same class.
-  #
-  # Args:
-  #   obj: an object.
-  #   ...: further arguments passed to or from other methods.
-  #
-  # Returns:
-  #   An object of the same class.
-  #
-  # Notes:
-  #   A generic S3 method.
-  #
-  # Documentation:
-  #   seealso: Subset.GeoTimeseries, Subset.GeoExperimentData.
-
   UseMethod("Subset")
 }
 
+#' Extract a subset of GeoTimeseries.
+#'
+#' @param rows logical vector indicating rows to keep. No missing values are
+#'   allowed.
+#' @param columns character vector indicating columns of the data frame to
+#'   keep. Columns such as 'date', 'geo', 'period', 'geo.group' and
+#'   'assignment', if they exist, they are always included.
+#'
+#' @note
+#' The arguments 'rows' and 'columns' are *not* evaluated in the
+#' environment of the columns of 'obj'; the expressions must be evaluable
+#' in the enclosing environment. This behavior is deliberately different
+#' from that of 'subset'. The original experiment configuration (periods,
+#' geo assignment, treatment assignment) is preserved.
+#'
+#' @rdname Subset
 Subset.GeoTimeseries <- function(obj, rows, columns, ...) {
-  # Extract a subset of GeoTimeseries.
-  #
-  # Args:
-  #   obj: a GeoTimeseries object.
-  #   rows: logical vector indicating rows to keep. No missing values
-  #     are allowed.
-  #   columns: character vector indicating columns of the data frame
-  #     to keep. Columns such as 'date', 'geo', 'period', 'geo.group'
-  #     and 'assignment', if they exist, are always included.
-  #   ...: further arguments to be passed to or from other methods.
-  #
-  # Returns:
-  #   A GeoTimeseries object (a subset of 'obj').
-  #
-  # Notes:
-  #   The arguments 'rows' and 'columns' are not evaluated in the environment
-  #   of the columns of 'obj'; the expressions must be evaluable in the
-  #   enclosing environment.
-  #
-  # Documentation:
-  #   seealso: Subset (generic), Subset.GeoExperimentData.
-
   SetMessageContextString("Subset.GeoTimeseries")
   on.exit(SetMessageContextString())
 
@@ -91,33 +77,8 @@ Subset.GeoTimeseries <- function(obj, rows, columns, ...) {
   return(obj.subset)
 }
 
+#' @rdname Subset
 Subset.GeoExperimentData <- function(obj, rows, columns, ...) {
-  # Extracts a subset of a GeoExperimentData.
-  #
-  # Args:
-  #   obj: a GeoExperimentData object.
-  #   rows: logical vector indicating rows to keep. No missing values
-  #     are allowed.
-  #   columns: character vector indicating columns of the data frame
-  #     to keep. Columns such as 'date', 'geo', 'period', 'geo.group'
-  #     and 'assignment', if they exists, are always included.
-  #   ...: further arguments to be passed to or from other methods.
-  #
-  # Returns:
-  #   A GeoExperimentData object (a subset of 'x').
-  #
-  # Notes:
-  #   The arguments 'rows' and 'columns' are *not* evaluated in the
-  #   environment of the columns of 'obj'; the expressions must be
-  #   evaluable in the enclosing environment. This behavior is
-  #   deliberately different from that of 'subset'.
-  #
-  #   The original experiment configuration (periods, geo assignment,
-  #   treatment assignment) is preserved.
-  #
-  # Documentation:
-  #   seealso: Subset (generic), Subset.GeoTimeseries.
-
   SetMessageContextString("Subset.GeoExperimentData")
   on.exit(SetMessageContextString())
 

@@ -12,40 +12,27 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+#' Extracts an ExperimentPeriods object.
+#'
+#' @param obj an object.
+#' @param ... further arguments passed on to methods.
+#'
+#' @return An ExperimentPeriods object.
+#'
+#' @rdname ExtractExperimentPeriods
 ExtractExperimentPeriods <- function(obj, ...) {
-  # Extracts an ExperimentPeriods object.
-  #
-  # Args:
-  #   obj: an object.
-  #   ...: further arguments passed on to methods.
-  #
-  # Returns:
-  #   An ExperimentPeriods object.
-  #
-  # Notes:
-  #   A generic S3 method.
-  #
-  # Documentation:
-  #   seealso: ExtractExperimentPeriods.GeoTimeseries.
-
   UseMethod("ExtractExperimentPeriods")
 }
 
+#' Extracts a ExperimentPeriods object from a GeoTimeseries.
+#'
+#' @param strict (flag) if FALSE, the function returns NULL if the column
+#'   'period' does not exist. Otherwise, throws an error.
+#'
+#' @return An ExperimentPeriods object.
+#'
+#' @rdname ExtractExperimentPeriods
 ExtractExperimentPeriods.GeoTimeseries <- function(obj, strict=TRUE, ...) {
-  # Extracts a ExperimentPeriods object from a GeoTimeseries.
-  #
-  # Args:
-  #   obj: a GeoTimeseries object with the column 'period'.
-  #   strict: (flag) if FALSE, the function returns NULL if the column
-  #     'period' does not exist. Otherwise, throws an error.
-  #   ...: ignored.
-  #
-  # Returns:
-  #   An ExperimentPeriods object.
-  #
-  # Documentation:
-  #   seealso: ExtractExperimentPeriods (generic).
-
   SetMessageContextString("ExtractExperimentPeriods.GeoTimeseries")
   on.exit(SetMessageContextString())
 

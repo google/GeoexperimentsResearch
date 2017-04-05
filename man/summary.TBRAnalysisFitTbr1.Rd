@@ -11,7 +11,7 @@ confidence interval for the model 'tbr1'.}
   interval.type = c("one-sided", "two-sided"), threshold = 0, ...)
 }
 \arguments{
-\item{object}{a TBRAnalysisFit object.}
+\item{object}{a \code{TBRAnalysisFit} object.}
 
 \item{level}{(number between 0 and 1) confidence level.}
 
@@ -22,7 +22,7 @@ confidence interval for the model 'tbr1'.}
 \item{...}{ignored.}
 }
 \value{
-A TBRAnalysisResults object.
+A \code{TBRAnalysisResults} object.
 }
 \description{
 Returns a concise summary of the incremental response estimate and its

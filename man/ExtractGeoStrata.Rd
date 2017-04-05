@@ -4,19 +4,30 @@
 % Please edit documentation in R/extractgeostrata.R
 \name{ExtractGeoStrata}
 \alias{ExtractGeoStrata}
+\alias{ExtractGeoStrata.GeoExperimentData}
+\alias{ExtractGeoStrata.GeoTimeseries}
 \title{Extract a GeoStrata object from an object.}
 \usage{
 ExtractGeoStrata(obj, ...)
+
+\method{ExtractGeoStrata}{GeoTimeseries}(obj, volume = NULL, ...)
+
+\method{ExtractGeoStrata}{GeoExperimentData}(obj, volume = NULL, ...)
 }
 \arguments{
-\item{obj}{some object for which the method 'ExtractGeos' exists.}
+\item{obj}{an object.}
 
-\item{...}{other arguments passed to the methods.}
+\item{...}{further arguments passed to or from other methods.}
+
+\item{volume}{(string) name of a metric from which to generate the
+\code{volume} column.}
 }
 \value{
 A GeoStrata object.
 }
 \description{
 Extract a GeoStrata object from an object.
+
+Extract a GeoStrata object from a GeoTimeseries.
 }
 

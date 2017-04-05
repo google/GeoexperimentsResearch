@@ -12,24 +12,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+#' Returns a concise summary of the incremental response estimate and its
+#' confidence interval for the model 'tbr1'.
+#'
+#' @param object a \code{TBRAnalysisFit} object.
+#' @param level (number between 0 and 1) confidence level.
+#' @param interval.type (string) 'one-sided', 'two-sided' (interval).
+#' @param threshold (numeric vector) threshold(s) for the right-tail posterior.
+#' @param ... ignored.
+#'
+#' @return A \code{TBRAnalysisResults} object.
+
 summary.TBRAnalysisFitTbr1 <- function(object,
                                        level=0.90,
                                        interval.type=c("one-sided",
                                            "two-sided"),
                                        threshold=0, ...) {
-  # Returns a concise summary of the incremental response estimate and
-  # its confidence interval for the model 'tbr1'.
-  #
-  # Args:
-  #   object: a TBRAnalysisFit object.
-  #   level: (number between 0 and 1) confidence level.
-  #   interval.type: (string) 'one-sided', 'two-sided' (interval).
-  #   threshold: (numeric vector) threshold(s) for the right-tail posterior.
-  #   ...: ignored.
-  #
-  # Returns:
-  #   A TBRAnalysisResults object.
-
   kClassName <- "TBRAnalysisResults"
   SetMessageContextString("summary.TBRAnalysisFitTbr1")
   on.exit(SetMessageContextString())

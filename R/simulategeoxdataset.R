@@ -12,37 +12,30 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+#' Returns a geo experiment data set.
+#'
+#' @param obj an object.
+#' @param ... further arguments passed to or from other methods.
+#'
+#' @return A GeoExperimentData object with the experiment periods, geo
+#' assignment, and the treatment assignment set.
+#'
+#' @rdname SimulateGeoExperimentData
 SimulateGeoExperimentData <- function(obj, ...) {
-  # Returns a geo experiment data set.
-  #
-  # Args:
-  #   obj: a GeoExperimentPreanalysisData object.
-  #   ...: arguments passed on to the methods.
-  #
-  # Returns:
-  #   A GeoExperimentData object.
-
   UseMethod("SimulateGeoExperimentData")
 }
 
+#' Returns a set number i from the GeoExperimentPreanalysisData object.
+#'
+#' @param i (positive integer or NA) number of the pseudo data set; if NA, the
+#' number will be drawn from a uniform discrete distribution.
+#'
+#' @note If the embedded 'geos' object is GeoStrata, a randomization is done
+#' and the geo assignment applied.
+#'
+#' @rdname SimulateGeoExperimentData
 SimulateGeoExperimentData.GeoExperimentPreanalysisData <- function(obj,
     i=NA_integer_, ...) {
-  # Returns a set number i from the GeoExperimentPreanalysisData object.
-  #
-  # Args:
-  #   obj: a GeoExperimentPreanalysisData object.
-  #   i: (positive integer or NA) number of the pseudo data set; if NA, the
-  #     number will be drawn from a uniform discrete distribution.
-  #   ...: ignored.
-  #
-  # Returns:
-  #   A GeoExperimentData object with the experiment periods, geo assignment,
-  #   and the treatment assignment set.
-  #
-  # Notes:
-  #   If the embedded 'geos' object is GeoStrata, a randomization is done and
-  #   the geo assignment applied.
-
 
   SetMessageContextString(
       "SimulateGeoExperimentData.GeoExperimentPreanalysisData")

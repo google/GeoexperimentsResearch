@@ -4,22 +4,34 @@
 % Please edit documentation in R/as_geoexperimentdata.R
 \name{as.GeoExperimentData}
 \alias{as.GeoExperimentData}
+\alias{as.GeoExperimentData.GeoTimeseries}
 \title{Coerces an object to a GeoExperimentData object.}
 \usage{
 as.GeoExperimentData(obj, ...)
+
+\method{as.GeoExperimentData}{GeoTimeseries}(obj, strict = TRUE, ...)
 }
 \arguments{
 \item{obj}{an object.}
 
 \item{...}{further arguments passed to methods.}
+
+\item{strict}{(flag) if FALSE, the additional columns are optional and no
+error is thrown if any of them is missing;}
 }
 \value{
+A GeoExperimentData object.
+
 A GeoExperimentData object.
 }
 \description{
 Coerces an object to a GeoExperimentData object.
+
+Coerces a GeoTimeseries object to a GeoExperiment object.
 }
 \note{
-A generic S3 method.
+The GeoTimeseries object is supposed to have the columns 'period',
+  'geo.group', and 'assignment'. If any of these columns are missing,
+  the corresponding columns in the resulting object will be 'NA'.
 }
 

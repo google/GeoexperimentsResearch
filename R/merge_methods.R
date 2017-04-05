@@ -12,24 +12,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-merge.GeoExperimentData <- function(x, y, ...) {
-  # Merges two GeoExperimentData objects.
-  #
-  # Args:
-  #   x: a GeoExperimentData object.
-  #   y: a GeoExperimentData object.
-  #   ...: ignored.
-  #
-  # Returns:
-  #   A GeoExperimentData object.
-  #
-  # Notes:
-  #   The object created is a GeoExperimentData that includes all the columns of
-  #   x, and all the columns of y that were not in x. Columns of y that have the
-  #   same name as columns of x are ignored and a warning is issued whenever y
-  #   and x share some column name(s). The merging is done by kDate, kGeo,
-  #   kPeriod, kGeoGroup, kAssignment.
+#' Merges two GeoExperimentData objects.
+#'
+#' @param x a GeoExperimentData object.
+#' @param y a GeoExperimentData object.
+#' @param ... ignored.
+#'
+#' @return A GeoExperimentData object.
+#'
+#' @note
+#' The object created is a GeoExperimentData that includes all the
+#' columns of x, and all the columns of y that were not in x. Columns of y
+#' that have the same name as columns of x are ignored and a warning is
+#' issued whenever y and x share some column name(s). The merging is done
+#' by kDate, kGeo, kPeriod, kGeoGroup, kAssignment.
 
+merge.GeoExperimentData <- function(x, y, ...) {
   SetMessageContextString("merge.GeoExperimentData")
   on.exit(SetMessageContextString())
 
@@ -66,23 +64,22 @@ merge.GeoExperimentData <- function(x, y, ...) {
   return(obj.result)
 }
 
-merge.GeoTimeseries <- function(x, y, ...) {
-  # Merges two GeoTimeseries object.
-  #
-  # Args:
-  #   x: a GeoTimeseries object.
-  #   y: a GeoTimeseries object.
-  #   ...: ignored.
-  #
-  # Returns:
-  #   A GeoTimeseries object.
-  #
-  # Notes:
-  #   The object created is a GeoTimeseries that includes all the columns of x,
-  #   and all the columns of y that were not in x. Columns of y that have the
-  #   same name as columns of x are ignored and a warning is issued whenever y
-  #   and x share some column name(s). The merging is done by kDate, kGeo.
+#' Merges two GeoTimeseries objects.
+#'
+#' @param x a GeoTimeseries object.
+#' @param y a GeoTimeseries object.
+#' @param ... ignored.
+#'
+#' @return A GeoTimeseries object.
+#'
+#' @note
+#' The object created is a GeoTimeseries that includes all the columns
+#' of x, and all the columns of y that were not in x. Columns of y that
+#' have the same name as columns of x are ignored and a warning is issued
+#' whenever y and x share some column name(s). The merging is done by
+#' kDate, kGeo.
 
+merge.GeoTimeseries <- function(x, y, ...) {
   SetMessageContextString("merge.GeoTimeseries")
   on.exit(SetMessageContextString())
 

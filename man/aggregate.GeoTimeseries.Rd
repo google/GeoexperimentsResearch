@@ -28,8 +28,8 @@ A data.frame object.
 Aggregate the Metrics of a GeoTimeseries.
 }
 \note{
-Uses 'aggregate.data.frame' to do the aggregation. This function
-omits rows that have missing values in the 'by' columns.
+Uses \code{aggregate.data.frame} to do the aggregation. This function
+omits rows that have missing values in the '\code{by}' columns.
 }
 \seealso{
 AggregateTimeseries.

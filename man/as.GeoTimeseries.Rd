@@ -19,7 +19,4 @@ A GeoTimeseries object.
 \description{
 Coerce an object to a GeoTimeseries object.
 }
-\note{
-A S3 generic method.
-}
 

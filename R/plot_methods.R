@@ -12,29 +12,26 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+#' Generate a (gg)plot of a Geos object.
+#'
+#' @param x a Geos object.
+#' @param y (string) name of the metric to plot. If omitted, plots the volume
+#'   defined in the object by default.
+#' @param geom (string) short name of the geom ggplot2 method to be used.
+#' @param sort.by (string) name of the column to sort the plot by, defaults to
+#'   y. If the column contains string, alphabetical order will be used
+#'   unless every string can be coerced to an integer in which case
+#'   numerical (ascending) order will be used. If the column contains
+#'   numerical values, numerical (descending) order will be used.
+#' @param log.scale (flag) plot y-axis on log scale?
+#' @param ... ignored.
+#'
+#' @return A ggplot object.
+#'
+#' @method plot Geos
+
 plot.Geos <- function(x, y=NULL, geom=c("bar", "point", "rect"),
                       sort.by=y, log.scale=FALSE, ...) {
-  # Generate a (gg)plot of a Geos object.
-  #
-  # Args:
-  #   x: a Geos object.
-  #   y: (string) name of the metric to plot. If omitted, plots the
-  #     volume defined in the object by default.
-  #   geom: (string) short name of the geom ggplot2 method to be used.
-  #   sort.by: (string) name of the column to sort the plot by, defaults to y.
-  #     If the column contains string, alphabetical order will be used unless
-  #     every string can be coerced to an integer in which case numerical
-  #     (ascending) order will be used. If the column contains numerical values,
-  #     numerical (descending) order will be used.
-  #   log.scale: (flag) plot y-axis on log scale?
-  #   ...: ignored.
-  #
-  # Returns:
-  #   A ggplot object.
-  #
-  # Documentation:
-  #   method: plot Geos
-
   SetMessageContextString("plot.Geos")
   on.exit(SetMessageContextString())
 
@@ -94,33 +91,30 @@ plot.Geos <- function(x, y=NULL, geom=c("bar", "point", "rect"),
 }
 
 
+#' Generate a (gg)plot of a GeoTimeseries object.
+#'
+#' @param x a GeoTimeseries object.
+#' @param y (string) name of the metric to plot. If omitted, plots the first
+#'   metric in the object by default.
+#' @param by (string) group by which column? Default is 'geo'.
+#' @param subset (vector) subset of the items in column 'by' to use.
+#' @param aggregate (flag) aggregate over?
+#' @param title (string) a title string. By default, the name of the metric to
+#'   plot.
+#' @param log.scale (flag) plot y-axis on log scale?
+#' @param legend (flag) plot the legend?
+#' @param ... ignored.
+#'
+#' @return A ggplot object.
+#'
+#' @note
+#' Sets the lower y-axis limit to zero if all 'y' values are nonnegative
+#' and log.scale=\code{FALSE}.
+#'
+#' @method plot GeoTimeseries
+
 plot.GeoTimeseries <- function(x, y=NULL, by=NULL, subset=NULL, aggregate=FALSE,
                                title=y, log.scale=FALSE, legend=TRUE, ...) {
-  # Generate a (gg)plot of a GeoTimeseries object.
-  #
-  # Args:
-  #   x: a GeoTimeseries object.
-  #   y: (string) name of the metric to plot. If omitted, plots the
-  #     first metric in the object by default.
-  #   by: (string) group by which column? Default is 'geo'.
-  #   subset: (vector) subset of the items in column 'by' to use.
-  #   aggregate: (flag) aggregate over?
-  #   title: (string) a title string. By default, the name of the
-  #     metric to plot.
-  #   log.scale: (flag) plot y-axis on log scale?
-  #   legend: (flag) plot the legend?
-  #   ...: ignored.
-  #
-  # Returns:
-  #   A ggplot object.
-  #
-  # Notes:
-  #   Sets the lower y-axis limit to zero if all 'y' values are
-  #   nonnegative and log.scale='FALSE'.
-  #
-  # Documentation:
-  #   method: plot GeoTimeseries
-
   SetMessageContextString("plot.GeoTimeseries")
   on.exit(SetMessageContextString())
 

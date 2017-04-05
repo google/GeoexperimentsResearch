@@ -4,7 +4,7 @@
 % Please edit documentation in R/roasanalysisresults.R
 \name{ROASAnalysisResults}
 \alias{ROASAnalysisResults}
-\title{Constructs a ROASAnalysisResults object.}
+\title{Constructs a \code{ROASAnalysisResults} object.}
 \usage{
 ROASAnalysisResults(estimate, lower, upper, level, incr.resp, incr.cost,
   threshold, post.prob, model)
@@ -23,32 +23,35 @@ ROASAnalysisResults(estimate, lower, upper, level, incr.resp, incr.cost,
 \item{incr.cost}{(number) point estimate of the total incremental cost.}
 
 \item{threshold}{(number) threshold for calculating the posterior
-probability.}
+probability \code{Pr(iROAS>thres|data)}.}
 
 \item{post.prob}{(number) posterior probability Pr(beta2 > threshold|data).}
 
 \item{model}{(string) id string indicating the model used.}
 }
 \value{
-An object of class ROASAnalysisResults, which also inherits from
-  'ROASAnalysisResults'. This is a data frame with the columns:
+An object of class \code{ROASAnalysisResults}.
+  This is a \code{data.frame} with the columns:
   \itemize{
-  \item\code{estimate}: point estimate of the incremental Return On Ad
-  Spend.
-  \item\code{precision}: confidence/credible interval half-width.
-  Calculated as 0.5 times the difference between upper and lower
-  bounds; if upper is Inf, then precision is the distance between the
-  estimate and the lower bound.
-  \item\code{lower}: lower bound of the interval estimate.
-  \item\code{upper}: upper bound of the interval estimate (can be Inf).
-  \item\code{level}: confidence level.
-  \item\code{incr.resp}: estimated incremental response.
-  \item\code{incr.cost}: estimated incremental cost.
-  \item\code{thres}: threshold for the posterior tail probability.
-  \item\code{prob}: posterior tail probability Pr(beta2>thres|data).
-  \item\code{model}: model id.}
+    \item\code{estimate}: point estimate of the incremental ROAS.
+    \item\code{precision}: confidence/credible interval half-width.
+       Calculated as \code{0.5} times the difference between upper and
+       lower bounds; if upper is \code{Inf}, then precision is
+       the distance between the
+      estimate and the lower bound.
+    \item\code{lower}: lower bound of the interval estimate.
+    \item\code{upper}: upper bound of the interval estimate
+      (can be \code{Inf}).
+    \item\code{level}: confidence level.
+    \item\code{incr.resp}: estimated incremental response.
+    \item\code{incr.cost}: estimated incremental cost.
+    \item\code{thres}: threshold for the posterior tail probability.
+    \item\code{prob}: posterior tail probability
+      \code{Pr(iROAS>thres|data)}.
+    \item\code{model}: model id.
+}
 }
 \description{
-Constructs a ROASAnalysisResults object.
+Constructs a \code{ROASAnalysisResults} object.
 }
 

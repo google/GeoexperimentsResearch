@@ -1,3 +1,6 @@
+2017-04-05: Google <geoexperiments-opensource@google.com>
+	* Version 1.0.3
+	* Update documentation: roxygenize comments, reorganize help pages.
 2017-04-04: Google <geoexperiments-opensource@google.com>
 	* Version 1.0.2
 	* Update Vignette: add URL to the TBR white paper.

@@ -12,7 +12,7 @@ incremental cost.}
   cost = NA_real_, ...)
 }
 \arguments{
-\item{object}{a ROASPreanalysisFit object.}
+\item{object}{a \code{ROASPreanalysisFit} object.}
 
 \item{level}{(number between 0 and 1) confidence level.}
 
@@ -20,11 +20,11 @@ incremental cost.}
 
 \item{precision}{(number) target precision of the estimate; the distance
 between the lower bound of the confidence interval and the point
-estimate. Note: if 'cost' is given, this will be ignored and the CI
-half-width will be computed based on 'cost'.}
+estimate. Note: if \code{cost} is given, this will be ignored and the CI
+half-width will be computed based on \code{cost}.}
 
-\item{cost}{(number) cost difference (ad spend difference); if missing, will
-be computed based on 'precision'.}
+\item{cost}{(number) cost difference (ad spend difference); if missing,
+will be computed based on \code{precision}.}
 
 \item{...}{ignored.}
 }

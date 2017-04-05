@@ -12,42 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+#' Performs a TBR Analysis using the 2-parameter linear model 'tbr1'.
+#'
+#' @param obj an object.
+#' @param ... further arguments passed to or from other methods.
+#' @return A TBRAnalysisFit object.
+#'
+#' @rdname DoTBRAnalysisTbr1
 DoTBRAnalysisTbr1 <- function(obj, ...) {
-  # Performs a TBR Analysis using the 2-parameter linear model 'tbr1'.
-  #
-  # Args:
-  #   obj: an object.
-  #   ...: further arguments passed to or from other methods.
-  #
-  # Returns:
-  #   A TBRAnalysisFit object.
-  #
-  # Notes:
-  #   A generic S3 method. Users should use 'DoTBRAnalysis' instead,
-  #   specifying the 'model' parameter.
-  #
-  # Documentation:
-  #   seealso: DoTBRAnalysis.TBRAnalysisData, DoTBRAnalysisTbr1.TBRAnalysisData
-
   UseMethod("DoTBRAnalysisTbr1")
 }
 
+#' @rdname DoTBRAnalysisTbr1
 DoTBRAnalysisTbr1.TBRAnalysisData <- function(obj, ...) {
-  # Performs a TBR Analysis using the 2-parameter linear model 'tbr1'.
-  #
-  # Args:
-  #   obj: a TBRAnalysisData object.
-  #   ...: ignored.
-  #
-  # Returns:
-  #   A TBRAnalysisFit object.
-  #
-  # Notes:
-  #   Users should use 'DoTBRAnalysis' instead.
-  #
-  # Documentation:
-  #   seealso: DoTBRAnalysis.TBRAnalysisData, DoTBRAnalysisTbr1.TBRAnalysisData
-
   SetMessageContextString("DoTBRAnalysisTbr1.TBRAnalysisData")
   on.exit(SetMessageContextString())
 

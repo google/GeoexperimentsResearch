@@ -4,21 +4,83 @@
 % Please edit documentation in R/doroaspreanalysis.R
 \name{DoROASPreanalysis}
 \alias{DoROASPreanalysis}
+\alias{DoROASPreanalysis.GeoExperimentPreanalysisData}
+\alias{DoROASPreanalysis.GeoTimeseries}
 \title{Predicts the standard deviation (standard error) of the posterior of the
 iROAS estimator.}
 \usage{
 DoROASPreanalysis(obj, ...)
+
+\method{DoROASPreanalysis}{GeoTimeseries}(obj, period.lengths, geos,
+  recycle = TRUE, ...)
+
+\method{DoROASPreanalysis}{GeoExperimentPreanalysisData}(obj, response, prop.to,
+  n.sims = 1000, models = GetModelIds(), FUN = base::lapply, ...)
 }
 \arguments{
-\item{obj}{some object.}
+\item{obj}{an object.}
 
-\item{...}{arguments passed on to the models.}
+\item{...}{further arguments passed to or from other methods.}
+
+\item{period.lengths}{a vector of length 3, denoting the lengths (in days)
+of pre-period, test, and the cooldown periods, respectively. The test
+period must be at least 7 days; the pre-period must be at least as
+long as the test period; the cooldown period can be 0 or more days.}
+
+\item{geos}{(\code{GeoStrata} or \code{GeoAssignment} object) object
+to use for choosing the geo groups; if it is a \code{GeoAssignment}
+object, the geo assignment will be fixed. If it is a \code{GeoStrata}
+object, method \code{Randomize} will be used to obtain a geo assignment
+at each iteration.}
+
+\item{recycle}{(flag) if TRUE, uses an augmented data set in order to create
+a larger time series, reusing data from the head of the time series.}
+
+\item{response}{(string) name of the metric column to use as the response
+variable.}
+
+\item{prop.to}{(string) an existing name of the column in proportion to
+which the spend change will be distributed across the geos.}
+
+\item{n.sims}{(integer or NA) number of simulations to do. Note: if 'geos'
+is a GeoAssignment object, NA is allowed, and the actual number of
+simulations will be the number of all possible pseudo-data sets; if
+n.sims is given, only the first n.sims data sets will be simulated
+(useful for testing only).}
+
+\item{models}{(vector of nonempty strings) one or more analysis model ids,
+to apply to each simulated data set.}
+
+\item{FUN}{(function) a lapply-compatible function to use for generating the
+simulations. Use this for a parallel version of lapply to speed up
+the process. Note: the function only needs to be able to iterate
+along a vector of integers.}
 }
 \value{
+A ROASPreanalysisFit object.
+
 A ROASPreanalysisFit object.
 }
 \description{
 Predicts the standard deviation (standard error) of the posterior of the
 iROAS estimator.
+}
+\note{
+\code{DoROASPreanalysis.GeoTimeseries} is a wrapper, combining
+calls to \code{GeoExperimentPreanalysisData} and \code{DoROASPreanalysis}.\cr
+
+\code{DoROASPreanalysis.GeoTimeseries}: The extra arguments \code{...} are
+passed to \code{DoROASPreanalysis.GeoExperimentPreanalysisData}.\cr
+
+Simulates experiments without resorting to regenerating time series.
+Segments of the original time series are used to create 'pseudo-timeseries'
+of the length of the experiment. These simulated geo experiment data sets
+are produced by calls to \code{SimulateGeoExperimentData}.\cr
+
+The object that is returned contains the simulated raw numbers. Use
+the \code{summary} method for a more user-friendly output.\cr
+
+\code{DoROASPreanalysis.GeoExperimentPreanalysisData}: The extra arguments
+\code{...} are passed to \code{FUN}.
 }
 

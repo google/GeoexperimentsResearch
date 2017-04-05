@@ -4,10 +4,22 @@
 % Please edit documentation in R/isinperiod.R
 \name{IsInPeriod}
 \alias{IsInPeriod}
+\alias{IsInPeriod.TBRAnalysisData}
+\alias{IsInPeriod.TBRAnalysisFitTbr1}
+\alias{IsInPeriod.TBRQuantiles}
+\alias{IsInPeriod.TBRROASAnalysisFit}
 \title{[internal] Returns a logical vector indicating which of the rows are in
 the specified period(s).}
 \usage{
 IsInPeriod(obj, periods)
+
+\method{IsInPeriod}{TBRAnalysisData}(obj, periods)
+
+\method{IsInPeriod}{TBRAnalysisFitTbr1}(obj, periods)
+
+\method{IsInPeriod}{TBRROASAnalysisFit}(obj, periods)
+
+\method{IsInPeriod}{TBRQuantiles}(obj, periods)
 }
 \arguments{
 \item{obj}{some object.}
@@ -15,11 +27,18 @@ IsInPeriod(obj, periods)
 \item{periods}{names of the periods.}
 }
 \value{
-A logical vector of length \code{nrow(obj)}, TRUE for a row that is
-  within the given period(s), FALSE otherwise. No NAs.
+A logical vector of length \code{nrow(obj)}, \code{TRUE} for a row
+that is within the given period(s), \code{FALSE} otherwise. No \code{NA}s.
 }
 \description{
 [internal] Returns a logical vector indicating which of the rows are in
 the specified period(s).
+}
+\note{
+\code{TBRROASAnalysisFit} consists of simulations with rows only for
+the prediction period, not for the preanalysis period.
+
+\code{TBRQuantiles} consists of simulations with rows only for the
+prediction period, not for the preanalysis period.
 }
 

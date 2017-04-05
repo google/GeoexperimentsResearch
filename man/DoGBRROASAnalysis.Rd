@@ -4,14 +4,43 @@
 % Please edit documentation in R/dogbrroasanalysis.R
 \name{DoGBRROASAnalysis}
 \alias{DoGBRROASAnalysis}
+\alias{DoGBRROASAnalysis.GBRROASAnalysisData}
+\alias{DoGBRROASAnalysis.GeoExperimentData}
 \title{Performs a GBR ROAS Analysis.}
 \usage{
 DoGBRROASAnalysis(obj, ...)
+
+\method{DoGBRROASAnalysis}{GBRROASAnalysisData}(obj, ...)
+
+\method{DoGBRROASAnalysis}{GeoExperimentData}(obj, response = character(0),
+  cost = character(0), pretest.period = 0L, intervention.period = 1L,
+  cooldown.period = NULL, control.group = 1L, treatment.group = 2L, ...)
 }
 \arguments{
 \item{obj}{an object.}
 
 \item{...}{further arguments passed to or from other methods.}
+
+\item{response}{(string) name of the response variable column.}
+
+\item{cost}{(string) name of the cost variable column.}
+
+\item{pretest.period}{(non-negative integer) number of the pretest period,
+typically 0.}
+
+\item{intervention.period}{(vector of non-negative integers) number(s) of
+the period(s) forming the intervention period. All must be larger
+than the largest period in the pretest period.}
+
+\item{cooldown.period}{(vector of non-negative integers or NULL) number(s)
+of the period(s) forming the cooldown period. All must be larger than
+the largest period in the intervention period.}
+
+\item{control.group}{(a vector of positive integers) number(s) of geo groups
+forming the control group.}
+
+\item{treatment.group}{(a vector of positive integers) number(s) of geo
+groups forming the treatment group.}
 }
 \value{
 A GBRROASAnalysisFit object.
@@ -19,8 +48,7 @@ A GBRROASAnalysisFit object.
 \description{
 Performs a GBR ROAS Analysis.
 }
-\note{
-A generic S3 method. See also: DoGBRROASAnalysis.GBRROASAnalysisData,
-DoGBRROASAnalysis.GeoExperimentData.
+\seealso{
+\code{\link{as.GBRROASAnalysisData}}, \code{\link{DoROASAnalysis}}.
 }
 

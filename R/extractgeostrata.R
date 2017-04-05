@@ -12,30 +12,26 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-ExtractGeoStrata <- function(obj, ...) {
-  # Extract a GeoStrata object from an object.
-  #
-  # Args:
-  #   obj: some object for which the method 'ExtractGeos' exists.
-  #   ...: other arguments passed to the methods.
-  #
-  # Returns:
-  #   A GeoStrata object.
+#' Extract a GeoStrata object from an object.
+#'
+#' @param obj an object.
+#' @param ... further arguments passed to or from other methods.
+#'
+#' @return A GeoStrata object.
+#'
+#' @rdname ExtractGeoStrata
 
+ExtractGeoStrata <- function(obj, ...) {
   UseMethod("ExtractGeoStrata")
 }
 
+#' Extract a GeoStrata object from a GeoTimeseries.
+#'
+#' @param volume (string) name of a metric from which to generate the
+#' \code{volume} column.
+#'
+#' @rdname ExtractGeoStrata
 ExtractGeoStrata.GeoTimeseries <- function(obj, volume=NULL, ...) {
-  # Extract a GeoStrata object from a GeoTimeseries.
-  #
-  # Args:
-  #   obj: a GeoTimeseries object.
-  #   volume: (string) name of a metric in the GeoTimeseries over which to
-  #     generate the 'volume' column.
-  #   ...: arguments passed to 'GeoStrata'.
-  #
-  # Returns:
-  #   A GeoStrata object, obtained by first extracting a Geos object from 'obj'.
   SetMessageContextString("ExtractGeoStrata.GeoTimeseries")
   on.exit(SetMessageContextString())
 
@@ -44,17 +40,8 @@ ExtractGeoStrata.GeoTimeseries <- function(obj, volume=NULL, ...) {
   return(obj)
 }
 
+#' @rdname ExtractGeoStrata
 ExtractGeoStrata.GeoExperimentData <- function(obj, volume=NULL, ...) {
-  # Extract a GeoStrata object from a GeoExperimentData object.
-  #
-  # Args:
-  #   obj: a GeoExperimentData object.
-  #   volume: (string) name of a metric in the GeoExperimentData over which to
-  #     generate the 'volume' column.
-  #   ...: arguments passed to 'GeoStrata'.
-  #
-  # Returns:
-  #   A GeoStrata object, obtained by first extracting a Geos object from 'obj'.
   SetMessageContextString("ExtractGeoStrata.GeoExperimentData")
   on.exit(SetMessageContextString())
 

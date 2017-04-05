@@ -12,31 +12,27 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+#' Constructs an ExperimentPeriods object.
+#'
+#' @param period.dates (a character or Date vector); start dates of each
+#'   period, plus the last date of the experiment. The first period is the
+#'   pretest period, after which there must be at least one test period
+#'   (there can be more than one test period); the length must be at least
+#'   3.
+#' @param period.names (character or NULL or a vector of nonempty strings)
+#'   optional names of the periods. By default, names 'Pretest' and 'Test'
+#'   (or 'Test1', 'Test2', ...) are used.
+#' @param date.format (string) format for the dates if provided in character
+#'   format.
+#' @return An ExperimentPeriods object.
+#'
+#' @note
+#' The periods must be consecutive and each period must be at least of
+#' length 1 (day). No gaps can be specified. It is however possible to
+#' define a ('dummy') test period that is not included in the analyses.
+
 ExperimentPeriods <- function(period.dates, period.names=NULL,
                               date.format="%Y-%m-%d") {
-  # Constructs an ExperimentPeriods object.
-  #
-  # Args:
-  #   period.dates: (a character or Date vector); start dates of each
-  #     period, plus the last date of the experiment. The first period
-  #     is the pretest period, after which there must be at least one
-  #     test period (there can be more than one test period); the
-  #     length must be at least 3.
-  #   period.names: (character or NULL or a vector of nonempty
-  #     strings) optional names of the periods. By default, names
-  #     'Pretest' and 'Test' (or 'Test1', 'Test2', ...) are used.
-  #   date.format: (string) format for the dates if provided in
-  #     character format.
-  #
-  # Returns:
-  #   An ExperimentPeriods object.
-  #
-  # Notes:
-  #   The periods must be consecutive and each period must be at least
-  #   of length 1 (day). No gaps can be specified. It is however possible
-  #   to define a ('dummy') test period that is not included in the
-  #   analyses.
-
   kClassName <- "ExperimentPeriods"
   SetMessageContextString(kClassName)
   on.exit(SetMessageContextString())

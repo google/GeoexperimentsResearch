@@ -12,27 +12,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Functions to perform TBR analyses.
-# - DoTBRAnalysis (generic method)
-# - DoTBRAnalysis.TBRAnalysisData
-
+#' Executes a TBR Causal Effect Analysis.
+#'
+#' @param obj an object.
+#' @param model (string) model to use.
+#' @param ... further arguments passed to or from other methods.
+#'
+#' @return A TBRAnalysisFit object.
+#'
+#' @note
+#' Dispatcher of methods.
+#' The actual method to execute the 'tbr1' method is \code{DoTBRAnalysisTbr1}.
+#' @seealso \code{\link{DoTBRAnalysisTbr1}}, \code{\link{DoROASAnalysis}},
+#' \code{\link{DoGBRROASAnalysis}}.
+#' @rdname DoTBRAnalysis
 DoTBRAnalysis <- function(obj, model, ...) {
-  # Performs a TBR Causal Effect Analysis.
-  #
-  # Args:
-  #   obj: an object.
-  #   model: (string) model to use.
-  #   ...: further arguments passed to or from other methods.
-  #
-  # Returns:
-  #   A TBRAnalysisFit object.
-  #
-  # Notes:
-  #   A generic S3 method.
-  #
-  # Documentation:
-  #   seealso: DoTBRAnalysis.TBRAnalysisData, DoTBRAnalysis.GeoExperimentData.
-
   assert_that(is.nonempty.string(model))
   if (model %in% kDefault) {
     model <- getOption("geoexperiments.default.tbr.model",
@@ -41,45 +35,15 @@ DoTBRAnalysis <- function(obj, model, ...) {
   UseMethod("DoTBRAnalysis")
 }
 
+#' @rdname DoTBRAnalysis
 DoTBRAnalysis.GeoExperimentData <- function(obj, model, ...) {
-  # Performs a TBR Causal Effect Analysis on a GeoExperimentData object.
-  #
-  # Args:
-  #   obj: a GeoExperimentData object.
-  #   model: (string) model to use. See the generic method for
-  #     possible values.
-  #   ...: arguments passed on to the method performing the analysis.
-  #
-  # Returns:
-  #   A TBRAnalysisFit object.
-  #
-  # Notes:
-  #   Calls 'as.TBRAnalysisData' and passes the 'TBRAnalysisData'
-  #   object to the analysis method.
-  #
-  # Documentation:
-  #   seealso: DoTBRAnalysis (generic), DoTBRAnalysis.TBRAnalysisData.
-
   obj <- as.TBRAnalysisData(obj, ...)
   obj.result <- DoTBRAnalysis(obj, model=model, ...)
   return(obj.result)
 }
 
+#' @rdname DoTBRAnalysis
 DoTBRAnalysis.TBRAnalysisData <- function(obj, model, ...) {
-  # Performs a TBR Analysis on a TBRAnalysisData object.
-  #
-  # Args:
-  #   obj: a TBRAnalysisData object.
-  #   model: (string) model to use. See the generic method for
-  #     possible values.
-  #   ...: Arguments passed on to the method performing the analysis.
-  #
-  # Returns:
-  #   A TBRAnalysisFit object.
-  #
-  # Documentation:
-  #   seealso: DoTBRAnalysis (generic), DoTBRAnalysis.GeoExperimentData.
-
   SetMessageContextString("DoTBRAnalysis.TBRAnalysisData")
   on.exit(SetMessageContextString())
 

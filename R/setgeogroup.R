@@ -12,32 +12,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+#' Modifies the geo assignment in an object.
+#'
+#' @aliases SetGeoGroup
+#'
+#' @param obj an object with the columns 'geo' and 'geo.group'.
+#' @param value a GeoAssignment object.
+#' @return The object with the modfied geo-to-geo.group mapping.
+#'
+#' @seealso \code{\link{SetGeoAssignment<-}}, \code{\link{MapGeoGroups<-}}.
+#'
+#' @rdname setgeogroup
 "SetGeoGroup<-" <- function(obj, value) {
-  # Modifies the geo assignment in an object.
-  #
-  # Args:
-  #   obj: an object with the columns 'geo' and 'geo.group'.
-  #   value: a GeoAssignment object.
-  #
-  # Returns:
-  #   The object with the modfied geo-to-geo.group mapping.
-  #
-  # Notes:
-  #   See also: SetGeoAssignment<-.
-
   UseMethod("SetGeoGroup<-")
 }
 
+#' @rdname setgeogroup
 "SetGeoGroup<-.GeoStrata" <- function(obj, value) {
-  # Modifies the geo assignment in a GeoStrata object.
-  #
-  # Args:
-  #   obj: a GeoStrata object.
-  #   value: a GeoAssignment object.
-  #
-  # Returns:
-  #   The same object, with the geo.group column modified.
-
   SetMessageContextString("SetGeoGroup<-.GeoStrata")
   on.exit(SetMessageContextString())
 
@@ -73,17 +64,8 @@
   return(obj)
 }
 
-
+#' @rdname setgeogroup
 "SetGeoGroup<-.GeoAssignment" <- function(obj, value) {
-  # Modifies a GeoAssignment object.
-  #
-  # Args:
-  #   obj: a GeoAssignment object.
-  #   value: a GeoAssignment object.
-  #
-  # Returns:
-  #   The same object, with the geo.group column modified.
-
   SetMessageContextString("SetGeoGroup<-.GeoAssignment")
   on.exit(SetMessageContextString())
 
@@ -103,22 +85,13 @@
   return(obj)
 }
 
+#' @note
+#' The \code{\link{GeoExperimentData}} object must contain a valid
+#' \code{\link{GeoAssignment}} object. (Use \code{\link{SetGeoAssignment<-}} to
+#' associate a \code{\link{GeoAssignment}} object to the
+#' \code{\link{GeoExperimentData}} object.)
+#' @rdname setgeogroup
 "SetGeoGroup<-.GeoExperimentData" <- function(obj, value) {
-  # Modifies the GeoAssignment object in the GeoExperimentData object.
-  #
-  # Args:
-  #   obj: a GeoExperimentData object.
-  #   value: a GeoAssignment object.
-  #
-  # Returns:
-  #   The same object, with the geo assignment (and therefore also the
-  #   geo.group column) modified.
-  #
-  # Notes:
-  #   The GeoExperimentData object must contain a valid GeoAssignment
-  #   object. Use SetGeoAssignment<- to associate a GeoAssignment object to the
-  #   GeoExperimentData object.
-
   SetMessageContextString("SetGeoGroup<-.GeoExperimentData")
   on.exit(SetMessageContextString())
 

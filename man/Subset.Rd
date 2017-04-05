@@ -4,27 +4,43 @@
 % Please edit documentation in R/subset.R
 \name{Subset}
 \alias{Subset}
+\alias{Subset.GeoExperimentData}
+\alias{Subset.GeoTimeseries}
 \title{Returns a subset of the object, ensuring that the resulting object is of
 the same class.}
 \usage{
 Subset(obj, ...)
+
+\method{Subset}{GeoTimeseries}(obj, rows, columns, ...)
+
+\method{Subset}{GeoExperimentData}(obj, rows, columns, ...)
 }
 \arguments{
 \item{obj}{an object.}
 
 \item{...}{further arguments passed to or from other methods.}
+
+\item{rows}{logical vector indicating rows to keep. No missing values are
+allowed.}
+
+\item{columns}{character vector indicating columns of the data frame to
+keep. Columns such as 'date', 'geo', 'period', 'geo.group' and
+'assignment', if they exist, they are always included.}
 }
 \value{
-An object of the same class.
+An object of the same class as '\code{obj}'.
 }
 \description{
 Returns a subset of the object, ensuring that the resulting object is of
 the same class.
+
+Extract a subset of GeoTimeseries.
 }
 \note{
-A generic S3 method.
-}
-\seealso{
-Subset.GeoTimeseries, Subset.GeoExperimentData.
+The arguments 'rows' and 'columns' are *not* evaluated in the
+environment of the columns of 'obj'; the expressions must be evaluable
+in the enclosing environment. This behavior is deliberately different
+from that of 'subset'. The original experiment configuration (periods,
+geo assignment, treatment assignment) is preserved.
 }
 

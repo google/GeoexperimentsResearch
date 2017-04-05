@@ -12,22 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# General utilities.
+#' Renames columns of a data frame.
+#'
+#' @param x a data frame.
+#' @param map a named character vector, mapping old column names to new ones
+#'   such that the new ones are in 'names' and the values are the old
+#'   ones. For example, \code{c(geo='GMA', date='Week Ending')}. If 'map'
+#'   has length 0, the original data frame is returned.
+#'
+#' @return The data frame, with the column names renamed.
 
 RenameColumns <- function(x, map=character(0)) {
-  # Renames columns of a data frame.
-  #
-  # Args:
-  #   x : a data frame.
-  #   map: a named character vector, mapping old column names to new
-  #     ones such that the new ones are in 'names' and the values are
-  #     the old ones. For example, \code{c(geo='GMA', date='Week
-  #     Ending')}. If 'map' has length 0, the original data frame is
-  #     returned.
-  #
-  # Returns:
-  #   The data frame, with the column names renamed.
-
   SetMessageContextString("RenameColumns")
   on.exit(SetMessageContextString())
 

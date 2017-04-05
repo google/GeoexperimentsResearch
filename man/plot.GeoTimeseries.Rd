@@ -38,6 +38,6 @@ Generate a (gg)plot of a GeoTimeseries object.
 }
 \note{
 Sets the lower y-axis limit to zero if all 'y' values are nonnegative
-and log.scale='FALSE'.
+and log.scale=\code{FALSE}.
 }
 

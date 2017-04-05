@@ -12,13 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+#' Get a value of the 'info' attribute of an object.
+#'
+#' @param obj any R object.
+#' @param field (string) name of the field the value of which to retrieve.
+#' @return The requested value (object).
 GetInfo <- function (obj, field) {
-  # Get a value of the 'info' attribute of an object.
-  # Args:
-  #   obj: any R object.
-  #   field: (string) name of the field the value of which to retrieve.
-  # Returns:
-  #   The requested value (object).
   info <- attr(obj, "info")
   if (missing(field)) {
     return(info)
@@ -29,19 +28,17 @@ GetInfo <- function (obj, field) {
   return(info[[field]])
 }
 
+#' Set the values of the 'info' attribute of an object.
+#'
+#' @param obj some object.
+#' @param ... name-value pairs to set in the list-valued attribute 'info'.
+#' @param info the initial value of the 'info' attribute; if specified, will
+#'   re-set the value before changing the individual name-value pairs.
+#'
+#' @note
+#' Used only internally in this package. Do not use for data tables.
+#' @return The object ('obj') that was changed.
 SetInfo <- function (obj, ..., info=NULL) {
-  # Set the values of the 'info' attribute of an object.
-  # Args:
-  #   obj: some object.
-  #   ...: name-value pairs to set in the list-valued attribute
-  #   'info'.
-  #   info: the initial value of the 'info' attribute; if specified,
-  #     will re-set the value before changing the individual
-  #     name-value pairs.
-  # Notes:
-  #   Used only internally in this package. Do not use for data tables.
-  # Returns:
-  #   The object ('obj') that was changed.
   assert_that(is.object(obj))
   if (is.null(info)) {
     info <- GetInfo(obj)

@@ -12,80 +12,69 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Methods for GBRROASAnalysisFit objects.
-# - print, coef, summary, confint
+#' Shows a summary of GBR analysis results.
+#'
+#' @param x a GBRROASAnalysisFitGbr1 object.
+#' @param ... ignored.
+#'
+#' @return The object itself, invisibly. As a side effect, prints the default
+#'   summary of 'x' on the console.
 
 print.GBRROASAnalysisFitGbr1 <- function(x, ...) {
-  # Shows a summary of GBR analysis results.
-  #
-  # Args:
-  #   x: a GBRROASAnalysisFitGbr1 object.
-  #   ...: ignored.
-  #
-  # Returns:
-  #   The object itself, invisibly. As a side effect, prints the
-  #   default summary of 'x' on the console.
-
   print(summary(x))
   return(invisible(x))
 }
 
-coef.GBRROASAnalysisFitGbr1 <- function(object, ...) {
-  # Returns the model coefficients.
-  #
-  # Args:
-  #   object: a GBRROASAnalysisFitGbr1 object.
-  #   ...: ignored.
-  #
-  # Returns:
-  #   A named numeric vector with the model coefficients from the GBR
-  #   analysis.
+#' Returns the model coefficients.
+#'
+#' @param object a GBRROASAnalysisFitGbr1 object.
+#' @param ... ignored.
+#'
+#' @return A named numeric vector with the model coefficients from the GBR
+#'   analysis.
 
+coef.GBRROASAnalysisFitGbr1 <- function(object, ...) {
   coeff <- coef(summary(object[["lmfit"]]))
   return(coeff)
 }
 
+#' Returns the confidence intervals associated with the model parameters.
+#'
+#' @param object a GBRROASAnalysisFitGbr1 object.
+#' @param parm (character vector) a specification of which parameters are to be
+#'   given confidence intervals, either a vector of numbers or a vector of
+#'   names.
+#' @param level (number between 0 and 1) the confidence level required.
+#' @param ... ignored.
+#'
+#' @return A matrix with the confidence intervals from the 'confint.lm'
+#'   method.
+
 confint.GBRROASAnalysisFitGbr1 <- function(object, parm="incr.cost", level=0.95,
                                        ...) {
-  # Returns the confidence intervals associated with the model
-  # parameters.
-  #
-  # Args:
-  #   object: a GBRROASAnalysisFitGbr1 object.
-  #   parm: (character vector) a specification of which parameters are
-  #     to be given confidence intervals, either a vector of numbers
-  #     or a vector of names.
-  #   level: (number between 0 and 1) the confidence level required.
-  #   ...: ignored.
-  #
-  # Returns:
-  #   A matrix with the confidence intervals from the 'confint.lm' method.
-
   assert_that(is.vector.of.nonempty.strings(parm))
   assert_that(is.real.number(level), level > 0 & level < 1)
   conf.int <- confint(object[["lmfit"]], parm=parm, level=level, ...)
   return(conf.int)
 }
 
+#' Returns a concise summary of the ROAS estimate and confidence interval and
+#' the total incremental cost and incremental response.
+#'
+#' @param object a GBRROASAnalysisFitGbr1 object.
+#' @param level (number between 0 and 1) confidence level.
+#' @param interval.type (string) 'one-sided', or 'two-sided' (interval).
+#' @param threshold (numeric vector) threshold(s) for the right-tail posterior
+#'   probabilities of beta2.
+#' @param ... ignored.
+#'
+#' @return A ROASAnalysisResults object.
+
 summary.GBRROASAnalysisFitGbr1 <- function(object, level=0.90,
                                            interval.type=c("one-sided",
                                                "two-sided"),
                                            threshold=0,
                                            ...) {
-  # Returns a concise summary of the ROAS estimate and confidence
-  # interval and the total incremental cost and incremental response.
-  #
-  # Args:
-  #   object: a GBRROASAnalysisFitGbr1 object.
-  #   level: (number between 0 and 1) confidence level.
-  #   interval.type: (string) 'one-sided', or 'two-sided' (interval).
-  #   threshold: (numeric vector) threshold(s) for the right-tail posterior
-  #     probabilities of beta2.
-  #   ...: ignored.
-  #
-  # Returns:
-  #   A ROASAnalysisResults object.
-
   SetMessageContextString("summary.GBRROASAnalysisFitGbr1")
   on.exit(SetMessageContextString())
 

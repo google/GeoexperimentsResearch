@@ -12,6 +12,35 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+#' Coerces an object to a GBRROASAnalysisData object.
+#'
+#' @param obj an object.
+#' @param ... further arguments to be passed to or from other methods.
+#' @return A GBRROASAnalysisData object.
+#'
+#' @seealso \code{\link{DoGBRROASAnalysis}}.
+#'
+#' @rdname as.GBRROASAnalysisData
+as.GBRROASAnalysisData <- function(obj, ...) {
+  UseMethod("as.GBRROASAnalysisData")
+}
+
+#' @param response (string) name of the response variable column.
+#' @param cost (string) name of the cost variable column.
+#' @param pretest.period (vector of non-negative integers) number(s) of the
+#'   period(s) forming the pretest period.
+#' @param intervention.period (vector of non-negative integers) number(s) of
+#'   the period(s) forming the intervention period. All must be larger
+#'   than the largest period in the pretest period.
+#' @param cooldown.period (NULL or vector of non-negative integers) number(s)
+#'   of the period(s) forming the cooldown period. All must be larger than
+#'   the largest period in the intervention period.
+#' @param control.group (NULL or a vector of positive integers) number(s) of
+#'   geo groups forming the control group.
+#' @param treatment.group (NULL or a vector of positive integers) number(s) of
+#'   geo groups forming the control group.
+#'
+#' @rdname as.GBRROASAnalysisData
 as.GBRROASAnalysisData.GeoExperimentData <- function(obj,
                                                      response=character(0),
                                                      cost=character(0),
@@ -21,32 +50,6 @@ as.GBRROASAnalysisData.GeoExperimentData <- function(obj,
                                                      control.group=1L,
                                                      treatment.group=2L,
                                                      ...) {
-  # Coerces an object to a GBRROASAnalysisData object.
-  #
-  # Args:
-  #   obj: a GeoExperimentData object.
-  #   response: (string) name of the response variable column.
-  #   cost: (string) name of the cost variable column.
-  #   pretest.period: (vector of non-negative integers) number(s) of the
-  #     period(s) forming the pretest period.
-  #   intervention.period: (vector of non-negative integers) number(s) of the
-  #     period(s) forming the intervention period. All must be larger than the
-  #     largest period in the pretest period.
-  #   cooldown.period: (NULL or vector of non-negative integers) number(s) of
-  #     the period(s) forming the cooldown period. All must be larger than the
-  #     largest period in the intervention period.
-  #   control.group: (NULL or a vector of positive integers) number(s) of geo
-  #     groups forming the control group.
-  #   treatment.group: (NULL or a vector of positive integers) number(s) of geo
-  #     groups forming the control group.
-  #   ...: ignored.
-  #
-  # Returns:
-  #   A GBRROASAnalysisData object.
-  #
-  # Documentation:
-  #   seealso: as.GBRROASAnalysisData (generic).
-
   SetMessageContextString("as.GBRROASAnalysisData.GeoExperimentData")
   on.exit(SetMessageContextString())
 

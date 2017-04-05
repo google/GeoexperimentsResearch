@@ -12,34 +12,30 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+#' Randomize geos to groups.
+#'
+#' @param obj an object.
+#' @param ... arguments passed to other methods.
+#'
+#' @return A \code{GeoAssignment} object.
+#'
+#' @rdname Randomize
 Randomize <- function(obj, ...) {
-  # Randomize geos to groups.
-  #
-  # Args:
-  #   obj: an object.
-  #   ...: arguments passed to other methods.
-  #
-  # Returns:
-  #   A GeoAssignment object.
-
   UseMethod("Randomize")
 }
 
+#' Randomize geos, assigning geo groups by strata.
+#'
+#' @param n.groups (integer) number of groups.
+#' @param group.ratios (integer vector of length n.groups) vector of ratios of
+#'   the sizes of each group. By default each group is assumed to have
+#'   equal ratios.
+#'
+#' @return A \code{GeoAssignment} object.
+#'
+#' @rdname Randomize
 Randomize.Geos <- function(obj, n.groups=2,
                            group.ratios=rep(1, length.out=n.groups), ...) {
-  # Randomize geos, assigning geo groups by strata.
-  #
-  # Args:
-  #   obj: a Geos object.
-  #   n.groups: (integer) number of groups.
-  #   group.ratios: (integer vector of length n.groups) vector of ratios of the
-  #     sizes of each group. By default each group is assumed to have equal
-  #     ratios.
-  #   ...: ignored.
-  #
-  # Returns:
-  #   A GeoAssignment object.
-
   SetMessageContextString("Randomize.Geos")
   on.exit(SetMessageContextString())
 
@@ -48,16 +44,8 @@ Randomize.Geos <- function(obj, n.groups=2,
   return(obj.result)
 }
 
+#' @rdname Randomize
 Randomize.GeoStrata <- function(obj, ...) {
-  # Randomize geos, assigning geo groups by strata.
-  #
-  # Args:
-  #   obj: a GeoStrata object.
-  #   ...: ignored.
-  #
-  # Returns:
-  #   A GeoAssignment object.
-
   SetMessageContextString("Randomize.GeoStrata")
   on.exit(SetMessageContextString())
 

@@ -13,7 +13,7 @@ GeoAssignment(x)
 (integer-valued, positive). 'geo.group' indicates the group (1, 2,
 ...) the corresponding geo belongs to. Other columns are allowed but
 not checked. If 'geo' is an integer-valued numeric or factor, it is
-coerced to character.}
+coerced to character}
 }
 \value{
 An object of class 'GeoAssignment'.
@@ -21,7 +21,7 @@ An object of class 'GeoAssignment'.
 \description{
 Constructs a GeoAssignment object.
 }
-\note{
+\details{
 The group numbers must be integers (integer-valued numeric are
 allowed as input), starting with 1. The column 'geo.group' *can* have
 missing values (NA), unlike 'geo', which must have no missing values,

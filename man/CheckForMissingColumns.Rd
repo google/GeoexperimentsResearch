@@ -4,7 +4,7 @@
 % Please edit documentation in R/utils_assert.R
 \name{CheckForMissingColumns}
 \alias{CheckForMissingColumns}
-\title{Tests whether specified column names exist in a data frame.}
+\title{Checks whether specified column names exist in a data frame.}
 \usage{
 CheckForMissingColumns(x, dataframe, what = "specified")
 }
@@ -20,7 +20,7 @@ If all tests pass, returns TRUE invisibly. Otherwise, an
   'assertError' is thrown.
 }
 \description{
-Tests whether specified column names exist in a data frame.
+Checks whether specified column names exist in a data frame.
 }
 \note{
 Convenient for checking function arguments. Quotes the name of the

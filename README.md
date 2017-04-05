@@ -1,4 +1,4 @@
-# R package GeoexperimentsResearch version 1.0.2
+# R package GeoexperimentsResearch version 1.0.3
 
 Copyright (C) 2017 Google, Inc.
 License: Apache 2.0

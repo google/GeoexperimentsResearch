@@ -12,40 +12,40 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+#' [internal] Performs a ROAS analysis on one simulated data set drawn from
+#' the \code{GeoExperimentPreanalysisData} object.
+#'
+#' @param sim (integer >= 1) number of the simulation; if 'randomize.i' is
+#'   \code{FALSE}, 'sim' will be used as the number of the data set to draw.
+#' @param randomize.i (flag) if TRUE, the number of the data set will be drawn
+#'   at random. If \code{FALSE}, the number of the data set will be set equal
+#'   to \code{sim}.
+#' @param obj a \code{GeoExperimentPreanalysisData} object.
+#' @param response (string) name of the metric column to use as the response
+#'   variable.
+#' @param prop.to (string) an existing name of the column in proportion to
+#'   which the spend change will be distributed across the geos.
+#' @param cost (real number) incremental cost, assumed fixed and known.
+#' @param models (vector of nonempty strings) one or more analysis model ids.
+#'   The simulated data set is apply to simulated data set. By default,
+#'   all possible models are fit.
+#' @param swap.and.redo (flag) swap groups and redo the analysis? Note: number
+#'   of groups must be 2 if this flag is TRUE. Since this produces two
+#'   simulations, the indices of simulations that are registered will be
+#'   \code{2 * sim - 1} and \code{2 * sim}.
+#' @return A \code{ROASAnalysisFit} object, a data frame with one or more
+#'   rows.
+#'
+#' @note
+#' This is an internal function, called from another function. No
+#' integrity checking of the parameters is done; this must be done by the
+#' enclosing function.
+#'
+#' @rdname SimulateROASAnalysis
+
 .SimulateROASAnalysis <- function(sim, randomize.i, obj, response, prop.to,
                                   cost=1, models=GetModelIds(),
                                   swap.and.redo=FALSE) {
-  # [internal] Performs a ROAS analysis on one simulated data set drawn from
-  # the GeoExperimentPreanalysisData object.
-  #
-  # Args:
-  #   sim: (integer >= 1) number of the simulation; if 'randomize.i' is FALSE,
-  #     'sim' will be used as the number of the data set to draw.
-  #   randomize.i: (flag) if TRUE, the number of the data set will be drawn at
-  #     random. If FALSE, the number of the data set will be set equal to
-  #     'sim'.
-  #   obj: a GeoExperimentPreanalysisData object.
-  #   response: (string) name of the metric column to use as the response
-  #     variable.
-  #   prop.to: (string) an existing name of the column in proportion to which
-  #     the spend change will be distributed across the geos.
-  #   cost: (real number) incremental cost, assumed fixed and known.
-  #   models: (vector of nonempty strings) one or more analysis model ids. The
-  #     simulated data set is apply to simulated data set. By default, all
-  #     possible models are fit.
-  #   swap.and.redo: (flag) swap groups and redo the analysis? Note: number of
-  #     groups must be 2 if this flag is TRUE. Since this produces two
-  #     simulations, the indices of simulations that are registered will be 2 *
-  #     sim - 1 and 2 * sim.
-  #
-  # Returns:
-  #   A ROASAnalysisFit object, a data frame with one or more rows.
-  #
-  # Notes:
-  #   This is an internal function, called from another function. No integrity
-  #   checking of the parameters is done; this must be done by the enclosing
-  #   function.
-
   kClassName <- "ROASAnalysisFit"
 
   i.max <- GetInfo(obj, "i.max")
@@ -91,24 +91,27 @@
   return(obj.result)
 }
 
+#' [internal] Constructs a \code{ROASPreanalysisFit}-compatible object with one
+#' single row. To be bound together row-wise with other such objects.
+#'
+#' @param sim (integer >= 0) number of the simulation.
+#' @param model (string) model id.
+#' @param estimate (real number) point estimate.
+#' @param sd (real number > 0) posterior s.d.
+#' @param df (integer > 0) degrees of freedom of the t distribution that is the
+#'   posterior of the iROAS estimate.
+#' @param i (integer >= 1) index of the data set.
+#' @param geo.assignment (a \code{GeoAssignment} object) the actual geo
+#' assignment used.
+#'
+#' @return A \code{ROASPreanalysisFitRow} object.
+#'
+#' @note No integrity checking of the arguments is done.
+#'
+#' @rdname ROASPreanalysisFitRow
+
 .ROASPreanalysisFitRow <- function(sim, model, estimate, sd, df, i,
                                    geo.assignment) {
-  # [internal] Constructs a ROASPreanalysisFit-compatible object with one
-  # single row. To be bound together row-wise with other such objects.
-  #
-  # Args:
-  #   sim: (integer >= 0) number of the simulation.
-  #   model: (string) model id.
-  #   estimate: (real number) point estimate.
-  #   sd: (real number > 0) posterior s.d.
-  #   df: (integer > 0) degrees of freedom of the t distribution that is the
-  #     posterior of the iROAS estimate.
-  #   i: (integer >= 1) index of the data set.
-  #   geo.assignment: (a GeoAssignment object) the actual geo assignment used.
-  #
-  # Returns:
-  #   A ROASPreanalysisFitRow object.
-
   obj.result <- data.frame(sim=sim, model=model, estimate=estimate, sd=sd,
                        df=df, i=i)
   obj.result[["geo.assignment"]] <- list(geo.assignment)
@@ -117,37 +120,27 @@
   return(obj.result)
 }
 
-.GetPreanalysisSummary <- function(obj, i, geo.assignment, sim) {
-  # [internal] Derives a short summary of the quantities for the preanalysis.
-  #
-  # Args:
-  #   obj: some object.
-  #   ...: arguments passed on to the models.
-  #
-  # Returns:
-  #   A ROASAnalysisFit object.
+#' [internal] Derives a short summary of the quantities for the preanalysis.
+#'
+#' @param obj an object.
+#' @param i (integer) index of the data set.
+#' @param geo.assignment (a \code{GeoAssignment} object) the actual
+#'   geo assignment of the data set.
+#' @param sim (integer >= 0) number of the simulation.
+#'
+#' @return A \code{ROASAnalysisFit} object.
+#'
+#' @note No integrity checking of the arguments is done.
+#'
+#' @rdname GetPreanalysisSummary
 
+.GetPreanalysisSummary <- function(obj, i, geo.assignment, sim) {
   UseMethod(".GetPreanalysisSummary")
 }
 
+#' @rdname GetPreanalysisSummary
 .GetPreanalysisSummary.TBRROASAnalysisFit <- function(obj, i, geo.assignment,
                                                       sim) {
-  # [internal] Derives a short summary of the quantities of a TBR ROAS analysis
-  # for the preanalysis.
-  #
-  # Args:
-  #   obj: a TBRROASAnalysisFit object.
-  #   i: (integer) index of the data set.
-  #   geo.assignment: (a GeoAssignment object) the actual geo assignment of the
-  #     data set.
-  #   sim: (integer >= 0) number of the simulation.
-  #
-  # Returns:
-  #   A ROASAnalysisFit object.
-  #
-  # Notes:
-  #   No integrity checking of the arguments is done.
-
   info <- GetInfo(obj)
   summ <- summary(obj)
   tbr <- info[["tbr.resp"]]
@@ -164,25 +157,10 @@
   return(obj.result)
 }
 
+#' @rdname GetPreanalysisSummary
 .GetPreanalysisSummary.GBRROASAnalysisFitGbr1 <- function(obj, i,
                                                           geo.assignment,
                                                           sim) {
-  # [internal] Derives a short summary of the quantities of a GBR ROAS analysis
-  # for the preanalysis.
-  #
-  # Args:
-  #   obj: a GBRROASAnalysisFit object.
-  #   i: (integer) index of the data set.
-  #   geo.assignment: (a GeoAssignment object) the actual geo assignment of the
-  #     data set.
-  #   sim: (integer >= 0) number of the simulation.
-  #
-  # Returns:
-  #   A ROASPreanalysisFit object.
-  #
-  # Notes:
-  #   No integrity checking of the arguments is done.
-
   fit <- obj[["lmfit"]]
   summ <- summary(fit)
   coeff.fit <- coef(fit)
@@ -200,16 +178,15 @@
   return(obj.result)
 }
 
-print.ROASPreanalysisFit <- function(x, ...) {
-  # Prints a summary of the ROASPreanalysisFit method.
-  #
-  # Args:
-  #   x: a ROASPreanalysisFit object.
-  #   ...: arguments passed to the 'summary' method.
-  #
-  # Returns:
-  #   Prints the summary of 'x' and returns the summary of 'x' invisibly.
+#' Prints a summary of the \code{ROASPreanalysisFit} method.
+#'
+#' @param x a \code{ROASPreanalysisFit} object.
+#' @param ... arguments passed to the 'summary' method.
+#'
+#' @return Prints the summary of \code{x} and returns the summary of \code{x}
+#' invisibly.
 
+print.ROASPreanalysisFit <- function(x, ...) {
   summ <- summary(x, ...)
   print(summ)
 }

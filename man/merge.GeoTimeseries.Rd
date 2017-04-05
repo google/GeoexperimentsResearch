@@ -4,7 +4,7 @@
 % Please edit documentation in R/merge_methods.R
 \name{merge.GeoTimeseries}
 \alias{merge.GeoTimeseries}
-\title{Merges two GeoTimeseries object.}
+\title{Merges two GeoTimeseries objects.}
 \usage{
 \method{merge}{GeoTimeseries}(x, y, ...)
 }
@@ -19,7 +19,7 @@
 A GeoTimeseries object.
 }
 \description{
-Merges two GeoTimeseries object.
+Merges two GeoTimeseries objects.
 }
 \note{
 The object created is a GeoTimeseries that includes all the columns

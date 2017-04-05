@@ -4,10 +4,13 @@
 % Please edit documentation in R/aggregatetimeseries.R
 \name{AggregateTimeseries}
 \alias{AggregateTimeseries}
+\alias{AggregateTimeseries.GeoTimeseries}
 \title{Aggregate the metrics of a time series object over specified time
 intervals.}
 \usage{
 AggregateTimeseries(obj, freq = c("weekly", "monthly"), ...)
+
+\method{AggregateTimeseries}{GeoTimeseries}(obj, freq, ...)
 }
 \arguments{
 \item{obj}{an object.}
@@ -24,9 +27,17 @@ Aggregate the metrics of a time series object over specified time
 intervals.
 }
 \note{
-A generic S3 method.
+\itemize{
+  \item{'Weekly' frequency}: each day in the time series is mapped
+    to the next Sunday, then aggregated.
+  \item{'Monthly' frequency}: each day in the time series is mapped to
+    the last day of the month, then aggregated. No check is made about
+    the current frequency. This works best on daily data. So it is
+    possible to attempt to change a 'monthly' frequency back to 'weekly',
+    but this simply re-maps the last day of the month to the next Sunday.
+}
 }
 \seealso{
-AggregateTimeseries.GeoTimeseries.
+\code{\link{aggregate.GeoTimeseries}}.
 }
 

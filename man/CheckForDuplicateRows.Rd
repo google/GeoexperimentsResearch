@@ -4,7 +4,7 @@
 % Please edit documentation in R/utils_assert.R
 \name{CheckForDuplicateRows}
 \alias{CheckForDuplicateRows}
-\title{Tests whether the values in rows of given columns are not duplicated.}
+\title{Checks whether the values in rows of given columns are not duplicated.}
 \usage{
 CheckForDuplicateRows(x, columns)
 }
@@ -18,6 +18,6 @@ If all tests pass, returns TRUE invisibly. Otherwise, an
   'assertError' is thrown.
 }
 \description{
-Tests whether the values in rows of given columns are not duplicated.
+Checks whether the values in rows of given columns are not duplicated.
 }
 

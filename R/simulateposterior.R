@@ -12,47 +12,36 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+#' Draws a sample from a posterior distribution.
+#'
+#' @param obj an object.
+#' @param n.sims (integer >= 2) number of simulations to draw.
+#' @param ... other arguments passed on to the methods.
+#'
+#' @return A PosteriorSimulations object, which is a matrix with 'n.sims'
+#'   columns and as many rows as there are time points in the test period.
+#'   Each row corresponds to one time point in the test period, with the
+#'   draws from the pointwise distribution of the incremental effect.
+#'
+#' @rdname SimulatePosterior
 SimulatePosterior <- function(obj, n.sims=1e5, ...) {
-  # Draws a sample from a posterior distribution.
-  #
-  # Args:
-  #   obj: an object.
-  #   n.sims: (integer >= 2) number of simulations to draw.
-  #   ...: other arguments passed on to the methods.
-  #
-  # Returns:
-  #   A PosteriorSimulations object, which is a matrix with 'n.sims'
-  #   columns. Each row corresponds to a variable.
-
   assert_that(is.integer.valued(n.sims), n.sims >= 2)
 
   UseMethod("SimulatePosterior")
 }
 
+#' @details \code{SimulatePosterior.TBRAnalysisFitTbr1}: Draws from the
+#' posterior distribution of the pointwise incremental effect over the test
+#' period.
+#'
+#' @note
+#' The 'standard' noninformative prior is assumed: uniform on (beta, log
+#' sigma). Reference: Gelman et al. Bayesian Data Analysis (2nd ed.),
+#' section 14.2, formula (14.8). To obtain the simulations for the
+#' cumulative distribution, use the \code{cumsum} method.
+#'
+#' @rdname SimulatePosterior
 SimulatePosterior.TBRAnalysisFitTbr1 <- function(obj, n.sims=1e5, ...) {
-  # Draws from the posterior distribution of the pointwise incremental effect
-  # over the test period.
-  #
-  # Args:
-  #   obj: A TBRAnalysisFitTbr1 object.
-  #   n.sims: (integer >= 2) number of simulations to draw.
-  #   ...: ignored.
-  #
-  # Returns:
-  #   A PosteriorSimulations object, which is a matrix with 'n.sims' columns
-  #   and as many rows as there are time points in the test period. Each row
-  #   corresponds to one time point in the test period, with the draws from the
-  #   pointwise distribution of the incremental effect.
-  #
-  # Notes:
-  #   The 'standard' noninformative prior is assumed: uniform on (beta, log sigma).
-  #
-  #   Reference: Gelman et al. Bayesian Data Analysis (2nd ed.), section 14.2,
-  #   formula (14.8).
-  #
-  #   To obtain the simulations for the cumulative distribution, use the
-  #   \code{cumsum} method.
-
   SetMessageContextString("SimulatePosterior.TBRAnalysisFitTbr1")
   on.exit(SetMessageContextString())
 
@@ -107,22 +96,20 @@ SimulatePosterior.TBRAnalysisFitTbr1 <- function(obj, n.sims=1e5, ...) {
   return(obj.result)
 }
 
+#' Compute the quantiles for the posterior simulations.
+#'
+#' @param x a PosteriorSimulations object.
+#' @param probs (numeric vector) of probabilities.
+#' @param names (flag) if TRUE, the result has a 'names' attribute.
+#' @param ... possibly other arguments passed on to 'quantile'.
+#'
+#' @return A matrix with n rows and m columns, where n = rows in 'x' and m =
+#'   length of 'probs'.
+
 quantile.PosteriorSimulations <- function(x,
                                           probs=c(0.05, 0.1, 0.5, 0.9, 0.95),
                                           names=TRUE,
                                           ...) {
-  # Compute the quantiles for the posterior simulations.
-  #
-  # Args:
-  #   x: a PosteriorSimulations object.
-  #   probs: (numeric vector) of probabilities.
-  #   names: (flag) if TRUE, the result has a 'names' attribute.
-  #   ...: possibly other arguments passed on to 'quantile'.
-  #
-  # Returns:
-  #   A matrix with n rows and m columns, where n = rows in 'x' and m = length
-  #   of 'probs'.
-
   assert_that(is.numeric(probs), length(probs) >= 1, !anyNA(probs),
               all(probs >= 0), all(probs <= 1))
   assert_that(is.flag(names) && !is.na(names))
@@ -139,15 +126,14 @@ quantile.PosteriorSimulations <- function(x,
   return(m)
 }
 
-cumsum.PosteriorSimulations <- function(x) {
-  # Returns simulations of the posterior cumulative joint distribution.
-  #
-  # Args:
-  #   x: a PosteriorSimulations object.
-  #
-  # Returns:
-  #   A PosteriorSimulations object.
+#' Returns simulations of the posterior cumulative joint distribution.
+#'
+#' @param x a PosteriorSimulations object.
+#'
+#' @return A PosteriorSimulations object, with the cumulative sums in the
+#' columns.
 
+cumsum.PosteriorSimulations <- function(x) {
   obj <- apply(x, MARGIN=2, FUN=cumsum)
   class(obj) <- class(x)
   return(obj)

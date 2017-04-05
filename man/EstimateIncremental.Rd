@@ -4,27 +4,39 @@
 % Please edit documentation in R/estimateincremental.R
 \name{EstimateIncremental}
 \alias{EstimateIncremental}
+\alias{EstimateIncremental.GBRROASAnalysisData}
 \title{Estimates the difference of a metric between the test and counterfactual
 between the pre and the post periods.}
 \usage{
 EstimateIncremental(obj, ...)
+
+\method{EstimateIncremental}{GBRROASAnalysisData}(obj,
+  variable = c("response", "cost"), ...)
 }
 \arguments{
 \item{obj}{an object.}
 
 \item{...}{further arguments passed to or from other methods.}
+
+\item{variable}{(string) 'response' or 'cost'.}
 }
 \value{
-An object representing the adjusted incremental values
+A vector of (adjusted) incremental values, of length
+  \code{nrow(obj)}.
 }
 \description{
 Estimates the difference of a metric between the test and counterfactual
 between the pre and the post periods.
 }
 \note{
-A generic S3 method.
-}
-\seealso{
-EstimateIncremental.GBRROASAnalysisData.
+The incremental metric (response or cost) is calculated as the
+difference between the actual observed metric and the counterfactual
+during the test period. The counterfactual is defined as the prediction
+of the metric, using a model that uses only the control geos as the
+training data set. The incremental cost is defined to be zero for the
+control geos. In case there is not enough data to model the
+counterfactual (happens when all pre-test data are constant, usually
+zero), the counterfactual is defined to be simply the metric during the
+pre-test period.
 }
 

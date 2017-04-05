@@ -79,13 +79,12 @@ kStandardPeriods <- list(pretest=0L, intervention=1L, cooldown=2L,
                          excluded=NA_integer_, analysis=c(1L, 2L),
                          prediction=c(1L, 2L, 3L))
 
-GetModelIds <- function() {
-  # Returns the list of available model identifiers.
-  #
-  # Returns:
-  #   A character vector of the available model IDs. The 'names' attribute
-  #   shows the methodology ID (gbr, tbr).
+#' Returns the list of available model identifiers.
+#'
+#' @return A character vector of the available model IDs. The 'names'
+#'   attribute shows the methodology ID (gbr, tbr).
 
+GetModelIds <- function() {
   return(kModels)
 }
 
@@ -111,11 +110,11 @@ kTBRROASPlotPanels <- list(pointwise=
                            c(observed=NA,
                              panel.label="Cumulative iROAS"))
 
-GetTBRPlotPanelNames <- function() {
-  # Returns the names of available TBR panels in the default order of plotting.
-  #
-  # Returns:
-  #   A character vector of the available panel IDs.
+#' Returns the names of available TBR panels in the default order of
+#' plotting.
+#'
+#' @return A character vector of the available panel IDs.
 
+GetTBRPlotPanelNames <- function() {
   return(names(kTBRPlotPanels))
 }

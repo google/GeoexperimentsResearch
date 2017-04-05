@@ -4,19 +4,20 @@
 % Please edit documentation in R/simulateroasanalysis.R
 \name{print.ROASPreanalysisFit}
 \alias{print.ROASPreanalysisFit}
-\title{Prints a summary of the ROASPreanalysisFit method.}
+\title{Prints a summary of the \code{ROASPreanalysisFit} method.}
 \usage{
 \method{print}{ROASPreanalysisFit}(x, ...)
 }
 \arguments{
-\item{x}{a ROASPreanalysisFit object.}
+\item{x}{a \code{ROASPreanalysisFit} object.}
 
 \item{...}{arguments passed to the 'summary' method.}
 }
 \value{
-Prints the summary of 'x' and returns the summary of 'x' invisibly.
+Prints the summary of \code{x} and returns the summary of \code{x}
+invisibly.
 }
 \description{
-Prints a summary of the ROASPreanalysisFit method.
+Prints a summary of the \code{ROASPreanalysisFit} method.
 }
 

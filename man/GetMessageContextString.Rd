@@ -16,6 +16,6 @@ The current message context string. If not available, returns an
 Get the current message context string.
 }
 \note{
-Pastes the strings together with '>'.
+Pastes the strings together with '>'
 }
 

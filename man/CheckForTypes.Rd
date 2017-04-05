@@ -4,7 +4,7 @@
 % Please edit documentation in R/utils_assert.R
 \name{CheckForTypes}
 \alias{CheckForTypes}
-\title{Tests whether the vector values in the given list satisfies the specified
+\title{Checks whether the vector values in the given list satisfies the specified
 types.}
 \usage{
 CheckForTypes(x, checklist)
@@ -19,7 +19,7 @@ whether the functions are correct or not.}
 invisible NULL.
 }
 \description{
-Tests whether the vector values in the given list satisfies the specified
+Checks whether the vector values in the given list satisfies the specified
 types.
 }
 

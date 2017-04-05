@@ -4,19 +4,36 @@
 % Please edit documentation in R/randomize.R
 \name{Randomize}
 \alias{Randomize}
+\alias{Randomize.GeoStrata}
+\alias{Randomize.Geos}
 \title{Randomize geos to groups.}
 \usage{
 Randomize(obj, ...)
+
+\method{Randomize}{Geos}(obj, n.groups = 2, group.ratios = rep(1, length.out
+  = n.groups), ...)
+
+\method{Randomize}{GeoStrata}(obj, ...)
 }
 \arguments{
 \item{obj}{an object.}
 
 \item{...}{arguments passed to other methods.}
+
+\item{n.groups}{(integer) number of groups.}
+
+\item{group.ratios}{(integer vector of length n.groups) vector of ratios of
+the sizes of each group. By default each group is assumed to have
+equal ratios.}
 }
 \value{
-A GeoAssignment object.
+A \code{GeoAssignment} object.
+
+A \code{GeoAssignment} object.
 }
 \description{
 Randomize geos to groups.
+
+Randomize geos, assigning geo groups by strata.
 }
 

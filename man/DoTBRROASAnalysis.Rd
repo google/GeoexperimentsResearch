@@ -4,9 +4,13 @@
 % Please edit documentation in R/dotbrroasanalysis.R
 \name{DoTBRROASAnalysis}
 \alias{DoTBRROASAnalysis}
+\alias{DoTBRROASAnalysis.GeoExperimentData}
 \title{Performs a TBR ROAS Analysis.}
 \usage{
 DoTBRROASAnalysis(obj, model, response, cost, n.sims = 1e+05, ...)
+
+\method{DoTBRROASAnalysis}{GeoExperimentData}(obj, model, response, cost,
+  n.sims = 1e+05, ...)
 }
 \arguments{
 \item{obj}{an object.}
@@ -29,10 +33,7 @@ A TBRROASAnalysisFit object.
 \description{
 Performs a TBR ROAS Analysis.
 }
-\note{
-A generic S3 method.
-}
 \seealso{
-DoTBRROASAnalysis.GeoExperimentData.
+DoTBRAnalysis, DoGBRROASAnalysis
 }
 

@@ -12,53 +12,42 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Constructor and S3 methods for GBRROASAnalysisData objects.
-# Constructor:
-# - GBRROASAnalysisData
-# Generic Method:
-# - as.GBRROASAnalysisData
-
+#' Constructs a GBRROASAnalysisData object.
+#'
+#' @param x a _plain_ 'data.frame' or an object that has to be coercible to a
+#'   _plain_ 'data.frame' with the required columns 'geo', which is a
+#'   character vector; numeric columns 'resp.pre', 'resp.test',
+#'   'cost.pre', 'cost.test', and a logical (TRUE/FALSE) column 'control'.
+#'   Optionally the data frame can have other columns, whose names can not
+#'   start with a dot ('.'). No missing values are allowed.
+#' @return A GBRROASAnalysisData object, which is similarly a 'data.frame'
+#'   with the same columns as described above.
+#'
+#' @note
+#' 'GBRROASAnalysisData' is a 'data.frame', with the required columns,
+#' \itemize{
+#' \item\code{geo} a 'character'-valued vector of Geo IDs.
+#' \item\code{resp.pre} numeric values of the response metric in the
+#' pre-test period.
+#' \item\code{resp.test} numeric values of the response metric in the test
+#' period.
+#' \item\code{cost.pre} numeric values of the cost metric in the pre-test
+#' period.
+#' \item\code{cost.test} numeric values of the response metric in the test
+#' period.
+#' \item\code{control} : indicator ('TRUE'/'FALSE') of which columns are
+#' in the Control group.} In addition, optionally any other user-definable
+#' columns. The column 'geo' is the primary key; it is guaranteed that no
+#' rows with duplicate geos exist. The object includes the following
+#' fields stored in the attribute 'info':
+#' \itemize{
+#'   \item\code{keys}: names of the primary key columns ('geo').
+#'     \item\code{required}: names of the required columns.
+#'     \item\code{metrics}: names of the columns representing metric data.
+#' }
+#'
+#' @rdname gbrroasanalysisdata
 GBRROASAnalysisData <- function(x) {
-  # Constructs a GBRROASAnalysisData object.
-  #
-  # Args:
-  #   x: a _plain_ 'data.frame' or an object that has to be coercible
-  #     to a _plain_ 'data.frame' with the required columns 'geo',
-  #     which is a character vector; numeric columns 'resp.pre',
-  #     'resp.test', 'cost.pre', 'cost.test', and a logical
-  #     (TRUE/FALSE) column 'control'.  Optionally the data frame can
-  #     have other columns, whose names can not start with a dot ('.').
-  #     No missing values are allowed.
-  #
-  # Returns:
-  #   A GBRROASAnalysisData object, which is similarly a 'data.frame' with the
-  #   same columns as described above.
-  #
-  # Notes:
-  #  'GBRROASAnalysisData' is a 'data.frame', with the required columns,
-  #   \itemize{
-  #      \item\code{geo} a 'character'-valued vector of Geo IDs.
-  #      \item\code{resp.pre} numeric values of the response metric in the
-  #        pre-test period.
-  #      \item\code{resp.test} numeric values of the response metric in the
-  #        test period.
-  #      \item\code{cost.pre} numeric values of the cost metric in the
-  #        pre-test period.
-  #      \item\code{cost.test} numeric values of the response metric in the
-  #        test period.
-  #      \item\code{control} : indicator ('TRUE'/'FALSE') of which columns
-  #        are in the Control group.}
-  #   In addition, optionally any other user-definable columns.
-  #
-  #   The column 'geo' is the primary key; it is guaranteed that no
-  #   rows with duplicate geos exist.
-  #
-  #   The object includes the following fields stored in the attribute 'info':
-  #   \itemize{
-  #      \item\code{keys}: names of the primary key columns ('geo').
-  #      \item\code{required}: names of the required columns.
-  #      \item\code{metrics}: names of the columns representing metric data.}
-
   kClassName <- "GBRROASAnalysisData"
   SetMessageContextString(kClassName)
   on.exit(SetMessageContextString())
@@ -104,23 +93,4 @@ GBRROASAnalysisData <- function(x) {
                  metrics=kPrePostMetrics)
   class(obj) <- c(kClassName, oldClass(obj))
   return(obj)
-}
-
-as.GBRROASAnalysisData <- function(obj, ...) {
-  # Coerces the object to a GBRROASAnalysisData object.
-  #
-  # Args:
-  #   obj: an object.
-  #   ...: further arguments to be passed to or from other methods.
-  #
-  # Returns:
-  #   A GBRROASAnalysisData object.
-  #
-  # Notes:
-  #   A generic S3 method.
-  #
-  # Documentation:
-  #   seealso: as.GBRROASAnalysisData.GeoExperimentData.
-
-  UseMethod("as.GBRROASAnalysisData")
 }

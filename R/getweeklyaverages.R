@@ -12,51 +12,32 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-GetWeeklyAverages <- function(obj, ...) {
-  # Calculates the weekly averages of the metrics per geo.
-  #
-  # Args:
-  #   obj: an object.
-  #   ...: arguments passed on to the methods.
-  #
-  # Returns:
-  #   A data frame with one row per 'geo', and the weekly averages of each
-  #   metric in the columns.
-  #
-  # Notes:
-  #   A generic S3 method.
-  #
-  # Documentation:
-  #   seealso: GetWeeklyAverages.GeoTimeseries.
+#' Calculates the weekly averages of the metrics per geo.
+#'
+#' @param obj an object.
+#' @param ... further arguments passed to or from other methods.
+#'
+#' @return A data frame with one row per 'geo', and the weekly averages of
+#'   each metric in the columns.
+#'
+#' @rdname GetWeeklyAverages
 
+GetWeeklyAverages <- function(obj, ...) {
   UseMethod("GetWeeklyAverages")
 }
 
-GetWeeklyAverages.GeoTimeseries <- function(obj, na.rm=TRUE, ...) {
-  # Calculates the weekly averages of all metrics per geo.
-  #
-  # Args:
-  #   obj: a GeoTimeseries object.
-  #   na.rm: (flag) remove NAs?
-  #   ...: ignored.
-  #
-  # Returns:
-  #   A data frame with one row per 'geo', and the weekly averages of each
-  #   metric in the columns. Sorted by the name of the geo.
-  #
-  # Notes:
-  #   Does not handle incomplete weeks. Each week is supposed to have the
-  #   complete total sales of the week. If for example the first and last weeks
-  #   of a daily data set are incomplete, the weekly average will be
-  #   underestimated.
-  #
-  #   Works for both weekly and daily data.
-  #
-  #   The averages are calculated by first calculating the weekly sums for each
-  #   geo, and then taking the averages over the weeks.
-  #
-  #   NAs are removed by default.
+#' @param na.rm (flag) remove NAs?
+#'
+#' @note
+#' Does not handle incomplete weeks. Each week is supposed to have the
+#' complete total sales of the week. If for example the first and last
+#' weeks of a daily data set are incomplete, the weekly average will be
+#' underestimated. Works for both weekly and daily data. The averages are
+#' calculated by first calculating the weekly sums for each geo, and then
+#' taking the averages over the weeks. \code{NA}s are removed by default.
 
+#' @rdname GetWeeklyAverages
+GetWeeklyAverages.GeoTimeseries <- function(obj, na.rm=TRUE, ...) {
   assert_that(is.flag(na.rm) && !is.na(na.rm))
 
   metrics <- GetInfo(obj, "metrics")

@@ -12,40 +12,32 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-as.GeoExperimentData <- function(obj, ...) {
-  # Coerces an object to a GeoExperimentData object.
-  #
-  # Args:
-  #   obj: an object.
-  #   ...: further arguments passed to methods.
-  #
-  # Returns:
-  #   A GeoExperimentData object.
-  #
-  # Notes:
-  #   A generic S3 method.
+#' Coerces an object to a GeoExperimentData object.
+#'
+#' @param obj an object.
+#' @param ... further arguments passed to methods.
+#'
+#' @return A GeoExperimentData object.
+#'
+#' @rdname as.GeoExperimentData
 
+as.GeoExperimentData <- function(obj, ...) {
   UseMethod("as.GeoExperimentData")
 }
 
+#' Coerces a GeoTimeseries object to a GeoExperiment object.
+#'
+#' @param strict (flag) if FALSE, the additional columns are optional and no
+#'   error is thrown if any of them is missing;
+#'
+#' @return A GeoExperimentData object.
+#'
+#' @note The GeoTimeseries object is supposed to have the columns 'period',
+#'   'geo.group', and 'assignment'. If any of these columns are missing,
+#'   the corresponding columns in the resulting object will be 'NA'.
+#'
+#' @rdname as.GeoExperimentData
 as.GeoExperimentData.GeoTimeseries <- function(obj, strict=TRUE, ...) {
-  # Coerces a GeoTimeseries object to a GeoExperiment object.
-  #
-  # Args:
-  #   obj: a GeoTimeseries object with the additional columns 'period',
-  #     'geo.group', and 'assignment'. If any of these columns are
-  #     missing, the corresponding columns in the resulting object
-  #     will be 'NA'.
-  #   strict: (flag) if FALSE, the additional columns are optional and
-  #     no error is thrown if any of them is missing;
-  #   ...: ignored.
-  #
-  # Returns:
-  #   A GeoExperimentData object.
-  #
-  # Documentation:
-  #   seealso: as.GeoExperimentData (generic).
-
   SetMessageContextString("as.GeoExperimentData.GeoTimeseries")
   on.exit(SetMessageContextString())
 

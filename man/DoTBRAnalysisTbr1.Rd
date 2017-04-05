@@ -4,9 +4,12 @@
 % Please edit documentation in R/dotbranalysis_tbr1.R
 \name{DoTBRAnalysisTbr1}
 \alias{DoTBRAnalysisTbr1}
+\alias{DoTBRAnalysisTbr1.TBRAnalysisData}
 \title{Performs a TBR Analysis using the 2-parameter linear model 'tbr1'.}
 \usage{
 DoTBRAnalysisTbr1(obj, ...)
+
+\method{DoTBRAnalysisTbr1}{TBRAnalysisData}(obj, ...)
 }
 \arguments{
 \item{obj}{an object.}
@@ -18,12 +21,5 @@ A TBRAnalysisFit object.
 }
 \description{
 Performs a TBR Analysis using the 2-parameter linear model 'tbr1'.
-}
-\note{
-A generic S3 method. Users should use 'DoTBRAnalysis' instead,
-specifying the 'model' parameter.
-}
-\seealso{
-DoTBRAnalysis.TBRAnalysisData, DoTBRAnalysisTbr1.TBRAnalysisData
 }
 

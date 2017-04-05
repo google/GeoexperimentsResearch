@@ -4,25 +4,36 @@
 % Please edit documentation in R/extractgeoassignment.R
 \name{ExtractGeoAssignment}
 \alias{ExtractGeoAssignment}
+\alias{ExtractGeoAssignment.GeoExperimentData}
+\alias{ExtractGeoAssignment.GeoTimeseries}
 \title{Extracts a GeoAssignment object.}
 \usage{
 ExtractGeoAssignment(obj, ...)
+
+\method{ExtractGeoAssignment}{GeoTimeseries}(obj, strict = TRUE, ...)
+
+\method{ExtractGeoAssignment}{GeoExperimentData}(obj, ...)
 }
 \arguments{
 \item{obj}{an object.}
 
 \item{...}{further arguments passed on to methods.}
+
+\item{strict}{(flag) if FALSE, the function returns NULL if the column
+'geo.group' does not exist. Otherwise, throws an error.}
 }
 \value{
+A GeoAssignment object. Or \code{NULL} if not available.
+
 A GeoAssignment object.
 }
 \description{
 Extracts a GeoAssignment object.
+
+Attempts to extract a GeoAssignment object from a GeoTimeseries.
 }
 \note{
-A generic S3 method.
-}
-\seealso{
-ExtractGeoAssignment.GeoTimeseries.
+Finds all unique pairs of ('geo', 'geo.group') in the GeoTimeseries.
+'geo.group' can have missing values.
 }
 

@@ -12,28 +12,32 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+#' Associates the object with an TreatmentAssignment object.
+#'
+#' @param obj the object to change.
+#' @param ... further arguments passed to methods.
+#' @param value a TreatmentAssignment object.
+#'
+#' @return The object (that has been modified in place).
+#'
+#' @rdname SetTreatmentAssignment
+
+"SetTreatmentAssignment<-" <- function(obj, ..., value) {
+  UseMethod("SetTreatmentAssignment<-")
+}
+
+#' @param strict (flag) insist that data has all treatment combinations?
+#'
+#' @note The value pairs ('period', 'geo.group') are mapped to a (treatment)
+#' 'assignment' column.
+#'
+#' If 'strict' is TRUE, throws an error if some treatment assignments
+#' are not found in the data. If 'strict' is FALSE, no warnings or errors
+#' are thrown.
+#'
+#' @rdname SetTreatmentAssignment
 "SetTreatmentAssignment<-.GeoExperimentData" <- function(obj, strict=TRUE, ...,
                                                          value) {
-  # Associates the object with an TreatmentAssignment object, mapping the
-  # ('period', 'geo.group') pairs to a (treatment) 'assignment' column.
-  #
-  # Args:
-  #   obj: the object (a GeoExperimentData object) to change.
-  #   strict: (flag) insist that data has all treatment combinations?
-  #   value: a TreatmentAssignment object.
-  #   ...: ignored.
-  #
-  # Returns:
-  #   The object, that has been modified in place.
-  #
-  # Notes:
-  #   If 'strict' is TRUE, throws an error if some treatment
-  #   assignments are not found in the data. If 'strict' is FALSE, no
-  #   warnings or errors are thrown.
-  #
-  # Documentation:
-  #   seealso: SetTreatmentAssignment<- (treatment).
-
   SetMessageContextString("SetTreatmentAssignment<-.GeoExperimentData")
   on.exit(SetMessageContextString())
 

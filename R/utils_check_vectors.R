@@ -12,67 +12,45 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+#' Tests each component of the vector 'x' for valid values.
+#'
+#' @param x object to test.
+#'
+#' @return A logical vector of the same length as 'x', with 'TRUE' if and only
+#' if the string is a valid value, NA if the string is NA, otherwise FALSE. If
+#' 'x' is not character, throws an error.
+#'
+#' @note
+#' NA in a component returns NA. These are supposed to be tested
+#' separately.
+#'
+#' \itemize{
+#'   \item{\code{is.treatment.assignment}} The valid treatment assignment
+#'     symbols can be found in the constant \code{kTreatmentAssignment}.
+#'     Note however that the treatment assignment symbols are not used
+#'     in the current version of the package (included for possible future
+#'     use).
+#'   \item{\code{is.geo.group.number}} The value '0' has a special meaning:
+#'    it indicates a geo that has been omitted from the experiment.
+#'   \item{\code{is.period.number}} Negative period numbers are allowed.
+#' }
+#'
+#' @rdname utils_check_vectors
 is.treatment.assignment <- function(x) {
-  # Tests each component of the vector 'x' for valid treatment assignment
-  # symbols.
-  #
-  # Args:
-  #   x : object to test.
-  #
-  # Returns:
-  #   A logical vector of the same length as 'x', with 'TRUE' if and
-  #   only if the string is a valid treatment assignment symbol, NA if
-  #   the string is NA, otherwise FALSE.  If 'x' is not character,
-  #   throws an error.
-  #
-  # Notes:
-  #   NA in a component returns NA. These are supposed to be tested
-  #   separately.
-
   assert_that((is.logical(x) && all(is.na(x))) || is.integer.valued(x))
   pass <- ifelse(is.na(x), yes=NA, no=x %in% kTreatmentAssignment)
   return(pass)
 }
 
+#' @rdname utils_check_vectors
 is.geo.group.number <- function(x) {
-  # Tests each component of the vector 'x' for valid geo group number.
-  #
-  # Args:
-  #   x : object to test.
-  #
-  # Returns:
-  #   A logical vector of the same length as 'x', with 'TRUE' if and only if
-  #   the component is nonnegative integer-valued numeric value, NA if the
-  #   value is NA, otherwise FALSE.  If 'x' is not integer-valued, throws an
-  #   error.
-  #
-  # Notes:
-  #   NA in a component returns NA. These are supposed to be tested
-  #   separately.
-  #
-  #   The value '0' has a special meaning: it indicates a geo that has been
-  #   omitted from the experiment.
-
   assert_that((is.logical(x) && all(is.na(x))) || is.integer.valued(x))
   pass <- ifelse(is.na(x), yes=NA, no=(x >= 0L))
   return(pass)
 }
 
+#' @rdname utils_check_vectors
 is.period.number <- function(x) {
-  # Tests each component of the vector 'x' for valid experiment period number.
-  #
-  # Args:
-  #   x : object to test.
-  #
-  # Returns:
-  #   A logical vector of the same length as 'x', with 'TRUE' if and only if
-  #   the component is an integer-valued numeric value, NA if the value is NA,
-  #   otherwise FALSE.  If 'x' is not integer-valued, throws an error.
-  #
-  # Notes:
-  #   NA in a component returns NA. These are supposed to be tested separately.
-  #   Negative period numbers are allowed.
-
   assert_that((is.logical(x) && all(is.na(x))) || is.integer.valued(x))
   pass <- ifelse(is.na(x), yes=NA, no=TRUE)
   return(pass)

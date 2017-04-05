@@ -12,22 +12,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-Geos <- function(x, volume=NULL) {
-  # Constructor for Geos objects.
-  #
-  # Args:
-  #   x: a data frame with column 'geo' and optionally other columns. Each
-  #     'geo' must be unique.
-  #   volume: name of the column that represents the 'volume' of the geo. The
-  #     proportion of volume is computed. If omitted, the assumed volumes will
-  #     be 1 for each geo. The volumes have to be non-negative and sum up to
-  #     a positive value.
-  #
-  # Returns:
-  #   An object of class 'Geos', which is a data frame with the column 'geo',
-  #   the column 'proportion' and 'volume', and other optional columns. The
-  #   rows are sorted by the descending order of 'volume'.
+#' Constructor for Geos objects.
+#'
+#' @param x a data frame with column 'geo' and optionally other columns. Each
+#'   'geo' must be unique.
+#' @param volume name of the column that represents the 'volume' of the geo.
+#'   The proportion of volume is computed. If omitted, the assumed volumes
+#'   will be 1 for each geo. The volumes have to be non-negative and sum
+#'   up to a positive value.
+#'
+#' @return An object of class 'Geos', which is a data frame with the column
+#'   'geo', the column 'proportion' and 'volume', and other optional
+#'   columns. The rows are sorted by the descending order of 'volume'.
 
+Geos <- function(x, volume=NULL) {
   kClassName <- "Geos"
   SetMessageContextString(kClassName)
   on.exit(SetMessageContextString())

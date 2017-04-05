@@ -12,57 +12,52 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-GeoTimeseries <- function(x, metrics=character(0), date.format="%Y-%m-%d") {
-  # Constructs a GeoTimeseries object.
-  #
-  # Args:
-  #   x: a _plain_ 'data.frame' or an object that has to be coercible
-  #     to a _plain_ 'data.frame' with columns 'date', 'geo'. 'date'
-  #     must be a Date object or a character vector or factor
-  #     coercible to Date, and 'geo' must be a character vector,
-  #     factor, or integer-valued. All columns that start with a dot
-  #     ('.') are removed. If 'geo' is an integer-valued numeric or
-  #     factor, it is coerced to character silently without error. If
-  #     'date' is a character or factor, it is silently coerced to
-  #     Date without error. An error is output if the date conversion
-  #     fails.
-  #   metrics: (character) column names that point to numeric columns.
-  #     At least one metric must be specified. All metrics have to be
-  #     not all NA.
-  #   date.format: (string, optional) format of the column 'date' in
-  #     the form understood by as.Date(). Used only if the 'date'
-  #     column is of character type.
-  #
-  # Returns:
-  #   A GeoTimeseries object.
-  #
-  # Notes:
-  #  'GeoTimeseries' is a 'data.frame', with the required columns,
-  #   \itemize{
-  #      \item\code{date} a 'Date' vector.
-  #      \item\code{geo} a 'character'-valued vector of Geo IDs.
-  #      \item metrics : one or more numeric metrics.}
-  #   In addition, optionally any other user-definable columns.
-  #   (These are ignored by the specified methods but may be convenient
-  #   for the user).
-  #   Three columns are added, for convenience:
-  #   \itemize{
-  #      \item\code{.weekday} : day number (1 = Monday, 2 = Tuesday, ...,
-  #           7 = Sunday)
-  #      \item\code{.weeknum} : week number in the year from 0 to 53.
-  #      \item\code{.weekindex} : absolute index of week, year + weeknum
-  #           (e.g., '201542')}
-  #   These should be convenient for generating totals and averages,
-  #   using the \code{aggregate} method.
-  #
-  #   The columns 'date' and 'geo' form the primary keys:
-  #   it is guaranteed that no duplicate ('date', 'geo') pairs exist.
-  #
-  #   The object includes fields stored in the attribute 'info':
-  #   \itemize{
-  #      \item\code{metrics}: names of the metric columns.
-  #      \item\code{other}: names of the other user-supplied columns.}
+#' Constructs a \code{GeoTimeseries} object.
+#'
+#' @param x a \emph{plain} \code{data.frame} or an object that has to be
+#' coercible to a plain \code{data.frame} with columns \code{date},
+#' \code{geo}. \code{date} must be a \code{Date} object or a character vector
+#' or factor coercible to Date, and 'geo' must be a character vector, factor,
+#' or integer-valued. All columns that start with a dot (\code{.}) are
+#' removed. If \code{geo} is an integer-valued numeric or factor, it is coerced
+#' to character silently without error. If \code{date} is a character or
+#' factor, it is silently coerced to \code{Date}. An error is output if the
+#' date conversion fails.
+#' @param metrics (character) column names that point to numeric columns. At
+#' least one metric must be specified. All metrics have to be not all
+#' \code{NA}.
+#' @param date.format (string, optional) format of the column \code{date} in
+#' the form understood by \code{as.Date()}. Used only if the \code{date} column
+#' is of character type.
+#'
+#' @return A \code{GeoTimeseries} object, which is a \code{data.frame},
+#' with the required columns,
+#' \itemize{
+#'   \item{\code{date}}: a vector of class \code{Date}.
+#'   \item{\code{geo}}: a \code{character}-valued vector of Geo IDs.
+#'   \item{\code{metrics}} : one or more numeric metrics. In addition, optionally
+#'     any other user-definable columns. (These are ignored by the specified
+#'     methods but may be convenient for the user). Three columns are added,
+#'     for convenience:
+#'     \itemize{
+#'       \item{\code{.weekday}}: day number (1=Monday, 2=Tuesday, ..., 7=Sunday)
+#'       \item{\code{.weeknum}}: week number in the year from 0 to 53.
+#'       \item{\code{.weekindex}}: absolute index of week, year + weeknum
+#'         (e.g., \code{201542})
+#'     }
+#' }
+#' These should be convenient for generating totals and averages, using the
+#' \code{aggregate} method. The columns 'date' and 'geo' form the primary
+#' keys: it is guaranteed that no duplicate ('date', 'geo') pairs exist.
+#'
+#' The object includes fields stored in the attribute 'info':
+#' \itemize{
+#'   \item\code{metrics}: names of the metric columns.
+#'   \item\code{other}: names of the other user-supplied columns.
+#' }
+#'
 
+GeoTimeseries <- function(x, metrics=character(0), date.format="%Y-%m-%d") {
   kClassName <- "GeoTimeseries"
   SetMessageContextString(kClassName)
   on.exit(SetMessageContextString())

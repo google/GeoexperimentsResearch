@@ -12,52 +12,37 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+#' Sets an incremental response for simulation purposes.
+#'
+#' @param obj an object with the column '.spend'.
+#' @param response (string) name of the column which acts as the response
+#'   metric.
+#' @param periods numbers of the periods which are affected; if this is "all",
+#'   all periods are affected.
+#' @param value the absolute value of the incremental return on ad spend. Can
+#'   also be negative. Can also be NA, in the case of which the column
+#'   \code{.response} will be reset to NA.
+#'
+#' @return The object, with the modfied spend change column \code{.response}.
+#'
+#' @note
+#' Creates a column \code{.response} if it does not exist, and registers it
+#' as a metric. The column \code{.response} contains the baseline response and
+#' the incremental response, which is defined as the specified incremental
+#' ROAS ('value') times the column '.spend'.
+#'
+#' @rdname SetIncrementalResponse
+
 "SetIncrementalResponse<-" <- function(obj,
                                        response,
                                        periods="all",
                                        value) {
-  # Sets an incremental response for simulation purposes.
-  #
-  # Args:
-  #   obj: an object with the column '.spend'.
-  #   response: (string) name of the column which acts as the response metric.
-  #   periods: numbers of the periods which are affected; if this is "all",
-  #     all periods are affected.
-  #   value: the absolute value of the incremental return on ad spend. Can also
-  #     be negative. Can also be NA, in the case of which the column '.response'
-  #     will be reset to NA.
-  #
-  # Returns:
-  #   The object, with the modfied spend change column '.response'.
-
   UseMethod("SetIncrementalResponse<-")
 }
 
+#' @rdname SetIncrementalResponse
 "SetIncrementalResponse<-.GeoExperimentData" <- function(obj, response,
                                                          periods="all", value) {
-  # Sets an incremental response for simulation purposes in a GeoExperimentData
-  # object.
-  #
-  # Args:
-  #   obj: a GeoExperimentData object with the column '.spend'.
-  #   response: (string) name of the column which acts as the response metric.
-  #   periods: numbers of the periods which are affected; if this is "all",
-  #     all periods are affected.
-  #   value: (a real number) the incremental return on ad spend. Can be zero or
-  #     negative. Can also be NA, in the case of which the column '.response'
-  #     will be reset to NA.
-  #
-  # Returns:
-  #   The same object, with the column '.response' modified.
-  #
-  # Notes:
-  #   Creates a column '.response' if it does not exist, and registers it as a
-  #   metric.
-  #
-  #   The column '.response' contains the baseline response and the incremental
-  #   response, which is defined as the specified incremental ROAS ('value')
-  #   times the column '.spend'.
-
   SetMessageContextString("SetIncrementalResponse<-.GeoExperimentData")
   on.exit(SetMessageContextString())
 

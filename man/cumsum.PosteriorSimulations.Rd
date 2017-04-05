@@ -12,7 +12,8 @@
 \item{x}{a PosteriorSimulations object.}
 }
 \value{
-A PosteriorSimulations object.
+A PosteriorSimulations object, with the cumulative sums in the
+columns.
 }
 \description{
 Returns simulations of the posterior cumulative joint distribution.

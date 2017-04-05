@@ -12,56 +12,37 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-AggregateTimeseries <- function(obj, freq=c("weekly", "monthly"), ...) {
-  # Aggregate the metrics of a time series object over specified time
-  # intervals.
-  #
-  # Args:
-  #   obj: an object.
-  #   freq: (string) 'weekly' or 'monthly' aggregation.
-  #   ...: further arguments passed to or from other methods.
-  #
-  # Returns:
-  #   An object of the same class as 'obj'.
-  #
-  # Notes:
-  #   A generic S3 method.
-  #
-  # Documentation:
-  #   seealso: AggregateTimeseries.GeoTimeseries.
+#' Aggregate the metrics of a time series object over specified time
+#' intervals.
+#'
+#' @param obj an object.
+#' @param freq (string) 'weekly' or 'monthly' aggregation.
+#' @param ... further arguments passed to or from other methods.
+#'
+#' @return An object of the same class as 'obj'.
+#'
+#' @note
+#' \itemize{
+#'   \item{'Weekly' frequency}: each day in the time series is mapped
+#'     to the next Sunday, then aggregated.
+#'   \item{'Monthly' frequency}: each day in the time series is mapped to
+#'     the last day of the month, then aggregated. No check is made about
+#'     the current frequency. This works best on daily data. So it is
+#'     possible to attempt to change a 'monthly' frequency back to 'weekly',
+#'     but this simply re-maps the last day of the month to the next Sunday.
+#' }
+#'
+#' @seealso \code{\link{aggregate.GeoTimeseries}}.
+#'
+#' @rdname AggregateTimeseries
 
+AggregateTimeseries <- function(obj, freq=c("weekly", "monthly"), ...) {
   UseMethod("AggregateTimeseries")
 }
 
-AggregateTimeseries.GeoTimeseries <- function(obj, freq, ...) {
-  # Convert a GeoTimeseries to a weekly or monthly
-  # GeoTimeseries. (Note: intended to transform daily data.)
-  #
-  # Args:
-  #   obj: a GeoTimeseries object.
-  #   freq: desired frequency: 'weekly' or 'monthly'.
-  #   ...: ignored.
-  #
-  # Returns:
-  #   A GeoTimeseries object with the weekly or monthly metrics
-  #   aggregated. The sums are associated with the last day of the
-  #   week (which is by our definition _Sunday_), or the last day of
-  #   the month.
-  #
-  # Notes:
-  #   'Weekly' frequency: each day in the time series is mapped to the
-  #   next Sunday, then aggregated.  'Monthly' frequency: each day in
-  #   the time series is mapped to the last day of the month, then
-  #   aggregated.
-  #
-  #   No check is made about the current frequency. This works best on
-  #   daily data.  So it is possible to attempt to change a 'monthly'
-  #   frequency back to 'weekly', but this simply re-maps the last day
-  #   of the month to the next Sunday.
-  #
-  # Documentation:
-  #   seealso: AggregateTimeseries (generic), aggregate.GeoTimeseries.
+#' @rdname AggregateTimeseries
 
+AggregateTimeseries.GeoTimeseries <- function(obj, freq, ...) {
   SetMessageContextString("AggregateTimeseries.GeoTimeseries")
   on.exit(SetMessageContextString())
 

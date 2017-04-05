@@ -12,28 +12,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Constructor and S3 methods for TreatmentAssignment objects.
-# Constructor:
-# - TreatmentAssignment
-# Generic methods:
-# - ExtractTreatmentAssignment, SetTreatmentAssignment<-
-# Other functions:
-#  - DefaultTreatmentAssignment
+#' Constructs a TreatmentAssignment object.
+#'
+#' @param x (data frame) a mapping from (period, group) to treatment assignment
+#'   condition. The data frame must have the columns 'period'
+#'   (integer-valued), 'geo.group' (integer-valued, positive), and
+#'   'assignment' (integer-valued, one of 0, 1, -1), Each row specifies
+#'   the mapping of one (period, group) pair. No missing values are
+#'   allowed.
+#'
+#' @return An object of class 'TreatmentAssignment'.
+#'
+#' @note Not used in the analysis methods, only for
+#' \code{\link{SetSpendChange<-}}.
+#'
+#' @seealso \code{\link{TreatmentAssignment}}, \code{\link{SetSpendChange<-}}.
 
 TreatmentAssignment <- function(x) {
-  # Constructs a TreatmentAssignment object.
-  #
-  # Args:
-  #   x: (data frame) a mapping from (period, group) to treatment
-  #     assignment condition. The data frame must have the columns
-  #     'period' (integer-valued), 'geo.group' (integer-valued,
-  #     positive), and 'assignment' (integer-valued, one of 0, 1, -1),
-  #     Each row specifies the mapping of one (period, group) pair. No
-  #     missing values are allowed.
-  #
-  # Returns:
-  #   An object of class 'TreatmentAssignment'.
-
   kClassName <- "TreatmentAssignment"
   SetMessageContextString(kClassName)
   on.exit(SetMessageContextString())
@@ -65,15 +60,12 @@ TreatmentAssignment <- function(x) {
   return(obj)
 }
 
-DefaultTreatmentAssignment <- function() {
-  # Generates the default treatment assignment condition.
-  #
-  # Returns:
-  #   A TreatmentAssignment object.
-  #
-  # Notes:
-  #   Period 1 of group 2 is assigned a change (some intervention).
+#' @note \code{DefaultTreatmentAssignment} generates the default treatment
+#' assignment condition, which assigns a change ('some intervention') to Period
+#' 1 of group 2.
 
+#' @rdname TreatmentAssignment
+DefaultTreatmentAssignment <- function() {
   required <- c(period=kPeriod, group=kGeoGroup, assignment=kAssignment)
   df.assign <- data.frame(period=1L, group=2L,
                           assignment=kTreatmentAssignment["change"],
@@ -81,40 +73,4 @@ DefaultTreatmentAssignment <- function() {
   names(df.assign) <- required[names(df.assign)]
   obj <- TreatmentAssignment(df.assign)
   return(obj)
-}
-
-ExtractTreatmentAssignment <- function(obj, ...) {
-  # Extracts a TreatmentAssignment object.
-  #
-  # Args:
-  #   obj: an object.
-  #   ...: further arguments passed on to methods.
-  #
-  # Returns:
-  #   A TreatmentAssignment object.
-  #
-  # Notes:
-  #   A generic S3 method.
-  #
-  # Documentation:
-  #   seealso: SetTreatmentAssignment<-.GeoExperimentData.
-
-  UseMethod("ExtractTreatmentAssignment")
-}
-
-"SetTreatmentAssignment<-" <- function(obj, ..., value) {
-  # Associates the object with an TreatmentAssignment object.
-  #
-  # Args:
-  #   obj: the object to change.
-  #   ...: further arguments passed to methods.
-  #   value: a TreatmentAssignment object.
-  #
-  # Returns:
-  #   The object (that has been modified in place).
-  #
-  # Documentation:
-  #   seealso: SetTreatmentAssignment<-.GeoExperimentData.
-
-  UseMethod("SetTreatmentAssignment<-")
 }

@@ -4,9 +4,15 @@
 % Please edit documentation in R/dotbranalysis.R
 \name{DoTBRAnalysis}
 \alias{DoTBRAnalysis}
-\title{Performs a TBR Causal Effect Analysis.}
+\alias{DoTBRAnalysis.GeoExperimentData}
+\alias{DoTBRAnalysis.TBRAnalysisData}
+\title{Executes a TBR Causal Effect Analysis.}
 \usage{
 DoTBRAnalysis(obj, model, ...)
+
+\method{DoTBRAnalysis}{GeoExperimentData}(obj, model, ...)
+
+\method{DoTBRAnalysis}{TBRAnalysisData}(obj, model, ...)
 }
 \arguments{
 \item{obj}{an object.}
@@ -19,12 +25,14 @@ DoTBRAnalysis(obj, model, ...)
 A TBRAnalysisFit object.
 }
 \description{
-Performs a TBR Causal Effect Analysis.
+Executes a TBR Causal Effect Analysis.
 }
 \note{
-A generic S3 method.
+Dispatcher of methods.
+The actual method to execute the 'tbr1' method is \code{DoTBRAnalysisTbr1}.
 }
 \seealso{
-DoTBRAnalysis.TBRAnalysisData, DoTBRAnalysis.GeoExperimentData.
+\code{\link{DoTBRAnalysisTbr1}}, \code{\link{DoROASAnalysis}},
+\code{\link{DoGBRROASAnalysis}}.
 }
 

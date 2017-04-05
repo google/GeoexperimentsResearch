@@ -12,42 +12,35 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Constructor and S3 methods for TBRAnalysisData objects.
-# Constructor:
-# - TBRAnalysisData
+#' Constructs a TBRAnalysisData object.
+#'
+#' @param x a _plain_ \code{data.frame} or an object that has to be coercible
+#' to a _plain_ \code{data.frame} with the required columns \code{data}, which
+#' _must_ be a \code{Date} vector; integer-valued column \code{period}
+#' indicating the pre-experiment, pretest, intervention, cooldown, and posttest
+#' periods; numeric columns \code{y} (response), \code{x}
+#' (covariate). Optionally the data frame can have other columns, which are
+#' ignored but whose names cannot start with a dot ('.'). No missing values are
+#' allowed in the pretest and test periods (but allowed outside of either
+#' period).#'
+#' @return A \code{TBRAnalysisData} object, which is similarly a
+#' \code{data.frame} with the columns:
+#'
+#' \code{TBRAnalysisData} is a \code{data.frame}, with the required columns,
+#' \itemize{
+#'   \item{\code{date}}: a 'Date'-valued vector.
+#'   \item{\code{period}}: numeric indicator of various periods.
+#'     \code{0} indicates the pretest period. \code{NA} indicates a date
+#'     that has been excluded from the analyses.
+#'   \item{\code{y}}: numeric values of the metric of the Treatment group.
+#'   \item{\code{x}}: numeric values of the metric in the Control group.
+#'     In addition, optionally any other user-definable columns.
+#' }
+#'
+#' @note The column \code{date} is the primary key; it is guaranteed that no
+#' rows with duplicate geos exist and that the rows are in temporal order.
 
 TBRAnalysisData <- function(x) {
-  # Constructs a TBRAnalysisData object.
-  #
-  # Args:
-  #   x: a _plain_ 'data.frame' or an object that has to be coercible to a
-  #     _plain_ 'data.frame' with the required columns 'data', which _must_ be
-  #     a 'Date' vector; integer-valued column 'period' indicating the
-  #     pre-experiment, pretest, intervention, cooldown, and posttest periods;
-  #     numeric columns 'y' (response), 'x' (covariate). Optionally the data
-  #     frame can have other columns, which are ignored but whose names cannot
-  #     start with a dot ('.'). No missing values are allowed in the pretest
-  #     and test periods (but allowed outside of either period).
-  #
-  # Returns:
-  #   A TBRAnalysisData object, which is similarly a 'data.frame' with the
-  #   same columns as described above.
-  #
-  # Notes:
-  #  'TBRAnalysisData' is a 'data.frame', with the required columns,
-  #   \itemize{
-  #      \item\code{date} a 'Date'-valued vector.
-  #      \item\code{period} numeric indicator of various periods. 0 indicates
-  #        the pretest period. NA indicates a date that has been excluded from
-  #        all analyses.
-  #      \item\code{y} numeric values of the metric of the Treatment group.
-  #      \item\code{x} numeric values of the metric in the Control group.
-  #   In addition, optionally any other user-definable columns.}
-  #
-  #   The column 'date' is the primary key; it is guaranteed that no
-  #   rows with duplicate geos exist and that the rows are in temporal
-  #   order.
-
   kClassName <- "TBRAnalysisData"
   SetMessageContextString(kClassName)
   on.exit(SetMessageContextString())

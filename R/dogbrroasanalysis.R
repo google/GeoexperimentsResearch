@@ -12,38 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+#' Performs a GBR ROAS Analysis.
+#'
+#' @param obj an object.
+#' @param ... further arguments passed to or from other methods.
+#' @return A GBRROASAnalysisFit object.
+#'
+#' @rdname DoGBRROASAnalysis
 DoGBRROASAnalysis <- function(obj, ...) {
-  # Performs a GBR ROAS Analysis.
-  #
-  # Args:
-  #   obj: an object.
-  #   ...: further arguments passed to or from other methods.
-  #
-  # Returns:
-  #   A GBRROASAnalysisFit object.
-  #
-  # Notes:
-  #   A generic S3 method.
-  #
-  #   See also: DoGBRROASAnalysis.GBRROASAnalysisData,
-  #   DoGBRROASAnalysis.GeoExperimentData.
-
   UseMethod("DoGBRROASAnalysis")
 }
 
+#' @rdname DoGBRROASAnalysis
 DoGBRROASAnalysis.GBRROASAnalysisData <- function(obj, ...) {
-  # Performs a ROAS Analysis on a GBRROASAnalysisData object.
-  #
-  # Args:
-  #   obj: a GBRROASAnalysisData object.
-  #   ...: ignored.
-  #
-  # Returns:
-  #   A GBRROASAnalysisFit object.
-  #
-  # Documentation:
-  #   seealso: DoGBRROASAnalysis (generic), DoGBRROASAnalysis.GeoExperimentData.
-
   kClassName <- "GBRROASAnalysisFitGbr1"
   SetMessageContextString("DoGBRROASAnalysis.GBRROASAnalysisData")
   on.exit(SetMessageContextString())
@@ -120,6 +101,24 @@ DoGBRROASAnalysis.GBRROASAnalysisData <- function(obj, ...) {
   return(obj.result)
 }
 
+#' @param response (string) name of the response variable column.
+#' @param cost (string) name of the cost variable column.
+#' @param pretest.period (non-negative integer) number of the pretest period,
+#'   typically 0.
+#' @param intervention.period (vector of non-negative integers) number(s) of
+#'   the period(s) forming the intervention period. All must be larger
+#'   than the largest period in the pretest period.
+#' @param cooldown.period (vector of non-negative integers or NULL) number(s)
+#'   of the period(s) forming the cooldown period. All must be larger than
+#'   the largest period in the intervention period.
+#' @param control.group (a vector of positive integers) number(s) of geo groups
+#'   forming the control group.
+#' @param treatment.group (a vector of positive integers) number(s) of geo
+#'   groups forming the treatment group.
+#'
+#' @seealso \code{\link{as.GBRROASAnalysisData}}, \code{\link{DoROASAnalysis}}.
+#'
+#' @rdname DoGBRROASAnalysis
 DoGBRROASAnalysis.GeoExperimentData <- function(obj,
                                                 response=character(0),
                                                 cost=character(0),
@@ -129,33 +128,6 @@ DoGBRROASAnalysis.GeoExperimentData <- function(obj,
                                                 control.group=1L,
                                                 treatment.group=2L,
                                                 ...) {
-  # Performs a ROAS Analysis on a GeoExperimentData object.
-  #
-  # Args:
-  #   obj: a GeoExperimentData object.
-  #   response: (string) name of the response variable column.
-  #   cost: (string) name of the cost variable column.
-  #   pretest.period: (non-negative integer) number of the pretest period,
-  #     typically 0.
-  #   intervention.period: (vector of non-negative integers) number(s) of the
-  #     period(s) forming the intervention period. All must be larger than the
-  #     largest period in the pretest period.
-  #   cooldown.period: (vector of non-negative integers or NULL) number(s) of
-  #     the period(s) forming the cooldown period. All must be larger than the
-  #     largest period in the intervention period.
-  #   control.group: (a vector of positive integers) number(s) of geo
-  #     groups forming the control group.
-  #   treatment.group: (a vector of positive integers) number(s) of geo
-  #     groups forming the treatment group.
-  #   ...: further arguments passed to as.GBRROASAnalysisData.
-  #
-  # Returns:
-  #   A GBRROASAnalysisFit object.
-  #
-  # Notes:
-  #   See also: DoGBRROASAnalysis (generic),
-  #   DoGBRROASAnalysis.GBRROASAnalysisData.
-
   SetMessageContextString("DoGBRROASAnalysis.GeoExperimentData")
   on.exit(SetMessageContextString())
 

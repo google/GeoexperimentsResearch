@@ -4,9 +4,12 @@
 % Please edit documentation in R/simulateposterior.R
 \name{SimulatePosterior}
 \alias{SimulatePosterior}
+\alias{SimulatePosterior.TBRAnalysisFitTbr1}
 \title{Draws a sample from a posterior distribution.}
 \usage{
 SimulatePosterior(obj, n.sims = 1e+05, ...)
+
+\method{SimulatePosterior}{TBRAnalysisFitTbr1}(obj, n.sims = 1e+05, ...)
 }
 \arguments{
 \item{obj}{an object.}
@@ -17,9 +20,22 @@ SimulatePosterior(obj, n.sims = 1e+05, ...)
 }
 \value{
 A PosteriorSimulations object, which is a matrix with 'n.sims'
-  columns. Each row corresponds to a variable.
+  columns and as many rows as there are time points in the test period.
+  Each row corresponds to one time point in the test period, with the
+  draws from the pointwise distribution of the incremental effect.
 }
 \description{
 Draws a sample from a posterior distribution.
+}
+\details{
+\code{SimulatePosterior.TBRAnalysisFitTbr1}: Draws from the
+posterior distribution of the pointwise incremental effect over the test
+period.
+}
+\note{
+The 'standard' noninformative prior is assumed: uniform on (beta, log
+sigma). Reference: Gelman et al. Bayesian Data Analysis (2nd ed.),
+section 14.2, formula (14.8). To obtain the simulations for the
+cumulative distribution, use the \code{cumsum} method.
 }
 

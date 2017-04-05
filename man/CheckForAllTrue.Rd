@@ -4,7 +4,7 @@
 % Please edit documentation in R/utils_assert.R
 \name{CheckForAllTrue}
 \alias{CheckForAllTrue}
-\title{Check whether all(x) is true.}
+\title{Checks whether all components are TRUE.}
 \usage{
 CheckForAllTrue(x, ...)
 }
@@ -20,6 +20,6 @@ If all tests pass, returns TRUE invisibly. Otherwise, an
   'assertError' is thrown.
 }
 \description{
-Check whether all(x) is true.
+Checks whether all components are TRUE.
 }
 

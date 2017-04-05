@@ -27,8 +27,8 @@ weeks?}
 
 \item{date.format}{(string) date format.}
 
-\item{...}{further arguments passed to methods 'as.TBRPlotData' and
-'plot.TBRPlotData'.}
+\item{...}{further arguments passed to methods \code{\link{as.TBRPlotData}} and
+\code{\link{plot.TBRPlotData}}.}
 }
 \value{
 A ggplot2 object.

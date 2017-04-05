@@ -11,16 +11,16 @@ CountRandomizations(geostrata, show.warnings = TRUE, log.scale = FALSE)
 \arguments{
 \item{geostrata}{a GeoStrata object.}
 
-\item{show.warnings}{(flag) if TRUE, shows a warning when a stratum is not
-compatible with the group.ratios.}
+\item{show.warnings}{(flag) if \code{TRUE}, shows a warning when a stratum
+is not compatible with the group.ratios.}
 
-\item{log.scale}{(flag) if TRUE, returns the result on the log.scale.}
+\item{log.scale}{(flag) if \code{TRUE}, returns the result on the log.scale.}
 }
 \value{
 An integer vector of the same length as the number of strata in
-  geostrata (excluding stratum 0, if it exists). The i-th coordinate
-  corresponds to the total number of possible randomizations for the
-  i-th stratum.
+geostrata (excluding stratum 0, if it exists). The i-th coordinate
+corresponds to the total number of possible randomizations for the i-th
+stratum.
 }
 \description{
 Counts the total numbers of randomizations in a GeoStrata object.

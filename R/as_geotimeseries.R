@@ -12,18 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-as.GeoTimeseries <- function(obj, ...) {
-  # Coerce an object to a GeoTimeseries object.
-  #
-  # Args:
-  #   obj: an object.
-  #   ...: additional arguments to be passed to or from methods.
-  #
-  # Returns:
-  #   A GeoTimeseries object.
-  #
-  # Notes:
-  #   A S3 generic method.
+#' Coerce an object to a GeoTimeseries object.
+#'
+#' @param obj an object.
+#' @param ... additional arguments to be passed to or from methods.
+#'
+#' @return A GeoTimeseries object.
 
+as.GeoTimeseries <- function(obj, ...) {
   UseMethod("as.GeoTimeseries")
 }

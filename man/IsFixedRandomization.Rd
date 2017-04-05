@@ -4,7 +4,7 @@
 % Please edit documentation in R/geostrata.R
 \name{IsFixedRandomization}
 \alias{IsFixedRandomization}
-\title{Returns TRUE iff randomizing the geostrata can lead to multiple outcomes.}
+\title{Test if randomizing the geostrata can lead only to a single outcome.}
 \usage{
 IsFixedRandomization(geostrata)
 }
@@ -12,10 +12,10 @@ IsFixedRandomization(geostrata)
 \item{geostrata}{a GeoStrata object.}
 }
 \value{
-TRUE if randomizing the geostrata can only lead to a single
-  GeoAssignment, FALSE otherwise.
+\code{TRUE} if randomizing the geostrata can only lead to a single
+\code{GeoAssignment}, \code{FALSE} otherwise.
 }
 \description{
-Returns TRUE iff randomizing the geostrata can lead to multiple outcomes.
+Test if randomizing the geostrata can lead only to a single outcome.
 }
 

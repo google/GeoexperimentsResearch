@@ -4,14 +4,19 @@
 % Please edit documentation in R/getweeklyaverages.R
 \name{GetWeeklyAverages}
 \alias{GetWeeklyAverages}
+\alias{GetWeeklyAverages.GeoTimeseries}
 \title{Calculates the weekly averages of the metrics per geo.}
 \usage{
 GetWeeklyAverages(obj, ...)
+
+\method{GetWeeklyAverages}{GeoTimeseries}(obj, na.rm = TRUE, ...)
 }
 \arguments{
 \item{obj}{an object.}
 
-\item{...}{arguments passed on to the methods.}
+\item{...}{further arguments passed to or from other methods.}
+
+\item{na.rm}{(flag) remove NAs?}
 }
 \value{
 A data frame with one row per 'geo', and the weekly averages of
@@ -21,9 +26,11 @@ A data frame with one row per 'geo', and the weekly averages of
 Calculates the weekly averages of the metrics per geo.
 }
 \note{
-A generic S3 method.
-}
-\seealso{
-GetWeeklyAverages.GeoTimeseries.
+Does not handle incomplete weeks. Each week is supposed to have the
+complete total sales of the week. If for example the first and last
+weeks of a daily data set are incomplete, the weekly average will be
+underestimated. Works for both weekly and daily data. The averages are
+calculated by first calculating the weekly sums for each geo, and then
+taking the averages over the weeks. \code{NA}s are removed by default.
 }
 

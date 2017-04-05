@@ -31,6 +31,6 @@ value of 'name'.
 # Outputs "Column 'foo' is not an integer-valued numeric vector"
 # if 'x' fails the test.
 \dontrun{
-AssertThat(is.integer.valued(x), name="Column 'foo'")}
+CheckThat(is.integer.valued(x), name="Column 'foo'")}
 }
 

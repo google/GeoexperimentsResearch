@@ -4,18 +4,32 @@
 % Please edit documentation in R/getgeonames.R
 \name{GetGeoNames}
 \alias{GetGeoNames}
+\alias{GetGeoNames.GeoAssignment}
+\alias{GetGeoNames.GeoExperimentData}
+\alias{GetGeoNames.GeoTimeseries}
+\alias{GetGeoNames.Geos}
 \title{Extracts the names of the geos from the object.}
 \usage{
 GetGeoNames(obj, groups = NULL)
+
+\method{GetGeoNames}{GeoTimeseries}(obj, groups = NULL)
+
+\method{GetGeoNames}{GeoExperimentData}(obj, groups = NULL)
+
+\method{GetGeoNames}{GeoAssignment}(obj, groups = NULL)
+
+\method{GetGeoNames}{Geos}(obj, groups = NULL)
 }
 \arguments{
 \item{obj}{an object.}
 
 \item{groups}{(NULL, or integer vector) id number(s) of the groups whose
-geos to obtain, or NULL for all geos. NA is allowed.}
+geos to obtain, or NULL for all geos. \code{NA} is allowed.}
 }
 \value{
-A character vector of unique geo identifiers.
+A character vector of unique geo identifiers, sorted. Can be empty
+  if there are no geos matching 'groups'. Will be empty if the geo
+  assignment object does not exist in the object.
 }
 \description{
 Extracts the names of the geos from the object.

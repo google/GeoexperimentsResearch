@@ -12,16 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-SetMessageContextString <- function(context) {
-  # Save a string representing the current context of the program flow.
-  #
-  # Args:
-  #   context: (a string) context of the message; to be displayed in (error)
-  #     messages.
-  #
-  # Returns:
-  #   The previous message context strings (a character vector).
+#' Save a string representing the current context of the program flow.
+#'
+#' @param context (a string) context of the message; to be displayed in (error)
+#'   messages.
+#' @return The previous message context strings (a character vector).
 
+SetMessageContextString <- function(context) {
   opt <- getOption("geoexperiments", default=list())
   context.old <- opt[["context"]]
   if (is.null(context.old)) {
@@ -41,16 +38,15 @@ SetMessageContextString <- function(context) {
   invisible(context.old)
 }
 
-GetMessageContextString <- function() {
-  # Get the current message context string.
-  #
-  # Returns:
-  #   The current message context string. If not available, returns an empty
-  #   string ("").
-  #
-  # Notes:
-  #   Pastes the strings together with '>'.
+#' Get the current message context string.
+#'
+#' @return The current message context string. If not available, returns an
+#'   empty string ("").
+#'
+#' @note
+#' Pastes the strings together with '>'
 
+GetMessageContextString <- function() {
   kSeparator <- ">"
   context.strings <- getOption("geoexperiments", default=list())[["context"]]
   if (length(context.strings) == 0L) {
@@ -61,15 +57,12 @@ GetMessageContextString <- function() {
   return(context.string)
 }
 
-Message <- function(...) {
-  # Form a message, prefixed with the message context string.
-  #
-  # Args:
-  #   ...: R vectors, usually character, to be collapsed using 'paste0'.
-  #
-  # Returns:
-  #   A string.
+#' Form a message, prefixed with the message context string.
+#'
+#' @param ... R vectors, usually character, to be collapsed using 'paste0'.
+#' @return A string.
 
+Message <- function(...) {
   prefix <- GetMessageContextString()
   if (nchar(prefix) > 0L) {
     prefix <- paste0(prefix, ": ")
@@ -77,16 +70,13 @@ Message <- function(...) {
   paste0(prefix, ..., collapse="")
 }
 
-Messagef <- function(fmt, ...) {
-  # Form a message, using sprintf.
-  #
-  # Args:
-  #   fmt: a character vector of format strings (see 'sprintf' for details).
-  #   ...: values to be passed to 'fmt'.
-  #
-  # Returns:
-  #   A string.
+#' Form a message, using sprintf.
+#'
+#' @param fmt a character vector of format strings (see 'sprintf' for details).
+#' @param ... values to be passed to 'fmt'.
+#' @return A string.
 
+Messagef <- function(fmt, ...) {
   assert_that(is.nonempty.string(fmt))
   Message(sprintf(fmt, ...))
 }

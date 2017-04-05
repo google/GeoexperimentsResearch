@@ -4,9 +4,18 @@
 % Please edit documentation in R/as_tbrplotdata.R
 \name{as.TBRPlotData}
 \alias{as.TBRPlotData}
+\alias{as.TBRPlotData.TBRAnalysisFitTbr1}
+\alias{as.TBRPlotData.TBRROASAnalysisFit}
 \title{Coerces an object to a TBRPlotData object.}
 \usage{
 as.TBRPlotData(obj, panels, periods, quantiles = c(0.1, 0.9), ...)
+
+\method{as.TBRPlotData}{TBRAnalysisFitTbr1}(obj,
+  panels = GetTBRPlotPanelNames(), periods = c("pretest", "prediction"),
+  quantiles = c(0.1, 0.9), ...)
+
+\method{as.TBRPlotData}{TBRROASAnalysisFit}(obj, panels = "cumulative",
+  periods = "prediction", quantiles = c(0.1, 0.9), ...)
 }
 \arguments{
 \item{obj}{an object to coerce.}

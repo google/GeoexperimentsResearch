@@ -12,47 +12,41 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+#' Predicts the standard deviation (standard error) of the posterior of the
+#' iROAS estimator.
+#'
+#' @param obj an object.
+#' @param ... further arguments passed to or from other methods.
+#'
+#' @return A ROASPreanalysisFit object.
+#'
+#' @rdname DoROASPreanalysis
 DoROASPreanalysis <- function(obj, ...) {
-  # Predicts the standard deviation (standard error) of the posterior of the
-  # iROAS estimator.
-  #
-  # Args:
-  #   obj: some object.
-  #   ...: arguments passed on to the models.
-  #
-  # Returns:
-  #   A ROASPreanalysisFit object.
-
   UseMethod("DoROASPreanalysis")
 }
 
+#' @param period.lengths a vector of length 3, denoting the lengths (in days)
+#'   of pre-period, test, and the cooldown periods, respectively. The test
+#'   period must be at least 7 days; the pre-period must be at least as
+#'   long as the test period; the cooldown period can be 0 or more days.
+#' @param geos (\code{GeoStrata} or \code{GeoAssignment} object) object
+#'   to use for choosing the geo groups; if it is a \code{GeoAssignment}
+#'   object, the geo assignment will be fixed. If it is a \code{GeoStrata}
+#'   object, method \code{Randomize} will be used to obtain a geo assignment
+#'   at each iteration.
+#' @param recycle (flag) if TRUE, uses an augmented data set in order to create
+#'   a larger time series, reusing data from the head of the time series.
+#' @return A ROASPreanalysisFit object.
+#'
+#' @note \code{DoROASPreanalysis.GeoTimeseries} is a wrapper, combining
+#' calls to \code{GeoExperimentPreanalysisData} and \code{DoROASPreanalysis}.\cr
+#'
+#' \code{DoROASPreanalysis.GeoTimeseries}: The extra arguments \code{...} are
+#' passed to \code{DoROASPreanalysis.GeoExperimentPreanalysisData}.\cr
+#'
+#' @rdname DoROASPreanalysis
 DoROASPreanalysis.GeoTimeseries <- function(obj, period.lengths, geos,
                                             recycle=TRUE, ...) {
-  # Predicts the standard deviation of the posterior of the iROAS estimator by
-  # simulating experiments using historical data.
-  #
-  # Args:
-  #   obj: a GeoTimeseries object.
-  #   period.lengths: a vector of length 3, denoting the lengths (in days) of
-  #     pre-period, test, and the cooldown periods, respectively. The test
-  #     period must be at least 7 days; the pre-period must be at least as long
-  #     as the test period; the cooldown period can be 0 or more days.
-  #   geos: (GeoStrata or GeoAssignment object) object to use for choosing the
-  #     geo groups; if it is a GeoAssignment object, the geo assignment will be
-  #     fixed.  If it is a GeoStrata object, method 'Randomize' will be used to
-  #     obtain a geo assignment.
-  #   recycle: (flag) if TRUE, uses an augmented data set in order to
-  #     create a larger time series, reusing data from the head of the
-  #     time series.
-  #   ...: arguments passed to DoROASPreanalysis.GeoExperimentPreanalysisData.
-  #
-  # Returns:
-  #   A ROASPreanalysisFit object.
-  #
-  # Notes:
-  #   This is a simple wrapper, combining calls to
-  #   'GeoExperimentPreanalysisData' and 'DoROASPreanalysis'.
-
   assert_that(is.integer.valued(period.lengths),
               length(period.lengths) == 3L,
               period.lengths[2] >= 7L,
@@ -69,45 +63,37 @@ DoROASPreanalysis.GeoTimeseries <- function(obj, period.lengths, geos,
 }
 
 
+#' @param response (string) name of the metric column to use as the response
+#'   variable.
+#' @param prop.to (string) an existing name of the column in proportion to
+#'   which the spend change will be distributed across the geos.
+#' @param n.sims (integer or NA) number of simulations to do. Note: if 'geos'
+#'   is a GeoAssignment object, NA is allowed, and the actual number of
+#'   simulations will be the number of all possible pseudo-data sets; if
+#'   n.sims is given, only the first n.sims data sets will be simulated
+#'   (useful for testing only).
+#' @param models (vector of nonempty strings) one or more analysis model ids,
+#'   to apply to each simulated data set.
+#' @param FUN (function) a lapply-compatible function to use for generating the
+#'   simulations. Use this for a parallel version of lapply to speed up
+#'   the process. Note: the function only needs to be able to iterate
+#'   along a vector of integers.
+#'
+#' @note Simulates experiments without resorting to regenerating time series.
+#' Segments of the original time series are used to create 'pseudo-timeseries'
+#' of the length of the experiment. These simulated geo experiment data sets
+#' are produced by calls to \code{SimulateGeoExperimentData}.\cr
+#'
+#' The object that is returned contains the simulated raw numbers. Use
+#' the \code{summary} method for a more user-friendly output.\cr
+#'
+#' \code{DoROASPreanalysis.GeoExperimentPreanalysisData}: The extra arguments
+#' \code{...} are passed to \code{FUN}.
+#'
+#' @rdname DoROASPreanalysis
 DoROASPreanalysis.GeoExperimentPreanalysisData <- function(
     obj, response, prop.to, n.sims=1000,  models=GetModelIds(),
     FUN=base::lapply, ...) {
-  # Predicts the standard deviation of the posterior of the iROAS estimator by
-  # simulating experiments using historical data.
-  #
-  # Args:
-  #   obj: a GeoExperimentPreanalysisData object.
-  #   response: (string) name of the metric column to use as the response
-  #     variable.
-  #   prop.to: (string) an existing name of the column in proportion to which
-  #     the spend change will be distributed across the geos.
-  #   n.sims: (integer or NA) number of simulations to do. Note: if 'geos' is a
-  #     GeoAssignment object, NA is allowed, and the actual number of
-  #     simulations will be the number of all possible pseudo-data sets; if
-  #     n.sims is given, only the first n.sims data sets will be simulated
-  #     (useful for testing only).
-  #   models: (vector of nonempty strings) one or more analysis model ids, to
-  #     apply to each simulated data set.
-  #   FUN: (function) a lapply-compatible function to use for generating the
-  #     simulations. Use this for a parallel version of lapply to speed up the
-  #     process. Note: the function only needs to be able to iterate along a
-  #     vector of integers.
-  #   ...: arguments passed to FUN.
-  #
-  # Returns:
-  #   A ROASPreanalysisFit object.
-  #
-  # Notes:
-  #   Simulates experiments without resorting to regenerating time
-  #   series. Segments of the original time series are used to create
-  #   'pseudo-timeseries' of the length of the experiment. These simulated geo
-  #   experiment data sets are produced by calls to
-  #   'SimulateGeoExperimentData'.
-  #
-  # Notes:
-  #   The object that is returned contains the simulated raw numbers. Use
-  #   the 'summary' method for a more user-friendly output.
-
   kClassName <- "ROASPreanalysisFit"
 
   assert_that(is.nonempty.string(response))
@@ -169,31 +155,28 @@ DoROASPreanalysis.GeoExperimentPreanalysisData <- function(
   return(obj.result)
 }
 
+#' Computes a summary of the predicted ROAS estimate and associated
+#' incremental cost.
+#'
+#' @param object a \code{ROASPreanalysisFit} object.
+#' @param level (number between 0 and 1) confidence level.
+#' @param interval.type (string) 'one-sided', 'two-sided'.
+#' @param precision (number) target precision of the estimate; the distance
+#'   between the lower bound of the confidence interval and the point
+#'   estimate. Note: if \code{cost} is given, this will be ignored and the CI
+#'   half-width will be computed based on \code{cost}.
+#' @param cost (number) cost difference (ad spend difference); if missing,
+#'   will be computed based on \code{precision}.
+#' @param ... ignored.
+#'
+#' @return A ROASPreanalysisResults object.
+
 summary.ROASPreanalysisFit <- function(object, level=0.90,
                                        interval.type=c("one-sided",
                                            "two-sided"),
                                        precision=1.0,
                                        cost=NA_real_,
                                        ...) {
-  # Computes a summary of the predicted ROAS estimate and associated
-  # incremental cost.
-  #
-  # Args:
-  #   object: a ROASPreanalysisFit object.
-  #   level: (number between 0 and 1) confidence level.
-  #   interval.type: (string) 'one-sided', 'two-sided'.
-  #   precision: (number) target precision of the estimate; the
-  #     distance between the lower bound of the confidence interval
-  #     and the point estimate. Note: if 'cost' is given, this will be
-  #     ignored and the CI half-width will be computed based on
-  #     'cost'.
-  #   cost: (number) cost difference (ad spend difference); if
-  #     missing, will be computed based on 'precision'.
-  #   ...: ignored.
-  #
-  # Returns:
-  #   A ROASPreanalysisResults object.
-
   kClassName <- "ROASPreanalysisResults"
   SetMessageContextString("summary.ROASPreanalysisFit")
   on.exit(SetMessageContextString())

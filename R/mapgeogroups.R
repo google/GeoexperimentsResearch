@@ -12,67 +12,44 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+#' Map or merge geo group numbers into new group ids.
+#'
+#' @aliases MapGeoGroups
+#'
+#' @param obj an object.
+#' @param value (integer vector, NA allowed, NULL or empty integer vector
+#'   allowed) mapping of old group numbers to new ones. The length must be
+#'   exactly equal to the number of old groups in the object. The old
+#'   numbers match the positions of the index, and the new ones are the
+#'   values in the vector. For example, c(2, 1) maps 1->2 and 2->1; c(3,
+#'   2, 1) maps 1->3, 3->1 and 2 stays unchanged; '1:2' has no effect;
+#'   NOTE: c(1, 1) merges groups 1 and 2 into 1! If the 'geo.group' is NA
+#'   in the object, its value will be NOT changed. If the data has only
+#'   NAs, the only mapping that is allowed is an empty vector, resulting
+#'   in no change in the original object. The special value '0' (group of
+#'   excluded geos) will also be unchanged.
+#' @return An object identical to 'obj' except the 'geo.groups' column has
+#'   (possibly) changed.
+#'
+#' @note
+#' If all group ids in 'geo.group' are NA, nothing changes as 'NAs'
+#' cannot be mapped. Try 'SetGeoGroup<-' instead, to map specific geos
+#' first into group ids.\cr The group number '0' (group of excluded geos)
+#' remains unchanged. It is not possible to map this group to another. For
+#' that purpose, map geos explicitly to desired groups using the
+#' replacement method 'SetGeoGroup<-'.\cr It is however possible to
+#' exclude a complete group by mapping it to 0 by including 0 in the map,
+#' for example c(1, 2, 0) maps group 3 to 0, leaving group numbers 1 and 2
+#' unchanged.
+#'
+#' @seealso \code{\link{SetGeoGroup<-}}.
+#' @rdname mapgeogroups
 "MapGeoGroups<-" <- function(obj, value) {
-  # Map or merge geo group numbers into new group ids.
-  #
-  # Args:
-  #   obj: an object.
-  #   value: (integer vector, NA allowed, NULL or empty integer vector allowed)
-  #     mapping of old group numbers to new ones. The length must be exactly
-  #     equal to the number of old groups in the object.  The old numbers match
-  #     the positions of the index, and the new ones are the values in the
-  #     vector. For example, c(2, 1) maps 1->2 and 2->1; c(3, 2, 1) maps 1->3,
-  #     3->1 and 2 stays unchanged; '1:2' has no effect; NOTE: c(1, 1) merges
-  #     groups 1 and 2 into 1! If the 'geo.group' is NA in the object, its
-  #     value will be NOT changed. If the data has only NAs, the only mapping
-  #     that is allowed is an empty vector, resulting in no change in the
-  #     original object. The special value '0' (group of excluded geos) will
-  #     also be unchanged.
-  #
-  # Returns:
-  #   An object identical to 'obj' except the 'geo.groups' column has
-  #   (possibly) changed.
-  #
-
   UseMethod("MapGeoGroups<-")
 }
 
-
+#' @rdname mapgeogroups
 "MapGeoGroups<-.GeoAssignment" <- function(obj, value) {
-  # Map or merge geo group numbers into new group ids.
-  #
-  # Args:
-  #   obj: a GeoAssignment object.
-  #   value: (integer vector, NA allowed, NULL or empty integer vector allowed)
-  #     mapping of old group numbers to new ones. The length must be exactly
-  #     equal to the number of old groups in the object.  The old numbers match
-  #     the positions of the index, and the new ones are the values in the
-  #     vector. For example, c(2, 1) maps 1->2 and 2->1; c(3, 2, 1) maps 1->3,
-  #     3->1 and 2 stays unchanged; '1:2' has no effect; NOTE: c(1, 1) merges
-  #     groups 1 and 2 into 1! If the 'geo.group' is NA in the object, its
-  #     value will be NOT changed. If the data has only NAs, the only mapping
-  #     that is allowed is an empty vector or NULL, resulting in no change in
-  #     original object. The special value '0' (group of excluded geos) will
-  #     also be unchanged.
-  #
-  # Returns:
-  #   A GeoAssignment object, identical to 'obj' except the 'geo.groups' column
-  #   has (possibly) changed.
-  #
-  # Notes:
-  #   If all group ids in 'geo.group' are NA, nothing changes as 'NAs' cannot
-  #   be mapped. Try 'SetGeoGroup<-' instead, to map specific geos first into
-  #   group ids.\cr
-  #
-  #   The group number '0' (group of excluded geos) remains unchanged. It is
-  #   not possible to map this group to another. For that purpose, map geos
-  #   explicitly to desired groups using the replacement method
-  #   'SetGeoGroup<-'.\cr
-  #
-  #   It is however possible to exclude a complete group by mapping it to 0 by
-  #   including 0 in the map, for example c(1, 2, 0) maps group 3 to 0, leaving
-  #   group numbers 1 and 2 unchanged.
-
   SetMessageContextString("MapGeoGroups<-.GeoAssignment")
   on.exit(SetMessageContextString())
 
@@ -108,17 +85,8 @@
   return(obj)
 }
 
+#' @rdname mapgeogroups
 "MapGeoGroups<-.GeoExperimentData" <- function(obj, value) {
-  # Map or merge geo group numbers into new group ids.
-  #
-  # Args:
-  #   obj: a GeoExperimentData object.
-  #   value: (integer vector or NA) mapping of old group numbers to new
-  #     ones. See 'MapGeoGroups<-.GeoAssignment' for details.
-  #
-  # Returns:
-  #   The GeoExperimentData object, with the column 'geo.group' affected.
-
   obj.ga <- ExtractGeoAssignment(obj)
   MapGeoGroups(obj.ga) <- value
   SetGeoAssignment(obj) <- obj.ga

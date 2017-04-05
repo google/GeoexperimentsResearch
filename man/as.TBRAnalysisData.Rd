@@ -4,25 +4,49 @@
 % Please edit documentation in R/as_tbranalysisdata.R
 \name{as.TBRAnalysisData}
 \alias{as.TBRAnalysisData}
-\title{Coerces the object to a TBRAnalysisData object.}
+\alias{as.TBRAnalysisData.GeoExperimentData}
+\title{Coerces an object to a TBRAnalysisData object.}
 \usage{
 as.TBRAnalysisData(obj, ...)
+
+\method{as.TBRAnalysisData}{GeoExperimentData}(obj, response = character(0),
+  control.group = 1L, treatment.group = 2L, pretest.period = 0L,
+  intervention.period = 1L, cooldown.period = NULL, ...)
 }
 \arguments{
 \item{obj}{an object.}
 
 \item{...}{further arguments to be passed to or from other methods.}
+
+\item{response}{(string) name of the response metric to analyze.}
+
+\item{control.group}{(positive integer) number of the control group
+(matching one of the groups in the column 'geo.group'). This is
+typically 1.}
+
+\item{treatment.group}{(positive integer) number of the treatment group
+(matching one of the groups in the column 'geo.group'). This is
+typically 2.}
+
+\item{pretest.period}{(non-negative integers) number of the pretest period,
+typically 0. Can also be one or more numbers, if periods are to be
+collapsed.}
+
+\item{intervention.period}{(vector of non-negative integers) number(s) of
+the period(s) forming the intervention period. All must be larger
+than the largest period in the pretest period.}
+
+\item{cooldown.period}{(NULL or vector of non-negative integers) number(s)
+of the period(s) forming the cooldown period. All must be larger than
+the largest period in the intervention period.}
 }
 \value{
 A TBRAnalysisData object.
 }
 \description{
-Coerces the object to a TBRAnalysisData object.
-}
-\note{
-A generic S3 method.
+Coerces an object to a TBRAnalysisData object.
 }
 \seealso{
-as.TBRAnalysisData.GeoExperimentData.
+\code{\link{DoTBRAnalysis}}, \code{\link{DoTBRROASAnalysis}}.
 }
 

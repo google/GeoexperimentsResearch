@@ -12,58 +12,41 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+#' Sets the spend change in a geo experiment for simulation purposes.
+#'
+#' @param obj an object with the column 'assignment'.
+#' @param prop.to (existing) name of the column in proportion to which the
+#' spend change will be spread across the geos.
+#' @param periods numbers of the periods which are affected; if this is
+#' \code{"all"}, all periods are affected and the spend change will be spread
+#' across all periods that have spend change (determined by the column
+#' \code{assignment}).
+#' @param value the total absolute value of the spend change. Can also be NA,
+#' in the case of which the spend change column will be reset to NA.
+#'
+#' @return The object, with the modified spend change column \code{.spend}.
+#'
+#' @note
+#' Creates a column \code{.spend}. The spend change type is determined by the
+#' \code{assignment} column. The absolute value of the spend change will be
+#' spread across geos in the proportion of the given column (\code{prop.to});
+#' the sign of the change is determined by the type of change: for
+#' treatment assignments set to 'decrease', the sign will be negative,
+#' otherwise positive.
+#'
+#' @rdname SetSpendChange
 "SetSpendChange<-" <- function(obj,
                                prop.to,
                                periods="all",
                                value) {
-  # Sets the spend change in a geo experiment for simulation purposes.
-  #
-  # Args:
-  #   obj: an object with the column 'assignment'.
-  #   prop.to: (existing) name of the column in proportion to which the
-  #     spend change will be spread across the geos.
-  #   periods: numbers of the periods which are affected; if this is "all",
-  #     all periods are affected and the spend change will be spread across all
-  #     periods that have spend change (determined by the column 'assignment').
-  #   value: the total absolute value of the spend change. Can also be NA,
-  #     in the case of which the spend change column will be reset to NA.
-  #
-  # Returns:
-  #   The object, with the modified spend change column \code{.spend}.
-
   UseMethod("SetSpendChange<-")
 }
 
+#' @rdname SetSpendChange
 "SetSpendChange<-.GeoExperimentData" <- function(obj,
                                                  prop.to,
                                                  periods="all",
                                                  value) {
-  # Sets the spend change column in a GeoExperimentData object.
-  #
-  # Args:
-  #   obj: a GeoExperimentData object. The values in the 'assignment' column
-  #     must not be missing.
-  #   prop.to: (existing) name of the column in proportion to which the
-  #     spend change will be spread across the geos.
-  #   periods: numbers of the periods which are affected; if this is "all",
-  #     all periods are affected and the spend change will be spread across all
-  #     periods that have spend change (determined by the column 'assignment').
-  #   value: the total absolute value of the spend change. Can also be NA,
-  #     in the case of which the spend change column will be reset to NA.
-  #
-  # Returns:
-  #   The same object, with the column specified as the spend change column
-  #   '.spend' modified.
-  #
-  # Notes:
-  #   Creates a column '.spend'.
-  #
-  #   The spend change type is determined by the 'assignment' column. The
-  #   absolute value of the spend change will be spread across geos in the
-  #   proportion of the given column ('prop.to'); the sign of the
-  #   change is determined by the type of change: for treatment assignments set
-  #   to 'decrease', the sign will be negative, otherwise positive.
-
   SetMessageContextString("SetSpendChange<-.GeoExperimentData")
   on.exit(SetMessageContextString())
 

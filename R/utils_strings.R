@@ -12,48 +12,45 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Utilities for manipulating strings.
+#' Compose text strings conditional on values of an object.
+#'
+#' @param x an integer-valued numeric scalar or a logical vector. In the former
+#'   case, indicates a number of items; in the latter case, indicates
+#'   which items in a vector were affected. May have the 'names' attribute
+#'   set.
+#' @param ... one or more character vectors that are pasted together
+#'   (collapsed) after concatenating the vectors one after another.
+#' @param quote the quote character to use.
+#'
+#' @return A character string.
+#'
+#' @details
+#' The function replaces the following special character patterns:
+#' \itemize{
+#'   \item{\code{\{a|b}\}}: 'a' if \code{sum(x) == 1} and 'b' otherwise.
+#'   \item{\code{\{z|a|b\}}}: 'z' if \code{sum(x) == 0}, otherwise works
+#'     like \code{{a|b}}.
+#'   \item{\code{$N}}: \code{sum(x)}.
+#'   \item{\code{$P}}: \code{sprintf("\%.1f", 100 * mean(x))}.
+#'   \item{\code{$L}}: \code{length(x)}. The following patterns are
+#'     replaced with comma-separated lists of:
+#'   \itemize{
+#'     \item{\code{$w}}: \code{which(x)}.
+#'     \item{\code{$W}}: \code{which(x)}, each item quoted.
+#'     \item{\code{$x}}: \code{names(x)[which(x)]}.
+#'     \item{\code{$X}}: \code{names(x)[which(x)]}, each item quoted.
+#'   }
+#' }
+#'
+#' Exception: These four patterns output only up to the Kth item, where
+#' \code{K = getOption('FormatTextMaxOutput', default=7L)}.
+#'
+#' @examples
+#' \dontrun{
+#'   FormatText(n, "There {is|are} {no|one|$N} item{|s}.")
+#'   FormatText(is.na(x), "Found $N NAs ($P% of all $L) in rows $w")}
 
 FormatText <- function(x, ..., quote="'") {
-  # Compose text strings conditional on values of an object.
-  #
-  # Args:
-  #   x: an integer-valued numeric scalar or a logical vector. In the former
-  #     case, indicates a number of items; in the latter case, indicates which
-  #     items in a vector were affected. May have the 'names' attribute set.
-  #   ...: one or more character vectors that are pasted together (collapsed)
-  #     after concatenating the vectors one after another.
-  #   quote: the quote character to use.
-  #
-  # Notes:
-  #   The function replaces the following special character patterns:
-  #   \itemize{
-  #     \item{\code{\{a|b}\}}: 'a' if \code{sum(x) == 1} and 'b' otherwise.
-  #     \item{\code{\{z|a|b\}}}: 'z' if \code{sum(x) == 0}, otherwise works
-  #        like \code{{a|b}}.
-  #     \item{\code{$N}}: \code{sum(x)}.
-  #     \item{\code{$P}}: \code{sprintf("\%.1f", 100 * mean(x))}.
-  #     \item{\code{$L}}: \code{length(x)}.
-  #   }
-  #   The following patterns are replaced with comma-separated lists of:
-  #   \itemize{
-  #     \item{\code{$w}}: \code{which(x)}.
-  #     \item{\code{$W}}: \code{which(x)}, each item quoted.
-  #     \item{\code{$x}}: \code{names(x)[which(x)]}.
-  #     \item{\code{$X}}: \code{names(x)[which(x)]}, each item quoted.
-  #   }
-  #
-  #   Exception: These four patterns output only up to the Kth item, where
-  #   K = getOption('FormatTextMaxOutput', default=7L).
-  #
-  # Examples:
-  #   \dontrun{
-  #   FormatText(n, "There {is|are} {no|one|$N} item{|s}.")
-  #   FormatText(is.na(x), "Found $N NAs ($P% of all $L) in rows $w")}
-  #
-  # Returns:
-  #   A character string.
-
   assert_that((is.integer.valued(x) && x >= 0L) || is.logical(x),
               !anyNA(x),
               msg=paste0("'x' must be an integer-valued scalar ",
@@ -103,17 +100,16 @@ FormatText <- function(x, ..., quote="'") {
   return(txt)
 }
 
+#' Concatenate items of a vector, optionally quoting each.
+#'
+#' @param x (atomic vector) an atomic vector, coerced to character.
+#' @param quote (string) a quote character to use.
+#' @param collapse (string) string to use for collapsing the components of 'x'.
+#' @param max.output (integer) maximum number of items of 'x' to output.
+#'
+#' @return A string.
+
 ConcatItems <- function(x, quote="'", collapse=", ", max.output=Inf) {
-  # Concatenate items of a vector, optionally quoting each.
-  #
-  # Args:
-  #   x: (atomic vector) an atomic vector, coerced to character.
-  #   quote: (string) a quote character to use.
-  #   collapse: (string) string to use for collapsing the components of 'x'.
-  #   max.output: (integer) maximum number of items of 'x' to output.
-  #
-  # Returns:
-  #   A string.
   assert_that(is.atomic(x), !is.null(x))
   assert_that(is.string(quote))
   assert_that(is.string(collapse))

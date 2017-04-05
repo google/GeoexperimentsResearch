@@ -12,24 +12,24 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+#' Coerces an object to a TBRPlotData object.
+#'
+#' @param obj an object to coerce.
+#' @param panels (vector of strings or NULL) names of the panels to be plotted.
+#'   By default, all available panels.
+#' @param periods (vector of strings or NULL) names of the periods to show. By
+#'   default, all default periods.
+#' @param quantiles (real vector of length 2) lower and upper quantiles of the
+#'   credible interval to show.
+#' @param ... further arguments passed to the methods.
+#'
+#' @return A TBRPlotData object.
+#'
+#' @rdname as.TBRPlotData
+
 as.TBRPlotData <- function(obj, panels,
                            periods,
                            quantiles=c(0.1, 0.9), ...) {
-  # Coerces an object to a TBRPlotData object.
-  #
-  # Args:
-  #   obj: an object to coerce.
-  #   panels: (vector of strings or NULL) names of the panels to be
-  #     plotted. By default, all available panels.
-  #   periods: (vector of strings or NULL) names of the periods to show. By
-  #     default, all default periods.
-  #   quantiles: (real vector of length 2) lower and upper quantiles of the
-  #     credible interval to show.
-  #   ...: further arguments passed to the methods.
-  #
-  # Returns:
-  #   A TBRPlotData object.
-
   assert_that(is.numeric(quantiles),
               length(quantiles) == 2,
               !anyNA(quantiles),
@@ -40,22 +40,11 @@ as.TBRPlotData <- function(obj, panels,
   UseMethod("as.TBRPlotData")
 }
 
+
+#' @rdname as.TBRPlotData
 as.TBRPlotData.TBRAnalysisFitTbr1 <- function(obj, panels=GetTBRPlotPanelNames(),
                                               periods=c("pretest", "prediction"),
                                               quantiles=c(0.1, 0.9), ...) {
-  # Coerces a TBRAnalysisFitTbr1 object to a TBRPlotData object.
-  #
-  # Args:
-  #   obj: an object to coerce.
-  #   panels: (vector of strings) names of the panels to be plotted.
-  #   periods: (vector of strings) names of the periods to show.
-  #   quantiles: (real vector of length 2) lower and upper quantiles of the
-  #     credible interval to show.
-  #   ...: ignored.
-  #
-  # Returns:
-  #   A TBRPlotData object.
-
   kClassName <- "TBRPlotData"
   SetMessageContextString("as.TBRPlotData.TBRAnalysisFitTbr1")
   on.exit(SetMessageContextString())
@@ -70,23 +59,10 @@ as.TBRPlotData.TBRAnalysisFitTbr1 <- function(obj, panels=GetTBRPlotPanelNames()
   return(obj.result)
 }
 
-
+#' @rdname as.TBRPlotData
 as.TBRPlotData.TBRROASAnalysisFit <- function(obj, panels="cumulative",
                                               periods="prediction",
                                               quantiles=c(0.1, 0.9), ...) {
-  # Coerces a TBRROASAnalysisFit object to a TBRPlotData object.
-  #
-  # Args:
-  #   obj: an object to coerce.
-  #   panels: (vector of strings) names of the panels to be plotted.
-  #   periods: (vector of strings) names of the periods to show.
-  #   quantiles: (real vector of length 2) lower and upper quantiles of the
-  #     credible interval to show.
-  #   ...: ignored.
-  #
-  # Returns:
-  #   A TBRPlotData object.
-
   kClassName <- "TBRPlotData"
   SetMessageContextString("as.TBRPlotData.TBRAnalysisFitTbr1")
   on.exit(SetMessageContextString())
@@ -101,31 +77,30 @@ as.TBRPlotData.TBRROASAnalysisFit <- function(obj, panels="cumulative",
   return(obj.result)
 }
 
+#' [internal] Arranges a TBRPlotData or TBRROASPlotData object into a data
+#' frame for plotting.
+#'
+#' @param obj a TBRPlotData or TBRROASPlotData object.
+#' @param panels names of the panels to plot. Available names are those in
+#'   \code{(kTBRPlotPanels)}.
+#' @param periods (vector of strings) names of the periods to show.
+#' @param lower (0 < number < upper) lower quantile.
+#' @param upper (lower < number < 1) upper quantile.
+#' @param panel.info (list) information about the data frame columns for each
+#'   of the available panels.
+#' @return A data frame with the columns:
+#'   \itemize{
+#'     \item\code{date} date.
+#'     \item\code{observed} an observed time series.
+#'     \item\code{predicted} a predicted time series.
+#'     \item\code{lower} lower bound of the predicted time series.
+#'       \item\code{upper} lower bound of the predicted time series.
+#'       \item\code{panel.label} panel label to be shown in the plot.
+#' }
+#' @rdname GetTBRDataFrameForGgplot
+
 .GetTBRDataFrameForGgplot <- function(obj, panels, periods, lower, upper,
                                       panel.info) {
-  # [internal] Arranges a TBRPlotData or TBRROASPlotData object into a data
-  # frame for plotting.
-  #
-  # Args:
-  #   obj: a TBRPlotData or TBRROASPlotData object.
-  #   panels: names of the panels to plot. Available names are
-  #     those in \code{(kTBRPlotPanels)}.
-  #   periods: (vector of strings) names of the periods to show.
-  #   lower: (0 < number < upper) lower quantile.
-  #   upper: (lower < number < 1) upper quantile.
-  #   panel.info: (list) information about the data frame columns for each of
-  #     the available panels.
-  #
-  # Returns:
-  #   A data frame with the columns:
-  #   \itemize{
-  #      \item\code{date} date.
-  #      \item\code{observed} an observed time series.
-  #      \item\code{predicted} a predicted time series.
-  #      \item\code{lower} lower bound of the predicted time series.
-  #      \item\code{upper} lower bound of the predicted time series.
-  #      \item\code{panel.label} panel label to be shown in the plot.}
-
   assert_that(is.vector.of.nonempty.strings(panels))
   there <- structure(panels %in% names(panel.info),
                      names=panels)
@@ -153,29 +128,28 @@ as.TBRPlotData.TBRROASAnalysisFit <- function(obj, panels="cumulative",
   return(plot.data)
 }
 
-.GetOneTBRDataFrameForGgplot <- function(panel, obj, lower, upper, panel.info) {
-  # [internal] Arranges a TBRPlotData or TBRROASPlotData object into a data
-  # frame for plotting.
-  #
-  # Args:
-  #   panel: name of the panel to plot. Must be one of those in
-  #     \code{Get(kTBRPlotPanels)}.
-  #   obj: a TBRPlotData or TBRROASPlotData object.
-  #   lower: (0 < number < upper) lower quantile.
-  #   upper: (lower < number < 1) upper quantile.
-  #   panel.info: (list) information about the data frame columns for each of
-  #     the available panels.
-  #
-  # Returns:
-  #   A data frame with the columns:
-  #   \itemize{
-  #      \item\code{date} date.
-  #      \item\code{observed} an observed time series.
-  #      \item\code{predicted} a predicted time series.
-  #      \item\code{lower} lower bound of the predicted time series.
-  #      \item\code{upper} lower bound of the predicted time series.
-  #      \item\code{panel.label} panel label to be shown in the plot.}
+#' [internal] Arranges a TBRPlotData or TBRROASPlotData object into a data
+#' frame for plotting.
+#'
+#' @param panel name of the panel to plot. Must be one of those in
+#'   \code{Get(kTBRPlotPanels)}.
+#' @param obj a TBRPlotData or TBRROASPlotData object.
+#' @param lower (0 < number < upper) lower quantile.
+#' @param upper (lower < number < 1) upper quantile.
+#' @param panel.info (list) information about the data frame columns for each
+#'   of the available panels.
+#' @return A data frame with the columns:
+#'   \itemize{
+#'     \item\code{date} date.
+#'     \item\code{observed} an observed time series.
+#'     \item\code{predicted} a predicted time series.
+#'     \item\code{lower} lower bound of the predicted time series.
+#'       \item\code{upper} lower bound of the predicted time series.
+#'       \item\code{panel.label} panel label to be shown in the plot.}
+#'
+#' @rdname GetOneTBRDataFrameForGgplot
 
+.GetOneTBRDataFrameForGgplot <- function(panel, obj, lower, upper, panel.info) {
   probs <- c("lower"=unname(lower), "predicted"=0.5, "upper"=unname(upper))
   df.panel <- quantile(obj, probs=probs, distribution=panel)
   # The columns 3, 4, 5 contain the lower, middle, and upper quantiles.

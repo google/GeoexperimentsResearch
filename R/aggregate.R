@@ -12,28 +12,25 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+#' Aggregate the Metrics of a GeoTimeseries.
+#'
+#' @param x a GeoTimeseries object.
+#' @param by (character vector) name(s) of column(s) by which to group.
+#' @param FUN (function) function to apply to each metric column.
+#' @param metrics (character vector) metrics to aggregate. Default is all
+#'   metrics.
+#' @param ... optional arguments passed to FUN.
+#'
+#' @return A data.frame object.
+#'
+#' @note
+#' Uses \code{aggregate.data.frame} to do the aggregation. This function
+#' omits rows that have missing values in the '\code{by}' columns.
+#'
+#' @seealso AggregateTimeseries.
+
 aggregate.GeoTimeseries <- function(x, by=kGeo, FUN=base::sum,
                                     metrics=NULL, ...) {
-  # Aggregate the Metrics of a GeoTimeseries.
-  #
-  # Args:
-  #   x: a GeoTimeseries object.
-  #   by: (character vector) name(s) of column(s) by which to group.
-  #   FUN: (function) function to apply to each metric column.
-  #   metrics: (character vector) metrics to aggregate. Default is all metrics.
-  #   ...: optional arguments passed to FUN.
-  #
-  # Returns:
-  #   A data.frame object.
-  #
-  # Notes:
-  #
-  #   Uses 'aggregate.data.frame' to do the aggregation. This function
-  #   omits rows that have missing values in the 'by' columns.
-  #
-  # Documentation:
-  #   seealso: AggregateTimeseries.
-
   SetMessageContextString("aggregate.GeoTimeseries")
   on.exit(SetMessageContextString())
 

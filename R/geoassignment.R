@@ -12,32 +12,27 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-GeoAssignment <- function(x) {
-  # Constructs a GeoAssignment object.
-  #
-  # Args:
-  #   x: a data frame with columns 'geo' (character) and 'geo.group'
-  #     (integer-valued, positive).  'geo.group' indicates the group
-  #     (1, 2, ...) the corresponding geo belongs to. Other columns
-  #     are allowed but not checked. If 'geo' is an integer-valued
-  #     numeric or factor, it is coerced to character.
-  #
-  # Returns:
-  #   An object of class 'GeoAssignment'.
-  #
-  # Notes:
-  #   The group numbers must be integers (integer-valued numeric are
-  #   allowed as input), starting with 1.
-  #
-  #   The column 'geo.group' *can* have missing values (NA), unlike
-  #   'geo', which must have no missing values, and no duplicates.
-  #
-  #   A missing value in geo.group simply indicates that the
-  #   mapping from a geo is not available. When associating the geo
-  #   assignment with a GeoExperimentData object, the effect will be the
-  #   same as if the geo with 'geo.group'==NA was not in the mapping
-  #   in the first place.
+#' Constructs a GeoAssignment object.
+#'
+#' @param x a data frame with columns 'geo' (character) and 'geo.group'
+#'   (integer-valued, positive). 'geo.group' indicates the group (1, 2,
+#'   ...) the corresponding geo belongs to. Other columns are allowed but
+#'   not checked. If 'geo' is an integer-valued numeric or factor, it is
+#'   coerced to character
+#'
+#' @return An object of class 'GeoAssignment'.
+#'
+#' @details
+#' The group numbers must be integers (integer-valued numeric are
+#' allowed as input), starting with 1. The column 'geo.group' *can* have
+#' missing values (NA), unlike 'geo', which must have no missing values,
+#' and no duplicates. A missing value in geo.group simply indicates that
+#' the mapping from a geo is not available. When associating the geo
+#' assignment with a GeoExperimentData object, the effect will be the same
+#' as if the geo with 'geo.group'==NA was not in the mapping in the first
+#' place.
 
+GeoAssignment <- function(x) {
   kClassName <- "GeoAssignment"
   SetMessageContextString(kClassName)
   on.exit(SetMessageContextString())

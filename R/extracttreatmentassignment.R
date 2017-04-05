@@ -12,36 +12,39 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-ExtractTreatmentAssignment.GeoTimeseries <- function(obj, strict=TRUE, ...) {
-  # Extracts a TreatmentAssignment object from a GeoTimeseries object.
-  #
-  # Args:
-  #   obj: a GeoTimeseries object with the columns 'period',
-  #     'geo.group', and 'assignment'.
-  #   strict: (flag) if FALSE, the function returns NULL if either of
-  #     the columns 'geo.group' or 'period' does not exist. Otherwise,
-  #     throws an error.
-  #   ...: ignored.
-  #
-  # Returns:
-  #   A TreatmentAssignment object.
-  #
-  # Notes:
-  #   A well-defined (period, group) pair (i.e., neither of them is
-  #   missing) in the data frame implies that the corresponding (date,
-  #   geo) pair is part of the experiment and *must* be therefore
-  #   associated a treatment condition. Otherwise, if a date or a geo
-  #   is not part of the experiment, the (date, geo) pair *must* have *no*
-  #   treatment condition assignment.
-  #
-  #   In other words, any (period, group) pair that maps to a
-  #   non-missing treatment assignment must have no missing
-  #   values. Conversely, any (period, group) pair with a missing
-  #   value must map to a missing treatment assignment.
-  #
-  # Documentation:
-  #   seealso: ExtractTreatmentAssignment (generic).
+#' Extracts a TreatmentAssignment object.
+#'
+#' @param obj An object.
+#' @param ... further arguments passed to or from other methods.
+#'
+#' @return A TreatmentAssignment object.
+#'
+#' @rdname ExtractTreatmentAssignment
 
+ExtractTreatmentAssignment <- function(obj, ...) {
+  UseMethod("ExtractTreatmentAssignment")
+}
+
+#' @param strict (flag) if FALSE, the function returns NULL if either of the
+#'   columns 'geo.group' or 'period' does not exist. Otherwise, throws an
+#'   error.
+#'
+#' @note \code{ExtractTreatmentAssignment.GeoTimeseries}: \code{obj} is
+#' supposed to have the columns 'period', 'geo.group', and 'assignment'.\cr
+#'
+#' A well-defined (period, group) pair (i.e., neither of them is missing) in
+#' the data frame implies that the corresponding (date, geo) pair is part of
+#' the experiment and \emph{must} be therefore associated a treatment
+#' condition. Otherwise, if a date or a geo is not part of the experiment, the
+#' (date, geo) pair \emph{must} have \emph{no} treatment condition
+#' assignment. In other words, any (period, group) pair that maps to a
+#' non-missing treatment assignment must have no missing values.  Conversely,
+#' any (period, group) pair with a missing value must map to a missing
+#' treatment assignment.
+#'
+#' @rdname ExtractTreatmentAssignment
+
+ExtractTreatmentAssignment.GeoTimeseries <- function(obj, strict=TRUE, ...) {
   SetMessageContextString("ExtractTreatmentAssignment.GeoTimeseries")
   on.exit(SetMessageContextString())
 

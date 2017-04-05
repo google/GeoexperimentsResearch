@@ -12,43 +12,29 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"SetExperimentPeriods<-" <- function(obj, ..., value) {
-  # Associates the object with an ExperimentPeriods object.
-  #
-  # Args:
-  #   obj: the object to change.
-  #   ...: further arguments passed to methods.
-  #   value: a ExperimentPeriods object.
-  #
-  # Returns:
-  #   The object that has been modified in place.
-  #
-  # Documentation:
-  #   seealso: SetExperimentPeriods<-.GeoExperimentData.
+#' Associates the object with an ExperimentPeriods object.
+#'
+#' @param obj the object to change.
+#' @param ... further arguments passed to methods.
+#' @param value a ExperimentPeriods object.
+#'
+#' @return The object that has been modified in place.
+#'
+#' @rdname SetExperimentPeriods
 
+"SetExperimentPeriods<-" <- function(obj, ..., value) {
   UseMethod("SetExperimentPeriods<-")
 }
 
+#' @param strict (flag) insist that data has all specified experiment periods?
+#'
+#' @note The 'date' column is mapped to the 'period' column. The 'period' slot
+#' is assigned with the new value and the columns 'period' and 'assignment' are
+#' changed to reflect the new date ranges.
+#'
+#' @rdname SetExperimentPeriods
 "SetExperimentPeriods<-.GeoExperimentData" <- function(obj, strict=TRUE, ...,
                                                        value) {
-  # Associates the object with an ExperimentPeriods object, mapping
-  # the 'date' column to a 'period' column.
-  #
-  # Args:
-  #   obj: the object to change.
-  #   strict: (flag) insist that data has all specified experiment periods?
-  #   ...: ignored.
-  #   value: a ExperimentPeriods object.
-  #
-  # Returns:
-  #   The same object that has been modified in place; the
-  #   'period' slot is assigned with the new value and the
-  #   columns 'period' and 'assignment' are changed to reflect the
-  #   new date ranges.
-  #
-  # Documentation:
-  #   seealso: SetExperimentPeriods<- (generic).
-
   SetMessageContextString("SetExperimentPeriods<-.GeoExperimentData")
   on.exit(SetMessageContextString())
 

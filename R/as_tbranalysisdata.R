@@ -12,30 +12,37 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# S3 methods for coercing objects to TBRAnalysisData objects.
-# Methods:
-# - as.TBRAnalysisData (generic)
-# - as.TBRAnalysisData.GeoExperimentData
-
+#' Coerces an object to a TBRAnalysisData object.
+#'
+#' @param obj an object.
+#' @param ... further arguments to be passed to or from other methods.
+#' @return A TBRAnalysisData object.
+#'
+#' @seealso \code{\link{DoTBRAnalysis}}, \code{\link{DoTBRROASAnalysis}}.
+#'
+#' @rdname as.TBRAnalysisData
 as.TBRAnalysisData <- function(obj, ...) {
-  # Coerces the object to a TBRAnalysisData object.
-  #
-  # Args:
-  #   obj: an object.
-  #   ...: further arguments to be passed to or from other methods.
-  #
-  # Returns:
-  #   A TBRAnalysisData object.
-  #
-  # Notes:
-  #   A generic S3 method.
-  #
-  # Documentation:
-  #   seealso: as.TBRAnalysisData.GeoExperimentData.
-
   UseMethod("as.TBRAnalysisData")
 }
 
+#' @param response (string) name of the response metric to analyze.
+#' @param control.group (positive integer) number of the control group
+#'   (matching one of the groups in the column 'geo.group'). This is
+#'   typically 1.
+#' @param treatment.group (positive integer) number of the treatment group
+#'   (matching one of the groups in the column 'geo.group'). This is
+#'   typically 2.
+#' @param pretest.period (non-negative integers) number of the pretest period,
+#'   typically 0. Can also be one or more numbers, if periods are to be
+#'   collapsed.
+#' @param intervention.period (vector of non-negative integers) number(s) of
+#'   the period(s) forming the intervention period. All must be larger
+#'   than the largest period in the pretest period.
+#' @param cooldown.period (NULL or vector of non-negative integers) number(s)
+#'   of the period(s) forming the cooldown period. All must be larger than
+#'   the largest period in the intervention period.
+#'
+#' @rdname as.TBRAnalysisData
 as.TBRAnalysisData.GeoExperimentData <- function(obj,
                                                  response=character(0),
                                                  control.group=1L,
@@ -44,34 +51,6 @@ as.TBRAnalysisData.GeoExperimentData <- function(obj,
                                                  intervention.period=1L,
                                                  cooldown.period=NULL,
                                                  ...) {
-  # Coerces a GeoExperimentData object to a TBRAnalysisData object.
-  #
-  # Args:
-  #   obj: a GeoExperimentData object.
-  #   response: (string) name of the response metric to analyze.
-  #   control.group: (positive integer) number of the control group
-  #     (matching one of the groups in the column 'geo.group').
-  #     This is typically 1.
-  #   treatment.group: (positive integer) number of the treatment group
-  #     (matching one of the groups in the column 'geo.group').
-  #     This is typically 2.
-  #   pretest.period: (non-negative integers) number of the pretest
-  #     period, typically 0. Can also be one or more numbers, if
-  #     periods are to be collapsed.
-  #   intervention.period: (vector of non-negative integers) number(s) of the
-  #     period(s) forming the intervention period. All must be larger than the
-  #     largest period in the pretest period.
-  #   cooldown.period: (NULL or vector of non-negative integers) number(s) of
-  #     the period(s) forming the cooldown period. All must be larger than the
-  #     largest period in the intervention period.
-  #   ...: ignored.
-  #
-  # Returns:
-  #   A TBRAnalysisData object.
-  #
-  # Documentation:
-  #   seealso: as.TBRAnalysisData (generic).
-
   SetMessageContextString("as.TBRAnalysisData.GeoExperimentData")
   on.exit(SetMessageContextString())
 

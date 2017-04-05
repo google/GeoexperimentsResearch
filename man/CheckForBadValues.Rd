@@ -4,7 +4,7 @@
 % Please edit documentation in R/utils_assert.R
 \name{CheckForBadValues}
 \alias{CheckForBadValues}
-\title{Check for bad values in given columns.}
+\title{Checks for bad values in given columns.}
 \usage{
 CheckForBadValues(x, columns, CHECK, good = TRUE, what = "invalid", ...)
 }
@@ -28,6 +28,6 @@ If all tests pass, returns NULL invisibly. Otherwise, an
   'assertError' is thrown.
 }
 \description{
-Check for bad values in given columns.
+Checks for bad values in given columns.
 }
 
